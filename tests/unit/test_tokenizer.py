@@ -182,6 +182,17 @@ class TokenizerTestCase(unittest.TestCase):
         # Assert:
         self.assertEqual('T_FONT', tokens[2]['type'])
 
+    def test_tokenize_keyboard(self):
+
+        # Arrange:
+        code = "LD V0, K"
+
+        # Act:
+        tokens = lexical.tokenize(code)
+
+        # Assert:
+        self.assertEqual('T_KEYBOARD', tokens[5]['type'])
+
     def test_tokenize_binary(self):
 
         # Arrange:
@@ -223,3 +234,28 @@ class TokenizerTestCase(unittest.TestCase):
             lexical.tokenize(code)
         except lexical.UnknowTokenError, e:
             self.assertEqual('Invalid token: #V0', e.message)
+
+    def test_show_column_from_asm(self):
+
+        # Arrange:
+        code = "ADD V0, #FF\nLD V0, 0xFE"
+
+        # Act:
+        tokens = lexical.tokenize(code)
+
+        # Assert:
+        self.assertEqual(1, tokens[0]['column'])
+        self.assertEqual(5, tokens[2]['column'])
+        self.assertEqual(1, tokens[7]['column'])
+
+    def test_show_line_from_asm(self):
+
+        # Arrange:
+        code = "ADD V0, #FF\nLD V0, 0xFE"
+
+        # Act:
+        tokens = lexical.tokenize(code)
+
+        # Assert:
+        self.assertEqual(1, tokens[0]['line'])
+        self.assertEqual(2, tokens[7]['line'])
