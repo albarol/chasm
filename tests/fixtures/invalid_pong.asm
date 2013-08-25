@@ -2,6 +2,7 @@
     LD VB, 0x0C
     LD VC, 0x3F
     LD VD, 0x0C
+    LTD 0xFFF
     LDI 0x2EA
     DRW V2, VE, 0xA
     DRW VC, VD, 0x6
@@ -23,4 +24,3 @@
     DRW VA, VB, 0x6
     DRW VC, VD, 0x6
     LD V0, 0x00
-    

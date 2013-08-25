@@ -10,7 +10,7 @@ asm_tokens = [
     { 'type': 'T_ADDR', 'pattern': r'0x[\d\A-F]{3}' },
     { 'type': 'T_BYTE', 'pattern': r'0x[\dA-F]{2}' },
     { 'type': 'T_NIBBLE', 'pattern': r'0x[\dA-F]{1}' },
-    { 'type': 'T_CONSTANT', 'pattern': r'#[\dA-F]+' },
+    { 'type': 'T_CONSTANT', 'pattern': r'#[\dA-F]{1,2}' },
     { 'type': 'T_REGISTER', 'pattern': r'V[\dA-F]{1}' },
     { 'type': 'T_DELAY', 'pattern': r'DT' },
     { 'type': 'T_SOUND', 'pattern': r'ST' },
@@ -21,20 +21,12 @@ asm_tokens = [
     { 'type': 'T_WHITESPACE', 'pattern': r'^[ \t\r]' },
     { 'type': 'T_COMMA', 'pattern': r',' },
     { 'type': 'T_EOL', 'pattern': r'^\n' },
-    { 'type': 'T_UNKNOW', 'pattern': r'[\d\w]+' }
+    { 'type': 'T_UNKNOW', 'pattern': r'[:punct:#\d\w]+' }
 ]
 
 
 class UnknowTokenError(Exception):
     pass
-
-
-class Token(object):
-
-    def __init__(self, type='T_EOL', value='\n'):
-        self.type = type
-        self.value = value
-
 
 def tokenize(code):
     tokens = []
@@ -44,9 +36,19 @@ def tokenize(code):
             match = re.match(token['pattern'], code, re.S)
             if match:
                 if token['type'] == 'T_UNKNOW':
-                    raise UnknowTokenError("Token not found: %s" % (match.group(0), ))
-                tokens.append(Token(type=token['type'],
-                                value=match.group(0)))
+                    raise UnknowTokenError("Invalid token: %s" % (match.group(0), ))
+
+                tokens.append({'type': token['type'],
+                               'value': match.group(0),
+                               'line': line,
+                               'column': column})
+
+                if token['type'] == 'T_EOL':
+                    line += 1
+                    column = 1
+                else:
+                    column += len(match.group(0))
+
                 code = code[len(match.group(0)):]
                 break
     return tokens
