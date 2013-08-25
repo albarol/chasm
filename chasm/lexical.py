@@ -1,13 +1,15 @@
 import re
 
 asm_tokens = [
-    { 'type': 'T_LABEL', 'pattern': r'[\d\w]+:' },
+    { 'type': 'T_LABEL', 'pattern': r'([\w]{2}[\w\d]*)\:' },
     { 'type': 'T_COMMAND', 'pattern': r'(SYS|CLS|RET|JMP|CALL|'
                                  'SE|SNE|LD|ADD|OR|AND|'
                                  'XOR|SUB|SHR|SUBC|SHL|SNE|'
                                  'LDI|RND|DRW|SKP|SKNP|STR|'
                                  'FIL)' },
-    { 'type': 'T_MEMORY', 'pattern': r'0x[\dA-F]+' },
+    { 'type': 'T_ADDR', 'pattern': r'0x[\d\A-F]{3}' },
+    { 'type': 'T_BYTE', 'pattern': r'0x[\dA-F]{2}' },
+    { 'type': 'T_NIBBLE', 'pattern': r'0x[\dA-F]{1}' },
     { 'type': 'T_CONSTANT', 'pattern': r'#[\dA-F]+' },
     { 'type': 'T_REGISTER', 'pattern': r'V[\dA-F]{1}' },
     { 'type': 'T_DELAY', 'pattern': r'DT' },
@@ -15,9 +17,10 @@ asm_tokens = [
     { 'type': 'T_BINARY', 'pattern': r'B' },
     { 'type': 'T_FONT', 'pattern': r'F' },
     { 'type': 'T_REGISTER_I', 'pattern': r'I' },
-    { 'type': 'T_WHITESPACE', 'pattern': r'\s' },
+    { 'type': 'T_COMMENT', 'pattern': r'^;([ \w\d]*[^\n])' },
+    { 'type': 'T_WHITESPACE', 'pattern': r'^[ \t\r]' },
     { 'type': 'T_COMMA', 'pattern': r',' },
-    { 'type': 'T_EOL', 'pattern': r'\n' },
+    { 'type': 'T_EOL', 'pattern': r'^\n' },
     { 'type': 'T_UNKNOW', 'pattern': r'[\d\w]+' }
 ]
 
@@ -42,7 +45,7 @@ def tokenize(code):
             if match:
                 if token['type'] == 'T_UNKNOW':
                     raise UnknowTokenError("Token not found: %s" % (match.group(0), ))
-                tokens.append(Token(type=token['type'], 
+                tokens.append(Token(type=token['type'],
                                 value=match.group(0)))
                 code = code[len(match.group(0)):]
                 break

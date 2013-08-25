@@ -2,7 +2,21 @@ import unittest
 from chasm import lexical
 
 class TokenizerTestCase(unittest.TestCase):
-    
+
+
+    def test_tokenize_comment(self):
+
+        # Arrange:
+        code = "; CHIP8 Assembler\n"
+
+        # Act:
+        tokens = lexical.tokenize(code)
+
+        # Assert:
+        self.assertEqual('T_COMMENT', tokens[0].type)
+        self.assertEqual('; CHIP8 Assembler', tokens[0].value)
+
+        self.assertEqual('T_EOL', tokens[1].type)
 
     def test_tokenize_whitespace(self):
 
@@ -15,6 +29,18 @@ class TokenizerTestCase(unittest.TestCase):
         # Assert:
         self.assertEqual('T_WHITESPACE', tokens[1].type)
         self.assertEqual(' ', tokens[1].value)
+
+    def test_tokenize_eol(self):
+
+        # Arrange:
+        code = "Start:\n  ADD V0, 0xEF"
+
+        # Act:
+        tokens = lexical.tokenize(code)
+
+        # Assert:
+        self.assertEqual('T_EOL', tokens[1].type)
+        self.assertEqual('\n', tokens[1].value)
 
     def test_tokenize_comma(self):
 
@@ -40,7 +66,19 @@ class TokenizerTestCase(unittest.TestCase):
         self.assertEqual('T_COMMAND', tokens[0].type)
         self.assertEqual('ADD', tokens[0].value)
 
-    def test_tokenize_memory(self):
+    def test_tokenize_addr(self):
+
+        # Arrange:
+        code = "JMP 0xFFF"
+
+        # Act:
+        tokens = lexical.tokenize(code)
+
+        # Assert:
+        self.assertEqual('T_ADDR', tokens[2].type)
+        self.assertEqual('0xFFF', tokens[2].value)
+
+    def test_tokenize_byte(self):
 
         # Arrange:
         code = "ADD V0, 0xEF"
@@ -49,8 +87,21 @@ class TokenizerTestCase(unittest.TestCase):
         tokens = lexical.tokenize(code)
 
         # Assert:
-        self.assertEqual('T_MEMORY', tokens[5].type)
+        self.assertEqual('T_BYTE', tokens[5].type)
         self.assertEqual('0xEF', tokens[5].value)
+
+    def test_tokenize_nibble(self):
+
+        # Arrange:
+        code = "DRW V0, V1, 0xF"
+
+        # Act:
+        tokens = lexical.tokenize(code)
+
+        # Assert:
+        self.assertEqual('T_NIBBLE', tokens[8].type)
+        self.assertEqual('0xF', tokens[8].value)
+
 
     def test_tokenize_register(self):
 
