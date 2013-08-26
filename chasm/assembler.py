@@ -37,6 +37,8 @@ symbols = [
     { 'pattern': r'LDI,V([\da-fA-F]{1})', 'opcode': 'FX1E' },
     { 'pattern': r'LDF,V([\da-fA-F]{1})', 'opcode': 'FX29' },
     { 'pattern': r'LDB,V([\da-fA-F]{1})', 'opcode': 'FX33' },
+    { 'pattern': r'DW#([\da-fA-F]{4})', 'opcode': 'NNNN' },
+    { 'pattern': r'DB#([\da-fA-F]{1})([\da-fA-F]{2})', 'opcode': 'XY' },
 ]
 
 
@@ -48,7 +50,9 @@ def compile(ast):
             match = re.match(symbol['pattern'], instruction)
             if match:
                 opcode = symbol['opcode']
-                if 'NNN' in symbol['opcode']:
+                if 'NNNN' in symbol['opcode']:
+                    opcode = opcode.replace('NNNN', match.group(1))
+                elif 'NNN' in symbol['opcode']:
                     opcode = opcode.replace('NNN', match.group(1))
                 elif 'NN' in symbol['opcode']:
                     opcode = opcode.replace('NN', match.group(2))
@@ -59,5 +63,6 @@ def compile(ast):
                     opcode = opcode.replace('X', match.group(1))
                 if 'Y' in symbol['opcode']:
                     opcode = opcode.replace('Y', match.group(2))
+                # opcodes.append('%s, %s\n' % (hex(node.addr), opcode.upper()))
                 opcodes.append(opcode.upper())
     return opcodes

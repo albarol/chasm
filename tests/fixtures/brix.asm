@@ -6,7 +6,7 @@ LDI #30c
 DRW Va, Vb, #1
 ADD Va, #04
 SE Va, #40
-JMP #a40
+JMP #208
 ADD Vb, #02
 SE Vb, #12
 JMP #206
@@ -132,9 +132,9 @@ ADD V3, #05
 LD F, V2
 DRW V3, V4, #5
 RET
-; DW #e000
-; DW #8000
-; DW #FC00
-; DW #AA00
-; DW #0000
-; DW #0000
+DW #e000
+DW #8000
+DW #FC00
+DW #AA00
+DW #0000
+DW #0000

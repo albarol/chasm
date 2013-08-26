@@ -11,10 +11,12 @@ asm_tokens = [
                                  'XOR|SUBC|SUB|SHR|SHL|SNE|'
                                  'RND|DRW|SKP|SKNP|STR|'
                                  'FILL|DW|DB)'},
+    { 'type': 'T_WORD', 'pattern': r'#[\da-fA-F]{4}'},
     { 'type': 'T_ADDR', 'pattern': r'#[\da-fA-F]{3}'},
     { 'type': 'T_BYTE', 'pattern': r'#[\da-fA-F]{2}'},
     { 'type': 'T_NIBBLE', 'pattern': r'#[\da-fA-F]{1}'},
     { 'type': 'T_VALUE', 'pattern': r'^[0-9]{1,3}'},
+    { 'type': 'T_NAME', 'pattern': r'^([\w]{3}[\w\d]*)'},
     { 'type': 'T_REGISTER', 'pattern': r'V[\da-fA-F]{1}'},
     { 'type': 'T_DELAY', 'pattern': r'DT'},
     { 'type': 'T_SOUND', 'pattern': r'ST'},
@@ -22,15 +24,13 @@ asm_tokens = [
     { 'type': 'T_FONT', 'pattern': r'F'},
     { 'type': 'T_KEYBOARD', 'pattern': r'K'},
     { 'type': 'T_REGISTER_I', 'pattern': r'I'},
-    { 'type': 'T_COMMENT', 'pattern': r'^;(.*)'},
+    { 'type': 'T_COMMENT', 'pattern': r'^;(.*)[^\n]'},
     { 'type': 'T_WHITESPACE', 'pattern': r'^[ \t\r]'},
     { 'type': 'T_COMMA', 'pattern': r','},
     { 'type': 'T_EOL', 'pattern': r'^\n'},
     { 'type': 'T_UNKNOW', 'pattern': r'[:punct:#\d\w]+'}
 ]
 
-class UnknowTokenError(Exception):
-    pass
 
 def tokenize(code):
     tokens = []

@@ -46,6 +46,18 @@ class TokenizerTestCase(unittest.TestCase):
         self.assertEqual('T_EOL', tokens[1]['type'])
         self.assertEqual('\n', tokens[1]['value'])
 
+    def test_tokenize_name(self):
+
+        # Arrange:
+        code = "JMP Draw"
+
+        # Act:
+        tokens = lexical.tokenize(code)
+
+        # Assert:
+        self.assertEqual('T_NAME', tokens[2]['type'])
+        self.assertEqual('Draw', tokens[2]['value'])
+
     def test_tokenize_comma(self):
 
         # Arrange:
@@ -209,27 +221,6 @@ class TokenizerTestCase(unittest.TestCase):
         self.assertEqual('T_VALUE', tokens[5]['type'])
 
 
-    def test_throw_exception_when_token_is_invalid(self):
-
-        # Arrange:
-        code = "LADD V0, #FF"
-
-        # Assert:
-        lexical.tokenize(code)
-
-        # Assert:
-        self.assertTrue(logger.invalid)
-
-    def test_throw_exception_show_what_token_is_invalid(self):
-
-        # Arrange:
-        code = "LADD V0, #FF"
-
-        # Act:
-        lexical.tokenize(code)
-
-        # Assert:
-        self.assertTrue(logger.invalid)
 
     def test_throw_exception_with_invalid_characters(self):
 

@@ -83,3 +83,28 @@ class SemanticTestCase(unittest.TestCase):
         # Arrange:
         self.assertFalse(logger.invalid)
 
+    def test_validate_if_name_exists_in_symbol_table(self):
+
+        # Arrange:
+        code = "Play: LD VA, #02\nJMP Args\nArgs: DRW V0, V1, #1"
+        tokens = lexical.tokenize(code)
+        ast = syntactic.Ast(tokens)
+
+        # Act:
+        semantic.analyze(ast)
+        
+        # Arrange:
+        self.assertFalse(logger.invalid)
+
+    def test_throw_exception_when_validate_if_name_does_not_exists_in_symbol_table(self):
+
+        # Arrange:
+        code = "Play: LD VA, #02\nJMP Draw\nArgs: DRW V0, V1, #1"
+        tokens = lexical.tokenize(code)
+        ast = syntactic.Ast(tokens)
+
+        # Act:
+        semantic.analyze(ast)
+        
+        # Arrange:
+        self.assertTrue(logger.invalid)

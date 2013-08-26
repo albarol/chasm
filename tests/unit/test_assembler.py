@@ -49,7 +49,7 @@ class AssemblerTestCase(unittest.TestCase):
     def test_convert_JMP_1NNN_node_to_opcode(self):
 
         # Arrange:
-        code = "JMP 0xFFF"
+        code = "JMP #FFF"
         tokens = lexical.tokenize(code)
         ast = syntactic.Ast(tokens)
         semantic.analyze(ast)
@@ -63,7 +63,7 @@ class AssemblerTestCase(unittest.TestCase):
     def test_convert_JMP_BNNN_node_to_opcode(self):
 
         # Arrange:
-        code = "JMP 0xFFF, V0"
+        code = "JMP #FFF, V0"
         tokens = lexical.tokenize(code)
         ast = syntactic.Ast(tokens)
         semantic.analyze(ast)
@@ -77,7 +77,7 @@ class AssemblerTestCase(unittest.TestCase):
     def test_convert_CALL_node_to_opcode(self):
 
         # Arrange:
-        code = "CALL 0xFFF"
+        code = "CALL #FFF"
         tokens = lexical.tokenize(code)
         ast = syntactic.Ast(tokens)
         semantic.analyze(ast)
@@ -91,7 +91,7 @@ class AssemblerTestCase(unittest.TestCase):
     def test_convert_SE_3XNN_node_to_opcode(self):
 
         # Arrange:
-        code = "SE V0, 0xFF"
+        code = "SE V0, #FF"
         tokens = lexical.tokenize(code)
         ast = syntactic.Ast(tokens)
         semantic.analyze(ast)
@@ -119,7 +119,7 @@ class AssemblerTestCase(unittest.TestCase):
     def test_convert_SNE_4XNN_node_to_opcode(self):
 
         # Arrange:
-        code = "SNE V0, 0xae"
+        code = "SNE V0, #ae"
         tokens = lexical.tokenize(code)
         ast = syntactic.Ast(tokens)
         semantic.analyze(ast)
@@ -147,7 +147,7 @@ class AssemblerTestCase(unittest.TestCase):
     def test_convert_ADD_7XNN_node_to_opcode(self):
 
         # Arrange:
-        code = "ADD V2, 0xFF"
+        code = "ADD V2, #FF"
         tokens = lexical.tokenize(code)
         ast = syntactic.Ast(tokens)
         semantic.analyze(ast)
@@ -273,7 +273,7 @@ class AssemblerTestCase(unittest.TestCase):
     def test_convert_LDI_node_to_opcode(self):
 
         # Arrange:
-        code = "LDI 0xffe"
+        code = "LDI #ffe"
         tokens = lexical.tokenize(code)
         ast = syntactic.Ast(tokens)
         semantic.analyze(ast)
@@ -287,7 +287,7 @@ class AssemblerTestCase(unittest.TestCase):
     def test_convert_RND_node_to_opcode(self):
 
         # Arrange:
-        code = "RND V1, 0xFF"
+        code = "RND V1, #FF"
         tokens = lexical.tokenize(code)
         ast = syntactic.Ast(tokens)
         semantic.analyze(ast)
@@ -301,7 +301,7 @@ class AssemblerTestCase(unittest.TestCase):
     def test_convert_DRW_node_to_opcode(self):
 
         # Arrange:
-        code = "DRW V1, V9, 0xF"
+        code = "DRW V1, V9, #F"
         tokens = lexical.tokenize(code)
         ast = syntactic.Ast(tokens)
         semantic.analyze(ast)
@@ -371,7 +371,7 @@ class AssemblerTestCase(unittest.TestCase):
     def test_convert_LD_6XNN_node_to_opcode(self):
 
         # Arrange:
-        code = "LD V0, 0xFF"
+        code = "LD V0, #FF"
         tokens = lexical.tokenize(code)
         ast = syntactic.Ast(tokens)
         semantic.analyze(ast)
