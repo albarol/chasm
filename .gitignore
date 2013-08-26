@@ -3,6 +3,8 @@
 
 *.sublime-workspace
 
+# Assembler
+*.c8
 
 ## Python
 

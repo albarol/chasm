@@ -1,10 +1,14 @@
 import argparse
 import os
+import sys
 
 import chasm
 
 
 CURRENT_PATH = os.path.dirname(os.path.abspath(__file__))
+
+logger = chasm.errors.Logger()
+
 
 def is_valid_file(parser, arg):
     if not os.path.exists(arg):
@@ -27,6 +31,11 @@ if __name__ == '__main__':
     tokens = chasm.lexical.tokenize(code)
     ast = chasm.syntactic.Ast(tokens)
     chasm.semantic.analyze(ast)
+
+    if logger.invalid:
+        logger.show()
+        sys.exit(-1)
+
     opcodes = chasm.assembler.compile(ast)
 
     with open(CURRENT_PATH + '/' + args.output, 'wb') as fd:

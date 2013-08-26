@@ -1,5 +1,9 @@
 import re
 
+from chasm.errors import Logger
+
+logger = Logger()
+
 asm_tokens = [
     { 'type': 'T_LABEL', 'pattern': r'([\w]{2}[\w\d]*)\:'},
     { 'type': 'T_COMMAND', 'pattern': r'(SYS|CLS|RET|JMP|CALL|'
@@ -36,7 +40,8 @@ def tokenize(code):
             match = re.match(token['pattern'], code, re.S)
             if match:
                 if token['type'] == 'T_UNKNOW':
-                    raise UnknowTokenError("Invalid token: %s" % (match.group(0), ))
+                    logger.fail("Invalid token %s in (%s, %s)" % 
+                               (match.group(0), line, column))
 
                 tokens.append({'type': token['type'],
                                'value': match.group(0),
