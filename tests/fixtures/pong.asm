@@ -5,14 +5,14 @@
     LDI 0x2EA
     DRW V2, VE, 0xA
     DRW VC, VD, 0x6
-    LD VE, 0x000
+    LD VE, 0x00
     CALL 0x2D4
     LD V6, 0x03
-    LD V8, 0x2
+    LD V8, 0x02
     LD V0, 0x60
     LD DT, V0
     LD V0, DT
-    SE V0, 0x0
+    SE V0, 0x07
     JMP 0x21A
     RND V7, 0x17
     ADD V7, 0x08

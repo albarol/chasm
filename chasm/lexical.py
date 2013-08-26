@@ -7,7 +7,7 @@ asm_tokens = [
                                  'XOR|SUBC|SUB|SHR|SHL|SNE|'
                                  'RND|DRW|SKP|SKNP|STR|'
                                  'FILL)'},
-    { 'type': 'T_ADDR', 'pattern': r'0x[\d\a-fA-F]{3}'},
+    { 'type': 'T_ADDR', 'pattern': r'0x[\da-fA-F]{3}'},
     { 'type': 'T_BYTE', 'pattern': r'0x[\da-fA-F]{2}'},
     { 'type': 'T_NIBBLE', 'pattern': r'0x[\da-fA-F]{1}'},
     { 'type': 'T_CONSTANT', 'pattern': r'#[\da-fA-F]{1,2}'},
