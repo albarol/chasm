@@ -5,7 +5,7 @@ from chasm.errors import Logger
 logger = Logger()
 
 asm_tokens = [
-    { 'type': 'T_LABEL', 'pattern': r'([\w]{2}[\w\d]*)\:'},
+    { 'type': 'T_LABEL', 'pattern': r'([\w]{2}[\w\d_]*)\:'},
     { 'type': 'T_COMMAND', 'pattern': r'(SYS|CLS|RET|JMP|CALL|'
                                  'SE|SNE|LDI|LD|ADD|OR|AND|'
                                  'XOR|SUBC|SUB|SHR|SHL|SNE|'

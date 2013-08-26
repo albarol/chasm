@@ -65,13 +65,14 @@ def is_valid_instruction(node):
 
 def is_valid_name(node, symbols):
     instruction = node[0]
-    value = node[1]
-    if 'JMP'in instruction['value'] and value['type'] == 'T_NAME':
-        if not value['value'] in symbols:
-            logger.fail("Invalid symbol %s in (%s, %s)" 
-              % (value['value'], node[0]['line'], node[0]['column']))
-        else:
-            node[1][value]['value'] = symbols[value['value']]
+    if 'JMP'in instruction['value']:
+        value = node[1]
+        if value['type'] == 'T_NAME': 
+            if value['value'] in symbols:
+                logger.fail("Invalid symbol %s in (%s, %s)" 
+                  % (value['value'], node[0]['line'], node[0]['column']))
+            else:
+                node[1]['value'] = symbols[value['value']]
     return True
 
 
