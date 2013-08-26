@@ -26,7 +26,6 @@ grammar = {
 class SyntacticError(Exception):
     pass
 
-
 class Ast(object):
 
     def __init__(self, tokens):
@@ -49,10 +48,16 @@ class Ast(object):
             elif token['type'] == 'T_EOL':
                 self._nodes.append(command)
                 command = []
-            elif token['type'] in grammar[command[-1]['type']]:
+            elif command and token['type'] in grammar[command[-1]['type']]:
                 command.append(token)
             else:
+                if not command:
+                    raise SyntacticError("Syntax Error: %s is invalid instruction" % (token['value'],))
                 raise SyntacticError("Syntax Error: %s %s is invalid syntax." %
                                   (command[-1]['value'], token['value']))
 
             index += 1
+
+        # append when T_EOL does not exists
+        if command:
+            self._nodes.append(command)
