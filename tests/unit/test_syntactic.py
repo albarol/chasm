@@ -4,7 +4,6 @@ from tests.helpers import FIXTURES_PATH
 from chasm import syntactic, lexical
 
 
-
 class SyntacticTestCase(unittest.TestCase):
 
     def test_should_generate_simple_ast(self):
@@ -47,4 +46,18 @@ class SyntacticTestCase(unittest.TestCase):
             syntactic.Ast(tokens)
         except syntactic.SyntacticError, e:
             message = "Syntax Error: LD , is invalid syntax."
+            self.assertEquals(message, e.message)
+
+    def test_throws_syntactic_error_when_initialize_with_invalid_value(self):
+
+        # Arrange:
+        code = "V0, V1"
+        tokens = lexical.tokenize(code)
+
+        # Act:
+        # Assert:
+        try:
+            syntactic.Ast(tokens)
+        except syntactic.SyntacticError, e:
+            message = "Syntax Error: V0 is invalid instruction"
             self.assertEquals(message, e.message)

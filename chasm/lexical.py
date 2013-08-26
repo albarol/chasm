@@ -3,15 +3,15 @@ import re
 asm_tokens = [
     { 'type': 'T_LABEL', 'pattern': r'([\w]{2}[\w\d]*)\:'},
     { 'type': 'T_COMMAND', 'pattern': r'(SYS|CLS|RET|JMP|CALL|'
-                                 'SE|SNE|LD|ADD|OR|AND|'
-                                 'XOR|SUB|SHR|SUBC|SHL|SNE|'
-                                 'LDI|RND|DRW|SKP|SKNP|STR|'
-                                 'FIL)'},
-    { 'type': 'T_ADDR', 'pattern': r'0x[\d\A-F]{3}'},
-    { 'type': 'T_BYTE', 'pattern': r'0x[\dA-F]{2}'},
-    { 'type': 'T_NIBBLE', 'pattern': r'0x[\dA-F]{1}'},
-    { 'type': 'T_CONSTANT', 'pattern': r'#[\dA-F]{1,2}'},
-    { 'type': 'T_REGISTER', 'pattern': r'V[\dA-F]{1}'},
+                                 'SE|SNE|LDI|LD|ADD|OR|AND|'
+                                 'XOR|SUBC|SUB|SHR|SHL|SNE|'
+                                 'RND|DRW|SKP|SKNP|STR|'
+                                 'FILL)'},
+    { 'type': 'T_ADDR', 'pattern': r'0x[\d\a-fA-F]{3}'},
+    { 'type': 'T_BYTE', 'pattern': r'0x[\da-fA-F]{2}'},
+    { 'type': 'T_NIBBLE', 'pattern': r'0x[\da-fA-F]{1}'},
+    { 'type': 'T_CONSTANT', 'pattern': r'#[\da-fA-F]{1,2}'},
+    { 'type': 'T_REGISTER', 'pattern': r'V[\da-fA-F]{1}'},
     { 'type': 'T_DELAY', 'pattern': r'DT'},
     { 'type': 'T_SOUND', 'pattern': r'ST'},
     { 'type': 'T_BINARY', 'pattern': r'B'},
