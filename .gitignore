@@ -1,0 +1,10 @@
+
+## Sublime
+
+*.sublime-workspace
+
+
+## Python
+
+*.pyc
+*.pyo

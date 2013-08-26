@@ -12,7 +12,7 @@ For transform asm in binary code you should run:
 
 | OPCODE  |      MNEMONIC        |
 | ------- | -------------------- |
-| 0NNN    | SYS                  |
+| 0NNN    | SYS (addr)           |
 | 00E0    | CLS                  |
 | 00EE    | RET                  |
 | 1NNN    | JMP (addr)           |
@@ -46,4 +46,4 @@ For transform asm in binary code you should run:
 | FX29    | LD F, (Vx)           |
 | FX33    | LD B, (Vx)           |
 | FX55    | STR (Vx)             |
-| FX65    | FIL (Vx)             |
+| FX65    | FILL (Vx)            |
