@@ -7,13 +7,7 @@ import chasm
 
 CURRENT_PATH = os.path.dirname(os.path.abspath(__file__))
 
-class bcolors:
-    HEADER = '\033[95m'
-    OKBLUE = '\033[94m'
-    OKGREEN = '\033[92m'
-    WARNING = '\033[93m'
-    FAIL = '\033[91m'
-    ENDC = '\033[0m'
+logger = chasm.errors.Logger()
 
 
 def is_valid_file(parser, arg):
@@ -34,27 +28,14 @@ if __name__ == '__main__':
     args = parser.parse_args()
 
     code = args.filename.read()
-    try:
-        tokens = chasm.lexical.tokenize(code)
-    except chasm.lexical.UnknowTokenError, e:
-        print bcolors.FAIL + 'FAIL: ' + e.message + bcolors.ENDC
+    tokens = chasm.lexical.tokenize(code)
+    ast = chasm.syntactic.Ast(tokens)
+    chasm.semantic.analyze(ast)
+
+    if logger.invalid:
+        logger.show()
         sys.exit(-1)
 
-    try:
-        ast = chasm.syntactic.Ast(tokens)
-    except chasm.syntactic.SyntacticError, e:
-        print bcolors.FAIL + 'FAIL: ' + e.message + bcolors.ENDC
-        sys.exit(-1)
-
-    try:
-        chasm.semantic.analyze(ast)
-    except chasm.semantic.InvalidInstructionError, e:
-        print bcolors.FAIL + 'FAIL: ' + e.message + bcolors.ENDC
-        sys.exit(-1)
-    except chasm.semantic.InvalidMemoryAddressError, e:
-        print bcolors.FAIL + 'FAIL: ' + e.message + bcolors.ENDC
-        sys.exit(-1)        
-    
     opcodes = chasm.assembler.compile(ast)
 
     with open(CURRENT_PATH + '/' + args.output, 'wb') as fd:

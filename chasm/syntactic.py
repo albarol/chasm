@@ -1,4 +1,8 @@
 
+from chasm.errors import Logger
+
+logger = Logger()
+
 grammar = {
     'T_SOL': ['T_LABEL', 'T_COMMAND'],
     'T_LABEL': ['T_EOL'],
@@ -52,11 +56,11 @@ class Ast(object):
                 command.append(token)
             else:
                 if not command:
-                    raise SyntacticError("Syntax Error: %s is invalid instruction in (%s, %s)" 
+                    logger.fail("Syntax Error %s is invalid instruction in (%s, %s)" 
                           % (token['value'], token['line'], token['column']))
-                raise SyntacticError("Syntax Error: %s %s is invalid syntax in (%s, %s)" %
-                                  (command[-1]['value'], token['value'], token['line'], token['column']))
-
+                
+                logger.fail("Syntax Error %s %s is invalid syntax in (%s, %s)" %
+                           (' '.join([t['value'] for t in command]), token['value'], token['line'], token['column']))
             index += 1
 
         # append when T_EOL does not exists
