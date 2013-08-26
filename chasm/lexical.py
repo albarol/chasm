@@ -36,7 +36,8 @@ def tokenize(code):
             match = re.match(token['pattern'], code, re.S)
             if match:
                 if token['type'] == 'T_UNKNOW':
-                    raise UnknowTokenError("Invalid token: %s" % (match.group(0), ))
+                    raise UnknowTokenError("Invalid token %s in (%s, %s)" % 
+                          (match.group(0), line, column))
 
                 tokens.append({'type': token['type'],
                                'value': match.group(0),

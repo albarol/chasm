@@ -35,7 +35,7 @@ class Ast(object):
 
     @property
     def nodes(self):
-        return self._nodes
+        return filter(lambda n: True if n else False, self._nodes)
 
     def _generate_ast(self, tokens):
         index = 0
@@ -52,9 +52,10 @@ class Ast(object):
                 command.append(token)
             else:
                 if not command:
-                    raise SyntacticError("Syntax Error: %s is invalid instruction" % (token['value'],))
-                raise SyntacticError("Syntax Error: %s %s is invalid syntax." %
-                                  (command[-1]['value'], token['value']))
+                    raise SyntacticError("Syntax Error: %s is invalid instruction in (%s, %s)" 
+                          % (token['value'], token['line'], token['column']))
+                raise SyntacticError("Syntax Error: %s %s is invalid syntax in (%s, %s)" %
+                                  (command[-1]['value'], token['value'], token['line'], token['column']))
 
             index += 1
 

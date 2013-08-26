@@ -55,15 +55,20 @@ def analyze(ast):
 
 def is_valid_instruction(node):
     instruction = tuple([t['type'] for t in node])
-    rule = rules[node[0]['value']]
+    try:
+        rule = rules[node[0]['value']]
+    except IndexError:
+        import ipdb; ipdb.set_trace()
     if not instruction in rule:
         instruction = ' '.join(map(lambda t: t['value'], node))
-        raise InvalidInstructionError("Invalid instruction: %s" % (instruction, ))
+        raise InvalidInstructionError("Invalid instruction %s in (%s, %s)" 
+              % (instruction, node[0]['line'], node[0]['column']))
     return True
 
 
 def is_valid_memory_address(node):
     addr = filter(lambda t: t['type'] == 'T_ADDR', node)
     if addr and addr[0]['value'] < '0x200':
-        raise InvalidMemoryAddressError("Invalid memory address: %s" % (addr[0]['value'],))
+        raise InvalidMemoryAddressError("Invalid memory address %s in (%s, %s)" 
+              % (addr[0]['value'], addr[0]['line'], addr[0]['column']))
     return True
