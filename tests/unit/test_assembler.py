@@ -7,7 +7,7 @@ class AssemblerTestCase(unittest.TestCase):
     def test_convert_SYS_node_to_opcode(self):
 
         # Arrange:
-        code = "SYS 0xfff"
+        code = "SYS #fff"
         tokens = lexical.tokenize(code)
         ast = syntactic.Ast(tokens)
         semantic.analyze(ast)

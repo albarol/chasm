@@ -40,7 +40,9 @@ rules = {
            ('T_COMMAND', 'T_SOUND', 'T_COMMA', 'T_REGISTER'),
            ('T_COMMAND', 'T_REGISTER_I', 'T_COMMA', 'T_REGISTER'),
            ('T_COMMAND', 'T_FONT', 'T_COMMA', 'T_REGISTER'),
-           ('T_COMMAND', 'T_BINARY', 'T_COMMA', 'T_REGISTER')]
+           ('T_COMMAND', 'T_BINARY', 'T_COMMA', 'T_REGISTER')],
+    'DW': [('T_COMMAND', 'T_ADDR')],
+    'DB': [('T_COMMAND', 'T_BYTE')]
 }
 
 
@@ -72,7 +74,7 @@ def is_valid_instruction(node):
 
 def is_valid_memory_address(node):
     addr = filter(lambda t: t['type'] == 'T_ADDR', node)
-    if addr and addr[0]['value'] < '0x200':
+    if addr and addr[0]['value'] < '#200':
         logger.warning("Invalid memory address %s in (%s, %s)" 
               % (addr[0]['value'], addr[0]['line'], addr[0]['column']))
     return True

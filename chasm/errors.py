@@ -30,6 +30,10 @@ class Logger(object):
             for message in self.messages:
                 print message['message']
 
+        def clear(self):
+            self.invalid = False
+            self.messages = []
+
     def __init__(self):
             
         if not Logger.__instance:

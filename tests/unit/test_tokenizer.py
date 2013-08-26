@@ -1,7 +1,12 @@
 import unittest
-from chasm import lexical
+from chasm import lexical, errors
+
+logger = errors.Logger()
 
 class TokenizerTestCase(unittest.TestCase):
+
+    def tearDown(self):
+        logger.clear()
 
     def test_tokenize_comment(self):
 
@@ -20,7 +25,7 @@ class TokenizerTestCase(unittest.TestCase):
     def test_tokenize_whitespace(self):
 
         # Arrange:
-        code = "ADD V0, 0xEF"
+        code = "ADD V0, #EF"
 
         # Act:
         tokens = lexical.tokenize(code)
@@ -32,7 +37,7 @@ class TokenizerTestCase(unittest.TestCase):
     def test_tokenize_eol(self):
 
         # Arrange:
-        code = "Start:\n  ADD V0, 0xEF"
+        code = "Start:\n  ADD V0, #EF"
 
         # Act:
         tokens = lexical.tokenize(code)
@@ -44,7 +49,7 @@ class TokenizerTestCase(unittest.TestCase):
     def test_tokenize_comma(self):
 
         # Arrange:
-        code = "ADD V0, 0xEF"
+        code = "ADD V0, #EF"
 
         # Act:
         tokens = lexical.tokenize(code)
@@ -56,7 +61,7 @@ class TokenizerTestCase(unittest.TestCase):
     def test_tokenize_command(self):
 
         # Arrange:
-        code = "ADD V0, 0xEF"
+        code = "ADD V0, #EF"
 
         # Act:
         tokens = lexical.tokenize(code)
@@ -68,44 +73,44 @@ class TokenizerTestCase(unittest.TestCase):
     def test_tokenize_addr(self):
 
         # Arrange:
-        code = "JMP 0xFFF"
+        code = "JMP #FFF"
 
         # Act:
         tokens = lexical.tokenize(code)
 
         # Assert:
         self.assertEqual('T_ADDR', tokens[2]['type'])
-        self.assertEqual('0xFFF', tokens[2]['value'])
+        self.assertEqual('#FFF', tokens[2]['value'])
 
     def test_tokenize_byte(self):
 
         # Arrange:
-        code = "ADD V0, 0xEF"
+        code = "ADD V0, #EF"
 
         # Act:
         tokens = lexical.tokenize(code)
 
         # Assert:
         self.assertEqual('T_BYTE', tokens[5]['type'])
-        self.assertEqual('0xEF', tokens[5]['value'])
+        self.assertEqual('#EF', tokens[5]['value'])
 
     def test_tokenize_nibble(self):
 
         # Arrange:
-        code = "DRW V0, V1, 0xF"
+        code = "DRW V0, V1, #F"
 
         # Act:
         tokens = lexical.tokenize(code)
 
         # Assert:
         self.assertEqual('T_NIBBLE', tokens[8]['type'])
-        self.assertEqual('0xF', tokens[8]['value'])
+        self.assertEqual('#F', tokens[8]['value'])
 
 
     def test_tokenize_register(self):
 
         # Arrange:
-        code = "ADD V0, 0xEF"
+        code = "ADD V0, #EF"
 
         # Act:
         tokens = lexical.tokenize(code)
@@ -113,18 +118,6 @@ class TokenizerTestCase(unittest.TestCase):
         # Assert:
         self.assertEqual('T_REGISTER', tokens[2]['type'])
         self.assertEqual('V0', tokens[2]['value'])
-
-    def test_tokenize_constant(self):
-
-        # Arrange:
-        code = "ADD V0, #FF"
-
-        # Act:
-        tokens = lexical.tokenize(code)
-
-        # Assert:
-        self.assertEqual('T_CONSTANT', tokens[5]['type'])
-        self.assertEqual('#FF', tokens[5]['value'])
 
     def test_tokenize_label(self):
 
@@ -204,6 +197,17 @@ class TokenizerTestCase(unittest.TestCase):
         # Assert:
         self.assertEqual('T_BINARY', tokens[2]['type'])
 
+    def test_tokenize_value(self):
+
+        # Arrange:
+        code = "LD V1, 2"
+
+        # Act:
+        tokens = lexical.tokenize(code)
+
+        # Assert:
+        self.assertEqual('T_VALUE', tokens[5]['type'])
+
 
     def test_throw_exception_when_token_is_invalid(self):
 
@@ -211,34 +215,37 @@ class TokenizerTestCase(unittest.TestCase):
         code = "LADD V0, #FF"
 
         # Assert:
-        self.assertRaises(lexical.UnknowTokenError, lexical.tokenize, code)
+        lexical.tokenize(code)
+
+        # Assert:
+        self.assertTrue(logger.invalid)
 
     def test_throw_exception_show_what_token_is_invalid(self):
 
         # Arrange:
         code = "LADD V0, #FF"
 
+        # Act:
+        lexical.tokenize(code)
+
         # Assert:
-        try:
-            lexical.tokenize(code)
-        except lexical.UnknowTokenError, e:
-            self.assertEqual('Invalid token: LADD', e.message)
+        self.assertTrue(logger.invalid)
 
     def test_throw_exception_with_invalid_characters(self):
 
         # Arrange:
         code = "ADD #V0, #FF"
 
+       # Act:
+        lexical.tokenize(code)
+
         # Assert:
-        try:
-            lexical.tokenize(code)
-        except lexical.UnknowTokenError, e:
-            self.assertEqual('Invalid token: #V0', e.message)
+        self.assertTrue(logger.invalid)
 
     def test_show_column_from_asm(self):
 
         # Arrange:
-        code = "ADD V0, #FF\nLD V0, 0xFE"
+        code = "ADD V0, #FF\nLD V0, #FE"
 
         # Act:
         tokens = lexical.tokenize(code)
@@ -251,7 +258,7 @@ class TokenizerTestCase(unittest.TestCase):
     def test_show_line_from_asm(self):
 
         # Arrange:
-        code = "ADD V0, #FF\nLD V0, 0xFE"
+        code = "ADD V0, #FF\nLD V0, #FE"
 
         # Act:
         tokens = lexical.tokenize(code)
