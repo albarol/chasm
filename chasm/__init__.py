@@ -1,3 +1,3 @@
-from . import lexical, semantic, compiler, syntactic
+from . import lexical, semantic, compiler, syntactic, decompiler
 
-__all__ = ['lexical', 'semantic', 'compiler', 'syntactic', 'errors']
+__all__ = ['lexical', 'semantic', 'compiler', 'decompiler', 'syntactic', 'errors']
