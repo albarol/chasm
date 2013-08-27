@@ -1,10 +1,12 @@
 import re
+import struct
 
 symbols = [
     { 'pattern': r'SYS#([\d\a-fA-F]{3})', 'opcode': '0NNN' },
     { 'pattern': 'CLS', 'opcode': '00E0'},
     { 'pattern': 'RET', 'opcode': '00EE'},
     { 'pattern': r'JMP#([\d\a-fA-F]{3}),V[\da-fA-F]{1}', 'opcode': 'BNNN' },
+    { 'pattern': r'JMP0x([\d\a-fA-F]{3})', 'opcode':  '1NNN' },
     { 'pattern': r'JMP#([\d\a-fA-F]{3})', 'opcode':  '1NNN' },
     { 'pattern': r'CALL#([\d\a-fA-F]{3})', 'opcode': '2NNN' },
     { 'pattern': r'SEV([\da-fA-F]{1}),#([\da-fA-F]{2})', 'opcode': '3XNN' },
@@ -64,5 +66,6 @@ def compile(ast):
                 if 'Y' in symbol['opcode']:
                     opcode = opcode.replace('Y', match.group(2))
                 # opcodes.append('%s, %s\n' % (hex(node.addr), opcode.upper()))
-                opcodes.append(opcode.upper())
+                # opcodes.append(struct.pack('>i', int(opcode.upper(), 16)))
+                opcodes.append(opcode)
     return opcodes

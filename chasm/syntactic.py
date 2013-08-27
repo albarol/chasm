@@ -94,7 +94,7 @@ class Ast(object):
 
         while index < len(tokens):
             token = tokens[index]
-            
+
             if token['type'] == 'T_LABEL':
                 self.__table.append(token['value'], addr)
             elif not node.tree and token['type'] in grammar['T_SOL']:
@@ -102,14 +102,14 @@ class Ast(object):
             elif token['type'] == 'T_EOL':
                 self.__nodes.append(node)
                 addr += 1
-                node = AstNode(addr=addr) 
+                node = AstNode(addr=addr)
             elif node.tree and token['type'] in grammar[node.tree[-1]['type']]:
                 node.tree.append(token)
             else:
                 if not node.tree:
-                    logger.fail("Syntax Error %s is invalid instruction in (%s, %s)" 
+                    logger.fail("Syntax Error %s is invalid instruction in (%s, %s)"
                           % (token['value'], token['line'], token['column']))
-                
+
                 logger.fail("Syntax Error %s %s is invalid syntax in (%s, %s)" %
                            (' '.join([t['value'] for t in node.tree]), token['value'], token['line'], token['column']))
             index += 1

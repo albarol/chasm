@@ -67,12 +67,12 @@ def is_valid_name(node, symbols):
     instruction = node[0]
     if 'JMP'in instruction['value']:
         value = node[1]
-        if value['type'] == 'T_NAME': 
-            if value['value'] in symbols:
-                logger.fail("Invalid symbol %s in (%s, %s)" 
-                  % (value['value'], node[0]['line'], node[0]['column']))
+        if value['type'] == 'T_NAME':
+            if not value['value'] in symbols:
+                logger.fail("Invalid symbol %s in (%s, %s)"
+                  % (value['value'], instruction['line'], instruction['column']))
             else:
-                node[1]['value'] = symbols[value['value']]
+                node[1]['value'] = str(hex(symbols[value['value']]))
     return True
 
 
@@ -80,6 +80,6 @@ def is_valid_name(node, symbols):
 def is_valid_memory_address(node):
     addr = filter(lambda t: t['type'] == 'T_ADDR', node)
     if addr and addr[0]['value'] < '#200':
-        logger.warning("Invalid memory address %s in (%s, %s)" 
+        logger.warning("Invalid memory address %s in (%s, %s)"
               % (addr[0]['value'], addr[0]['line'], addr[0]['column']))
     return True
