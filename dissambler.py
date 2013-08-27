@@ -25,7 +25,6 @@ if __name__ == '__main__':
     parser.add_argument('-o', dest="output", help='asm file')
     args = parser.parse_args()
 
-
     opcodes = array.array('H')
 
     try:

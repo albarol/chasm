@@ -1,0 +1,641 @@
+JMP #225
+SE V3, V5
+SNE V1, #43
+SNE V5, #20
+SNE V9, #4e
+DW #5641
+SNE V4, #45
+DW #5253
+CALL #076
+SE V0, #2e
+SE V9, #20
+SNE V2, #79
+CALL #044
+LD V1, #76
+LD V9, #64
+CALL #057
+SNE V9, #4e
+DW #5445
+SE V2, V6
+SYS #061
+SYS #062
+SYS #8a3
+DRW V3, Vd, #0
+JMP #871
+SYS #8f2
+JMP #e31
+CALL #012
+CALL #d70
+SYS #861
+SYS #030
+SNE V0, #12
+CALL #d69
+SYS #56c
+JMP #56e
+SYS #023
+LD V7, V6
+SYS #af0
+JMP #5f0
+SYS #730
+SYS #012
+SNE Vb, #23
+DW #877e
+SYS #112
+SNE V5, #66
+SYS #068
+JMP #c69
+SYS #06a
+SYS #46b
+SYS #a6c
+SYS #46d
+SE Vc, #6e
+SYS #f00
+DW #e023
+LD Vb, #23
+SNE V7, #fd
+JMP #560
+SYS #4e0
+DW #9e12
+ADD Vd, #23
+LD Vb, #38
+SYS #078
+DW #ff23
+LD Vb, #60
+SYS #6e0
+DW #9e12
+XOR Vb, V2
+LD Vb, #38
+SE V9, #78
+SYS #123
+LD Vb, #36
+SYS #012
+SNE Vf, V6
+SYS #5e0
+DW #9e12
+DW #e966
+SYS #165
+JMP #b84
+XOR V0, Va
+RND Vf, #d4
+DW #51a3
+RND Vf, #d4
+DW #5175
+DW #ff35
+DW #ff12
+LDI #d66
+SYS #012
+DW #e9d4
+DW #513f
+SYS #112
+DW #e9d4
+DW #5166
+SYS #083
+SNE V0, #73
+SYS #383
+JMP #562, V0
+DW #f883
+CALL #262
+SYS #833
+SYS #012
+RND V9, #23
+ADD V3, #82
+SYS #643
+SYS #812
+DRW V3, V3, #3
+JMP #012
+DRW V5, V2, #3
+ADD V3, #82
+SYS #633
+JMP #812
+DRW Vd, V2, #3
+ADD V3, #82
+SYS #643
+CALL #012
+DW #e733
+CALL #812
+DW #e923
+ADD V3, #3e
+SYS #013
+SYS #779
+SYS #649
+JMP #869
+SYS #06a
+SYS #46b
+SYS #a6c
+SYS #47d
+DW #f46e
+SYS #f00
+DW #e023
+SNE V7, #23
+LD Vb, #fd
+JMP #512
+LD Vf, #f7
+SYS #737
+SYS #012
+LD Vf, #fd
+JMP #523
+SNE V7, #8b
+LDI #43b
+JMP #213
+JMP #b7c
+SYS #26a
+DW #fc3b
+SYS #213
+CALL #37c
+SYS #26a
+SYS #423
+SNE V7, #3c
+JMP #812
+LD Vf, #00
+DW #e0a4
+DRW V3, V6, #0
+JMP #461
+SYS #862
+SYS #fd0
+JMP #f70
+SYS #8f2
+JMP #e30
+CALL #c13
+SE V3, #f0
+SYS #a00
+DW #e0a6
+DW #f4fe
+LD V5, #12
+CALL #5a3
+JMP #7f9, V0
+JMP #e61
+SYS #823
+DW #5f81
+SYS #623
+DW #5f81
+SYS #623
+DW #5f81
+SYS #623
+DW #5f7b
+DRW V0, V0, #0
+DW #ee80
+DW #e080
+JMP #230
+SYS #0db
+RND V6, #7b
+SYS #c00
+DW #eea3
+RND Vf, #60
+JMP #cd8
+SYS #400
+DW #ee23
+SNE V7, #8e
+CALL #323
+SNE V7, #60
+SYS #5f0
+JMP #8f0
+JMP #5f0
+SYS #730
+SYS #013
+ADD Vf, #00
+DW #ee6a
+SYS #08d
+DW #e06b
+SYS #4e9
+LDI #112
+DW #57a6
+SYS #2fd
+JMP #ef0
+LD V5, #30
+DW #ff13
+LDI #56a
+SYS #06b
+SYS #46d
+SYS #16e
+SYS #113
+SUB Vd, Va
+SYS #0f0
+JMP #edb
+RND V6, #7b
+SYS #87d
+SYS #17a
+SYS #13a
+SYS #713
+LD Vd, V0
+DW #ee3c
+ADD Ve, #ff
+DW #ff99
+DW #997e
+DW #ffff
+CALL #424
+DW #e77e
+DW #ff3c
+SE Vc, #7e
+DRW Vb, V8, #1
+SNE V2, #3c
+ADD Ve, #ff
+DRW Vb, V1, #0
+SE V8, #7c
+DW #fe00
+SYS #07f
+SYS #03f
+SYS #07f
+DW #0000
+SYS #001
+SYS #101
+SYS #303
+SYS #303
+DW #0000
+SE Vf, #20
+CALL #020
+CALL #020
+CALL #020
+CALL #03f
+SYS #808
+DW #ff00
+SYS #0fe
+SYS #0fc
+SYS #0fe
+DW #0000
+SYS #07e
+SNE V2, #42
+LD V2, #62
+LD V2, #62
+DW #0000
+DW #ff00
+DW #0000
+DW #0000
+DW #0000
+SYS #0ff
+DW #0000
+DW #ff00
+ADD Vd, #00
+SNE V1, #7d
+SYS #57d
+ADD Vd, #00
+SYS #0c2
+RND V2, #c6
+SNE V4, #6c
+CALL #838
+DW #0000
+DW #ff00
+DW #0000
+DW #0000
+DW #0000
+SYS #0ff
+DW #0000
+DW #ff00
+DW #f710
+JMP #4f7
+DW #f704
+SYS #400
+SYS #07c
+SNE V4, #fe
+RND V2, #c2
+RND V2, #c2
+DW #0000
+DW #ff00
+DW #0000
+DW #0000
+DW #0000
+SYS #0ff
+DW #0000
+DW #ff00
+DW #ef20
+CALL #8e8
+DW #e82f
+CALL #f00
+SYS #0f9
+SUB V5, Vc
+RND V5, #c5
+RND V5, #f9
+DW #0000
+DW #ff00
+DW #0000
+DW #0000
+DW #0000
+SYS #0ff
+DW #0000
+DW #ff00
+JMP #e00, V0
+CALL #030
+CALL #0be
+JMP #e00, V0
+SYS #0f7
+SYS #4e7
+SUB V5, V8
+ADD V4, Vf
+DW #0000
+DW #ff00
+DW #0000
+DW #0000
+DW #0000
+SYS #0ff
+DW #0000
+DW #ff00
+SYS #07f
+SYS #03f
+SYS #07f
+DW #0000
+SYS #0ef
+CALL #8ef
+CLS
+LD V0, #6f
+DW #0000
+DW #ff00
+DW #0000
+DW #0000
+DW #0000
+SYS #0ff
+DW #0000
+DW #ff00
+SYS #0fe
+SYS #0fc
+SYS #0fe
+DW #0000
+SYS #0c0
+SYS #0c0
+RND V0, #c0
+RND V0, #c0
+DW #0000
+DW #fc04
+SYS #404
+SYS #404
+SYS #404
+SYS #4fc
+JMP #010
+DW #fff9
+DW #81b9
+DW #8b9a
+DW #9afa
+SYS #0fa
+DW #8a9a
+DW #9a9b
+DW #99f8
+DW #e625
+CALL #5f4
+SE V4, #34
+SE V4, #00
+JMP #714
+SE V4, #37
+SE V6, #26
+RND V7, #df
+SE V0, V5
+DW #5cd8
+DRW V8, Vd, #f
+SYS #0df
+JMP #11f
+JMP #21b
+JMP #9d9
+ADD Vc, #44
+DW #fe86
+SHR V6, V8
+DW #fc84
+DW #fe82
+DW #82fe
+DW #fe80
+RND V0, #c0
+RND V0, #fe
+DW #fc82
+RND V2, #c2
+RND V2, #fc
+DW #fe80
+DW #f8c0
+RND V0, #fe
+DW #fe80
+DW #f0c0
+RND V0, #c0
+DW #fe80
+JMP #e86, V0
+DW #86fe
+SHR V6, V8
+DW #fe86
+SHR V6, V8
+JMP #010
+JMP #010
+JMP #010
+JMP #818
+JMP #848
+SNE V8, #78
+SNE Vc, V9
+JMP #0c0, V0
+JMP #09c, V0
+LD V0, V8
+RND V0, #c0
+RND V0, #fe
+DW #ee92
+DW #9286
+SHR V6, V8
+DW #fe82
+SHR V6, V8
+SHR V6, V8
+ADD Vc, #82
+SHR V6, V8
+DW #867c
+DW #fe82
+DW #fec0
+RND V0, #c0
+ADD Vc, #82
+RND V2, #ca
+RND V4, #7a
+DW #fe86
+DW #fe90
+DW #9c84
+DW #fec0
+DW #fe02
+SYS #2fe
+DW #fe10
+SE V0, #30
+SE V0, #30
+AND V2, V8
+RND V2, #c2
+RND V2, #fe
+AND V2, V8
+DW #82ee
+SE V8, #10
+SHR V6, V8
+DW #9692
+DW #92ee
+ADD V2, V4
+SE V8, #38
+SNE V4, #82
+AND V2, V8
+DW #fe30
+SE V0, #30
+DW #fe02
+JMP #ef0
+DW #80fe
+DW #0000
+DW #0000
+SYS #606
+DW #0000
+SYS #060
+LD V0, #c0
+DW #0000
+DW #0000
+DW #0000
+JMP #818
+JMP #818
+SYS #018
+ADD Vc, #c6
+SYS #c18
+SYS #018
+DW #0000
+DW #fefe
+DW #0000
+DW #fe82
+SHR V6, V8
+DW #86fe
+SYS #808
+SYS #818
+JMP #818
+DW #fe02
+DW #fec0
+RND V0, #fe
+DW #fe02
+JMP #e06
+SYS #6fe
+ADD V4, Vc
+RND V4, #fe
+SYS #404
+DW #fe80
+DW #fe06
+SYS #6fe
+RND V0, #c0
+RND V0, #fe
+DW #82fe
+DW #fe02
+SYS #206
+SYS #606
+ADD Vc, #44
+DW #fe86
+DW #86fe
+DW #fe82
+DW #fe06
+SYS #606
+SNE V4, #fe
+SNE V4, #44
+DW #fe44
+LDI #8a8
+LDI #8a8
+LDI #8a8
+LDI #86c
+SE Va, V0
+SYS #c18
+LDI #830
+SNE Ve, #7e
+SYS #012
+JMP #866
+LD Vc, #a8
+DW #5a66
+DW #5424
+LD V6, #00
+SNE V8, #48
+JMP #812
+LDI #806
+DW #90a8
+JMP #200
+ADD Ve, #30
+JMP #2a8
+LD V4, V3
+SNE Ve, #72
+JMP #866
+LDI #8a8
+LDI #8a8
+LDI #8a8
+DW #9054
+ADD V8, #a8
+SNE V8, #78
+LD Vc, #72
+LDI #812
+JMP #86c
+ADD V2, #66
+SE V4, V9
+LDI #872
+CALL #a18
+LDI #830
+SNE Ve, #7e
+SYS #012
+JMP #866
+LD Vc, #a8
+ADD V2, #54
+LDI #85a
+LD V6, #18
+ADD Ve, #18
+SNE Ve, #72
+LDI #872
+CALL #a18
+SE V0, #66
+LDI #830
+SNE Ve, #7e
+SYS #06c
+SE V0, #54
+SNE Ve, #9c
+LDI #8a8
+LDI #8a8
+LDI #8a8
+LDI #848
+DW #547e
+JMP #8a8
+DW #9054
+ADD V8, #66
+LDI #86c
+CALL #a30
+DW #5aa8
+LD V4, V3
+ADD V2, #2a
+LDI #8d8
+LDI #800
+SNE Ve, #12
+LDI #8e4
+LDI #2a8
+SYS #04e
+JMP #2a8
+LD Vc, #2a
+DW #5454
+ADD V2, #a8
+LD V4, V3
+ADD V2, #2a
+LDI #8de
+DW #9ca8
+ADD V2, #2a
+JMP #8a8
+SYS #c54
+SNE V8, #5a
+ADD V8, #72
+JMP #866
+LDI #872
+JMP #842
+SNE V2, #6c
+LDI #872
+CALL #a00
+ADD V2, #a8
+ADD V2, #2a
+JMP #8a8
+SE V0, #4e
+ADD Ve, #00
+JMP #218
+LD V6, #6c
+LDI #830
+SNE Ve, #0c
+LD V6, #18
+SYS #06c
+JMP #8a8
+ADD V2, #2a
+JMP #830
+LD V6, #a8
+JMP #e54
+LD V6, #0c
+JMP #89c
+LDI #824
+DW #5454
+JMP #2a8
+SNE V2, #78
+SYS #c3c
+LDI #8ae
+LDI #8a8
+LDI #8a8
+LDI #8a8
+LDI #8ff
+DW #0000
+DW #0000
+DW #0000
+DW #0000
+DW #0000
+DW #0000
+DW #0000

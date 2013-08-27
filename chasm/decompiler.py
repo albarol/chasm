@@ -1,6 +1,7 @@
 import re
 
 tokens = [
+    { 'pattern': r'(0{4})', 'mnemonic': 'DW #nnnn' },
     { 'pattern': r'(00[eE]0)', 'mnemonic': 'CLS' },
     { 'pattern': r'(00[eE]{2})', 'mnemonic': 'RET' },
     { 'pattern': r'0([\da-fA-F]{3})', 'mnemonic': 'SYS #nnn' },
