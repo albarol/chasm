@@ -25,8 +25,6 @@ if __name__ == '__main__':
                         help='asm file',
                         type=lambda x: is_valid_file(parser, x))
     parser.add_argument('-o', dest="output", help='c8 file')
-    parser.add_argument('--hex', action='store_true')
-    parser.add_argument('--bin', action='store_true')
     args = parser.parse_args()
 
     code = args.filename.read()
