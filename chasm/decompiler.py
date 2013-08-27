@@ -1,9 +1,9 @@
 import re
 
 tokens = [
+    { 'pattern': r'(00[eE]0)', 'mnemonic': 'CLS' },
+    { 'pattern': r'(00[eE]{2})', 'mnemonic': 'RET' },
     { 'pattern': r'0([\da-fA-F]{3})', 'mnemonic': 'SYS #nnn' },
-    { 'pattern': r'00[eE]0', 'mnemonic': 'CLS' },
-    { 'pattern': r'00[eE]{2}', 'mnemonic': 'RET' },
     { 'pattern': r'1([\da-fA-F]{3})', 'mnemonic': 'JMP #nnn' },
     { 'pattern': r'2([\da-fA-F]{3})', 'mnemonic': 'CALL #nnn' },
     { 'pattern': r'3([\da-fA-F]{1})([\da-fA-F]{2})', 'mnemonic': 'SE Vx, #nn' },
@@ -41,8 +41,9 @@ tokens = [
 
 def decompile(opcodes):
     mnemonics = []
+    opcodes.byteswap()
     for opcode in opcodes:
-        instruction = hex(opcode)[2:].ljust(4, '0')
+        instruction = hex(opcode)[2:].rjust(4, '0')
         for token in tokens:
             match = re.match(token['pattern'], instruction)
             if match:

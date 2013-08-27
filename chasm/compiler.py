@@ -66,8 +66,5 @@ def compile(ast):
                 if 'Y' in symbol['opcode']:
                     opcode = opcode.replace('Y', match.group(2))
 
-                if 'DB' in instruction or 'DW' in instruction:
-                    opcodes.append(struct.pack('<H', int(opcode, 16)))
-                else:
-                    opcodes.append(struct.pack('<H', int(opcode, 16)))
+                opcodes.append(struct.pack('>H', int(opcode, 16)))
     return opcodes
