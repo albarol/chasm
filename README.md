@@ -1,11 +1,9 @@
 # Chasm - Chip8 Assembler
 
-### This project define a basic ISA to CHIP8 and generate code based on ISA.
-
-
+This project define a basic ISA to CHIP8 and generate code based on ISA.
 For transform asm in binary code you should run:
 ```
-./chasm pong.asm -o pong.c8
+./assembler.py -i pong.asm -o pong.c8 --hex
 ```
 
 ### All opcodes supported by ISA
@@ -47,3 +45,5 @@ For transform asm in binary code you should run:
 | FX33    | LD B, (Vx)           |
 | FX55    | STR (Vx)             |
 | FX65    | FILL (Vx)            |
+|         | DB #NN               |
+|         | DW #NNNN             |

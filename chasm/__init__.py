@@ -1,10 +1,3 @@
-from . import lexical, semantic, assembler, syntactic
+from . import lexical, semantic, compiler, syntactic
 
-__all__ = ['lexical', 'semantic', 'assembler', 'syntactic', 'errors']
-
-
-
-
-
-
-
+__all__ = ['lexical', 'semantic', 'compiler', 'syntactic', 'errors']
