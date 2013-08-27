@@ -1,16 +1,22 @@
 import re
 
+from chasm.errors import Logger
+
+logger = Logger()
+
 asm_tokens = [
-    { 'type': 'T_LABEL', 'pattern': r'([\w]{2}[\w\d]*)\:'},
+    { 'type': 'T_LABEL', 'pattern': r'([\w]{2}[\w\d_]*)\:'},
     { 'type': 'T_COMMAND', 'pattern': r'(SYS|CLS|RET|JMP|CALL|'
                                  'SE|SNE|LDI|LD|ADD|OR|AND|'
                                  'XOR|SUBC|SUB|SHR|SHL|SNE|'
                                  'RND|DRW|SKP|SKNP|STR|'
-                                 'FILL)'},
-    { 'type': 'T_ADDR', 'pattern': r'0x[\da-fA-F]{3}'},
-    { 'type': 'T_BYTE', 'pattern': r'0x[\da-fA-F]{2}'},
-    { 'type': 'T_NIBBLE', 'pattern': r'0x[\da-fA-F]{1}'},
-    { 'type': 'T_CONSTANT', 'pattern': r'#[\da-fA-F]{1,2}'},
+                                 'FILL|DW|DB)'},
+    { 'type': 'T_WORD', 'pattern': r'#[\da-fA-F]{4}'},
+    { 'type': 'T_ADDR', 'pattern': r'#[\da-fA-F]{3}'},
+    { 'type': 'T_BYTE', 'pattern': r'#[\da-fA-F]{2}'},
+    { 'type': 'T_NIBBLE', 'pattern': r'#[\da-fA-F]{1}'},
+    { 'type': 'T_VALUE', 'pattern': r'^[0-9]{1,3}'},
+    { 'type': 'T_NAME', 'pattern': r'^([\w]{3}[\w\d]*)'},
     { 'type': 'T_REGISTER', 'pattern': r'V[\da-fA-F]{1}'},
     { 'type': 'T_DELAY', 'pattern': r'DT'},
     { 'type': 'T_SOUND', 'pattern': r'ST'},
@@ -18,15 +24,13 @@ asm_tokens = [
     { 'type': 'T_FONT', 'pattern': r'F'},
     { 'type': 'T_KEYBOARD', 'pattern': r'K'},
     { 'type': 'T_REGISTER_I', 'pattern': r'I'},
-    { 'type': 'T_COMMENT', 'pattern': r'^;([ \w\d]*[^\n])'},
+    { 'type': 'T_COMMENT', 'pattern': r'^;(.*)[^\n]'},
     { 'type': 'T_WHITESPACE', 'pattern': r'^[ \t\r]'},
     { 'type': 'T_COMMA', 'pattern': r','},
     { 'type': 'T_EOL', 'pattern': r'^\n'},
     { 'type': 'T_UNKNOW', 'pattern': r'[:punct:#\d\w]+'}
 ]
 
-class UnknowTokenError(Exception):
-    pass
 
 def tokenize(code):
     tokens = []
@@ -36,7 +40,8 @@ def tokenize(code):
             match = re.match(token['pattern'], code, re.S)
             if match:
                 if token['type'] == 'T_UNKNOW':
-                    raise UnknowTokenError("Invalid token: %s" % (match.group(0), ))
+                    logger.fail("Invalid token %s in (%s, %s)" % 
+                               (match.group(0), line, column))
 
                 tokens.append({'type': token['type'],
                                'value': match.group(0),

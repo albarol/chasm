@@ -1,8 +1,14 @@
 import unittest
 
-from chasm import semantic, lexical, syntactic
+from chasm import semantic, lexical, syntactic, errors
+
+logger = errors.Logger()
 
 class SemanticTestCase(unittest.TestCase):
+
+
+    def setUp(self):
+        logger.clear()
 
     def test_validate_valid_ast_node(self):
 
@@ -10,7 +16,7 @@ class SemanticTestCase(unittest.TestCase):
         node = [{'type': 'T_COMMAND', 'value': 'LD', 'column': 1, 'line': 1},
                {'type': 'T_REGISTER', 'value': 'VA', 'column': 4, 'line': 1},
                {'type': 'T_COMMA', 'value': ',', 'column': 6, 'line': 1},
-               {'type': 'T_BYTE', 'value': '0x02', 'column': 8, 'line': 1}]
+               {'type': 'T_BYTE', 'value': '#02', 'column': 8, 'line': 1}]
 
         # Act:
         # Arrange:
@@ -22,20 +28,19 @@ class SemanticTestCase(unittest.TestCase):
         node = [{'type': 'T_COMMAND', 'value': 'CLS', 'column': 1, 'line': 1},
                {'type': 'T_REGISTER', 'value': 'VA', 'column': 4, 'line': 1},
                {'type': 'T_COMMA', 'value': ',', 'column': 6, 'line': 1},
-               {'type': 'T_BYTE', 'value': '0x02', 'column': 8, 'line': 1}]
+               {'type': 'T_BYTE', 'value': '#02', 'column': 8, 'line': 1}]
 
         # Act:
+        semantic.is_valid_instruction(node)
+
         # Arrange:
-        try:
-            semantic.is_valid_instruction(node)
-        except semantic.InvalidInstructionError, e:
-            self.assertEqual("Invalid instruction: CLS VA , 0x02", e.message)
+        self.assertTrue(logger.invalid)
 
     def test_validate_valid_memory(self):
 
         # Arrange:
         node = [{'type': 'T_COMMAND', 'value': 'LDI', 'column': 1, 'line': 1},
-               {'type': 'T_ADDR', 'value': '0x2EA', 'column': 8, 'line': 1}]
+               {'type': 'T_ADDR', 'value': '#2EA', 'column': 8, 'line': 1}]
 
         # Act:
         # Arrange:
@@ -45,20 +50,19 @@ class SemanticTestCase(unittest.TestCase):
 
         # Arrange:
         node = [{'type': 'T_COMMAND', 'value': 'JMP', 'column': 1, 'line': 1},
-               {'type': 'T_ADDR', 'value': '0x199', 'column': 8, 'line': 1}]
+               {'type': 'T_ADDR', 'value': '#199', 'column': 8, 'line': 1}]
 
         # Act:
+        semantic.is_valid_memory_address(node)
+
         # Arrange:
-        try:
-            semantic.is_valid_memory_address(node)
-        except semantic.InvalidMemoryAddressError, e:
-            self.assertEqual("Invalid memory address: 0x199", e.message)
+        self.assertFalse(logger.invalid)
 
 
     def test_analyze_entire_ast(self):
 
         # Arrange:
-        code = "LD VA, 0x02\nLD VB, 0x02\n"
+        code = "LD VA, #02\nLD VB, #02\n"
         tokens = lexical.tokenize(code)
         ast = syntactic.Ast(tokens)
 
@@ -69,13 +73,38 @@ class SemanticTestCase(unittest.TestCase):
     def test_invalid_analyze_entire_ast(self):
 
         # Arrange:
-        code = "LD VA, 0x02\nJMP 0x199\n"
+        code = "LD VA, #02\nJMP #199\n"
         tokens = lexical.tokenize(code)
         ast = syntactic.Ast(tokens)
 
         # Act:
+        semantic.analyze(ast)
+        
         # Arrange:
-        try:
-            self.assertTrue(semantic.analyze(ast))
-        except semantic.InvalidMemoryAddressError, e:
-            self.assertEqual("Invalid memory address: 0x199", e.message)
+        self.assertFalse(logger.invalid)
+
+    def test_validate_if_name_exists_in_symbol_table(self):
+
+        # Arrange:
+        code = "Play: LD VA, #02\nJMP Args\nArgs: DRW V0, V1, #1"
+        tokens = lexical.tokenize(code)
+        ast = syntactic.Ast(tokens)
+
+        # Act:
+        semantic.analyze(ast)
+        
+        # Arrange:
+        self.assertFalse(logger.invalid)
+
+    def test_throw_exception_when_validate_if_name_does_not_exists_in_symbol_table(self):
+
+        # Arrange:
+        code = "Play: LD VA, #02\nJMP Draw\nArgs: DRW V0, V1, #1"
+        tokens = lexical.tokenize(code)
+        ast = syntactic.Ast(tokens)
+
+        # Act:
+        semantic.analyze(ast)
+        
+        # Arrange:
+        self.assertTrue(logger.invalid)
