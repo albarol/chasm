@@ -45,7 +45,7 @@ symbols = [
 
 
 def compile(ast):
-    opcodes = []
+    opcodes = [] 
     for node in ast.nodes:
         instruction = ''.join([i['value'] for i in node])
         for symbol in symbols:
@@ -65,7 +65,5 @@ def compile(ast):
                     opcode = opcode.replace('X', match.group(1))
                 if 'Y' in symbol['opcode']:
                     opcode = opcode.replace('Y', match.group(2))
-                # opcodes.append('%s, %s\n' % (hex(node.addr), opcode.upper()))
-                # opcodes.append(struct.pack('>i', int(opcode.upper(), 16)))
-                opcodes.append(opcode)
+                opcodes.append(struct.pack('>H', int(opcode, 16)))
     return opcodes
