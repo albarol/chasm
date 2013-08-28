@@ -39,7 +39,7 @@ symbols = [
     { 'pattern': r'LDF,V([\da-fA-F]{1})', 'opcode': 'FX29' },
     { 'pattern': r'LDB,V([\da-fA-F]{1})', 'opcode': 'FX33' },
     { 'pattern': r'LD\[I\],V([\da-fA-F]{1})', 'opcode': 'FX55' },
-    { 'pattern': r'LDV([\da-fA-F]{1}),\[I\]', 'opcode': 'FX63' },
+    { 'pattern': r'LDV([\da-fA-F]{1}),\[I\]', 'opcode': 'FX65' },
     { 'pattern': r'LDHF,V([\da-fA-F]{1})', 'opcode': 'FX30' },
     { 'pattern': r'LDR,V([\da-fA-F]{1})', 'opcode': 'FX75' },
     { 'pattern': r'LDV([\da-fA-F]{1}),R', 'opcode': 'FX85' },
@@ -52,11 +52,11 @@ symbols = [
     { 'pattern': r'SCL', 'opcode': '00FC' },
     { 'pattern': r'EXIT', 'opcode': '00FD' },
     { 'pattern': r'LOW', 'opcode': '00FE' },
-    { 'pattern': r'HIGH', 'opcode': '00FF' },
+    { 'pattern': r'HIGH', 'opcode': '00FF' }
 ]
 
 
-def compile(ast):
+def generate(ast):
     opcodes = []
     for node in ast.nodes:
         instruction = ''.join([i['value'] for i in node])

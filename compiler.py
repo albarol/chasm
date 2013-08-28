@@ -36,7 +36,7 @@ if __name__ == '__main__':
     if logger.invalid:
         sys.exit(-1)
 
-    opcodes = chasm.compiler.compile(ast)
+    opcodes = chasm.assembler.generate(ast)
 
     with open(CURRENT_PATH + '/' + args.output, 'wb') as fd:
         for  opcode in opcodes:

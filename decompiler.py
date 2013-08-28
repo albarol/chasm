@@ -32,7 +32,7 @@ if __name__ == '__main__':
     except EOFError:
         pass
 
-    mnemonics = chasm.decompiler.decompile(opcodes)
+    mnemonics = chasm.disassembler.generate(opcodes)
 
     with open(CURRENT_PATH + '/' + args.output, 'w') as fd:
         fd.write('\n'.join(mnemonics))

@@ -65,4 +65,4 @@ Transform binary code in asm:
 | 00FF    | HIGH                 |
 | FX30    | LD HF, Vx            |
 | FX75    | LD R, Vx             |
-| FX85    | LD Vx, R
+| FX85    | LD Vx, R             |
