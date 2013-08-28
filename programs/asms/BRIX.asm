@@ -2,11 +2,11 @@ LD Ve, #05
 LD V5, #00
 LD Vb, #06
 LD Va, #00
-LDI #30c
+LD I, #30c
 DRW Va, Vb, #1
 ADD Va, #04
 SE Va, #40
-JMP #208
+JP #208
 ADD Vb, #02
 SE Vb, #12
 JMP #206

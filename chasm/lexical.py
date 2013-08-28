@@ -6,11 +6,11 @@ logger = Logger()
 
 asm_tokens = [
     { 'type': 'T_LABEL', 'pattern': r'([\w]{2}[\w\d_]*)\:'},
-    { 'type': 'T_COMMAND', 'pattern': r'(SYS|CLS|RET|JMP|CALL|'
-                                 'SE|SNE|LDI|LD|ADD|OR|AND|'
-                                 'XOR|SUBC|SUB|SHR|SHL|SNE|'
-                                 'RND|DRW|SKP|SKNP|STR|'
-                                 'FILL|DW|DB)'},
+    { 'type': 'T_COMMAND', 'pattern': r'(SYS|CLS|RET|JP|CALL|'
+                                 'SE|SNE|LD|ADD|OR|AND|'
+                                 'XOR|SUBN|SUB|SHR|SHL|SNE|'
+                                 'RND|DRW|SKP|SKNP|DW|DB|'
+                                 'SCD|SCR|SCL|EXIT|LOW|HIGH)'},
     { 'type': 'T_WORD', 'pattern': r'#[\da-fA-F]{4}'},
     { 'type': 'T_ADDR', 'pattern': r'#[\da-fA-F]{3}'},
     { 'type': 'T_BYTE', 'pattern': r'#[\da-fA-F]{2}'},
@@ -23,6 +23,9 @@ asm_tokens = [
     { 'type': 'T_BINARY', 'pattern': r'B'},
     { 'type': 'T_FONT', 'pattern': r'F'},
     { 'type': 'T_KEYBOARD', 'pattern': r'K'},
+    { 'type': 'T_HIGH_FONT', 'pattern': r'HF'},
+    { 'type': 'T_FLAG', 'pattern': r'R'},
+    { 'type': 'T_MEMORY_I', 'pattern': r'\[I\]'},
     { 'type': 'T_REGISTER_I', 'pattern': r'I'},
     { 'type': 'T_COMMENT', 'pattern': r'^;(.*)[^\n]'},
     { 'type': 'T_WHITESPACE', 'pattern': r'^[ \t\r]'},
@@ -40,7 +43,7 @@ def tokenize(code):
             match = re.match(token['pattern'], code, re.S)
             if match:
                 if token['type'] == 'T_UNKNOW':
-                    logger.fail("Invalid token %s in (%s, %s)" % 
+                    logger.fail("Invalid token %s in (%s, %s)" %
                                (match.group(0), line, column))
 
                 tokens.append({'type': token['type'],

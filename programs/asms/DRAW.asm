@@ -1,0 +1,15 @@
+LD Ve, #05
+LD V5, #05
+LD Vb, #05
+LD Va, #00
+LDI #30c
+DRW Va, Vb, #1
+ADD Va, #04
+SE Va, #40
+JMP #203
+DW #e000
+DW #8000
+DW #FC00
+DW #AA00
+DW #0000
+DW #0000

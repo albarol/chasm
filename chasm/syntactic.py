@@ -10,7 +10,7 @@ grammar = {
                   'T_ADDR', 'T_CONSTANT', 'T_DELAY',
                   'T_SOUND', 'T_FONT', 'T_REGISTER_I',
                   'T_BINARY', 'T_VALUE', 'T_WORD', 'T_EOL',
-                  'T_NAME'],
+                  'T_NAME', 'T_MEMORY_I', 'T_HIGH_FONT', 'T_FLAG'],
     'T_ADDR': ['T_EOL', 'T_COMMA'],
     'T_BYTE': ['T_EOL'],
     'T_NIBBLE': ['T_EOL'],
@@ -24,8 +24,12 @@ grammar = {
     'T_FONT': ['T_COMMA'],
     'T_KEYBOARD': ['T_EOL'],
     'T_REGISTER_I': ['T_COMMA'],
+    'T_MEMORY_I': ['T_COMMA', 'T_EOL'],
+    'T_HIGH_FONT': ['T_COMMA'],
+    'T_FLAG': ['T_COMMA', 'T_EOL'],
     'T_COMMA': ['T_REGISTER', 'T_BYTE', 'T_NIBBLE',
-                'T_DELAY', 'T_KEYBOARD'],
+                'T_DELAY', 'T_KEYBOARD', 'T_MEMORY_I',
+                'T_FLAG'],
     'T_EOL': []
 }
 
