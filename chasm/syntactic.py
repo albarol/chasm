@@ -29,7 +29,7 @@ grammar = {
     'T_FLAG': ['T_COMMA', 'T_EOL'],
     'T_COMMA': ['T_REGISTER', 'T_BYTE', 'T_NIBBLE',
                 'T_DELAY', 'T_KEYBOARD', 'T_MEMORY_I',
-                'T_FLAG'],
+                'T_FLAG', 'T_ADDR'],
     'T_EOL': []
 }
 
