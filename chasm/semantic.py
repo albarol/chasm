@@ -5,54 +5,54 @@ logger = Logger()
 
 
 rules = {
-    'SYS': [('T_COMMAND', 'T_ADDR')],
-    'CLS': [('T_COMMAND',)],
-    'RET': [('T_COMMAND',)],
-    'JP':  [('T_COMMAND', 'T_NAME'),
-            ('T_COMMAND', 'T_ADDR'),
-            ('T_COMMAND', 'T_ADDR', 'T_COMMA', 'T_REGISTER')],
-    'CALL': [('T_COMMAND', 'T_ADDR')],
-    'SE': [('T_COMMAND', 'T_REGISTER', 'T_COMMA', 'T_REGISTER'),
-           ('T_COMMAND', 'T_REGISTER', 'T_COMMA', 'T_BYTE')],
-    'SNE': [('T_COMMAND', 'T_REGISTER', 'T_COMMA', 'T_BYTE'),
-            ('T_COMMAND', 'T_REGISTER', 'T_COMMA', 'T_REGISTER')],
-    'ADD': [('T_COMMAND', 'T_REGISTER', 'T_COMMA', 'T_BYTE'),
-            ('T_COMMAND', 'T_REGISTER', 'T_COMMA', 'T_REGISTER'),
-            ('T_COMMAND', 'T_REGISTER_I', 'T_COMMA', 'T_REGISTER')],
-    'OR':  [('T_COMMAND', 'T_REGISTER', 'T_COMMA', 'T_REGISTER')],
-    'AND':  [('T_COMMAND', 'T_REGISTER', 'T_COMMA', 'T_REGISTER')],
-    'XOR':  [('T_COMMAND', 'T_REGISTER', 'T_COMMA', 'T_REGISTER')],
-    'SUB':  [('T_COMMAND', 'T_REGISTER', 'T_COMMA', 'T_REGISTER')],
-    'SHR':  [('T_COMMAND', 'T_REGISTER', 'T_COMMA', 'T_REGISTER')],
-    'SUBC':  [('T_COMMAND', 'T_REGISTER', 'T_COMMA', 'T_REGISTER')],
-    'SHL':  [('T_COMMAND', 'T_REGISTER', 'T_COMMA', 'T_REGISTER')],
-    'RND': [('T_COMMAND', 'T_REGISTER', 'T_COMMA', 'T_BYTE')],
-    'DRW': [('T_COMMAND', 'T_REGISTER', 'T_COMMA', 'T_REGISTER',
-             'T_COMMA', 'T_NIBBLE')],
-    'SKP': [('T_COMMAND', 'T_REGISTER')],
-    'SKNP': [('T_COMMAND', 'T_REGISTER')],
-    'LD': [('T_COMMAND', 'T_REGISTER', 'T_COMMA', 'T_REGISTER'),
-           ('T_COMMAND', 'T_REGISTER', 'T_COMMA', 'T_BYTE'),
-           ('T_COMMAND', 'T_REGISTER', 'T_COMMA', 'T_DELAY'),
-           ('T_COMMAND', 'T_REGISTER', 'T_COMMA', 'T_KEYBOARD'),
-           ('T_COMMAND', 'T_DELAY', 'T_COMMA', 'T_REGISTER'),
-           ('T_COMMAND', 'T_SOUND', 'T_COMMA', 'T_REGISTER'),
-           ('T_COMMAND', 'T_REGISTER_I', 'T_COMMA', 'T_ADDR'),
-           ('T_COMMAND', 'T_MEMORY_I', 'T_COMMA', 'T_REGISTER'),
-           ('T_COMMAND', 'T_REGISTER', 'T_COMMA', 'T_MEMORY_I'),
-           ('T_COMMAND', 'T_FONT', 'T_COMMA', 'T_REGISTER'),
-           ('T_COMMAND', 'T_BINARY', 'T_COMMA', 'T_REGISTER'),
-           ('T_COMMAND', 'T_HIGH_FONT', 'T_COMMA', 'T_REGISTER'),
-           ('T_COMMAND', 'T_FLAG', 'T_COMMA', 'T_REGISTER'),
-           ('T_COMMAND', 'T_REGISTER', 'T_COMMA', 'T_FLAG')],
-    'DW': [('T_COMMAND', 'T_WORD')],
-    'DB': [('T_COMMAND', 'T_BYTE')],
-    'SCD': [('T_COMMAND', 'T_NIBBLE')],
-    'SCR': [('T_COMMAND',)],
-    'SCL': [('T_COMMAND',)],
-    'EXIT': [('T_COMMAND',)],
-    'LOW': [('T_COMMAND',)],
-    'HIGH': [('T_COMMAND',)]
+    'SYS': [('TOKEN_COMMAND', 'TOKEN_ADDR')],
+    'CLS': [('TOKEN_COMMAND',)],
+    'RET': [('TOKEN_COMMAND',)],
+    'JP':  [('TOKEN_COMMAND', 'TOKEN_NAME'),
+            ('TOKEN_COMMAND', 'TOKEN_ADDR'),
+            ('TOKEN_COMMAND', 'TOKEN_ADDR', 'TOKEN_COMMA', 'TOKEN_REGISTER')],
+    'CALL': [('TOKEN_COMMAND', 'TOKEN_ADDR')],
+    'SE': [('TOKEN_COMMAND', 'TOKEN_REGISTER', 'TOKEN_COMMA', 'TOKEN_REGISTER'),
+           ('TOKEN_COMMAND', 'TOKEN_REGISTER', 'TOKEN_COMMA', 'TOKEN_BYTE')],
+    'SNE': [('TOKEN_COMMAND', 'TOKEN_REGISTER', 'TOKEN_COMMA', 'TOKEN_BYTE'),
+            ('TOKEN_COMMAND', 'TOKEN_REGISTER', 'TOKEN_COMMA', 'TOKEN_REGISTER')],
+    'ADD': [('TOKEN_COMMAND', 'TOKEN_REGISTER', 'TOKEN_COMMA', 'TOKEN_BYTE'),
+            ('TOKEN_COMMAND', 'TOKEN_REGISTER', 'TOKEN_COMMA', 'TOKEN_REGISTER'),
+            ('TOKEN_COMMAND', 'TOKEN_REGISTER_I', 'TOKEN_COMMA', 'TOKEN_REGISTER')],
+    'OR':  [('TOKEN_COMMAND', 'TOKEN_REGISTER', 'TOKEN_COMMA', 'TOKEN_REGISTER')],
+    'AND':  [('TOKEN_COMMAND', 'TOKEN_REGISTER', 'TOKEN_COMMA', 'TOKEN_REGISTER')],
+    'XOR':  [('TOKEN_COMMAND', 'TOKEN_REGISTER', 'TOKEN_COMMA', 'TOKEN_REGISTER')],
+    'SUB':  [('TOKEN_COMMAND', 'TOKEN_REGISTER', 'TOKEN_COMMA', 'TOKEN_REGISTER')],
+    'SHR':  [('TOKEN_COMMAND', 'TOKEN_REGISTER', 'TOKEN_COMMA', 'TOKEN_REGISTER')],
+    'SUBC':  [('TOKEN_COMMAND', 'TOKEN_REGISTER', 'TOKEN_COMMA', 'TOKEN_REGISTER')],
+    'SHL':  [('TOKEN_COMMAND', 'TOKEN_REGISTER', 'TOKEN_COMMA', 'TOKEN_REGISTER')],
+    'RND': [('TOKEN_COMMAND', 'TOKEN_REGISTER', 'TOKEN_COMMA', 'TOKEN_BYTE')],
+    'DRW': [('TOKEN_COMMAND', 'TOKEN_REGISTER', 'TOKEN_COMMA', 'TOKEN_REGISTER',
+             'TOKEN_COMMA', 'TOKEN_NIBBLE')],
+    'SKP': [('TOKEN_COMMAND', 'TOKEN_REGISTER')],
+    'SKNP': [('TOKEN_COMMAND', 'TOKEN_REGISTER')],
+    'LD': [('TOKEN_COMMAND', 'TOKEN_REGISTER', 'TOKEN_COMMA', 'TOKEN_REGISTER'),
+           ('TOKEN_COMMAND', 'TOKEN_REGISTER', 'TOKEN_COMMA', 'TOKEN_BYTE'),
+           ('TOKEN_COMMAND', 'TOKEN_REGISTER', 'TOKEN_COMMA', 'TOKEN_DELAY'),
+           ('TOKEN_COMMAND', 'TOKEN_REGISTER', 'TOKEN_COMMA', 'TOKEN_KEYBOARD'),
+           ('TOKEN_COMMAND', 'TOKEN_DELAY', 'TOKEN_COMMA', 'TOKEN_REGISTER'),
+           ('TOKEN_COMMAND', 'TOKEN_SOUND', 'TOKEN_COMMA', 'TOKEN_REGISTER'),
+           ('TOKEN_COMMAND', 'TOKEN_REGISTER_I', 'TOKEN_COMMA', 'TOKEN_ADDR'),
+           ('TOKEN_COMMAND', 'TOKEN_MEMORY_I', 'TOKEN_COMMA', 'TOKEN_REGISTER'),
+           ('TOKEN_COMMAND', 'TOKEN_REGISTER', 'TOKEN_COMMA', 'TOKEN_MEMORY_I'),
+           ('TOKEN_COMMAND', 'TOKEN_FONT', 'TOKEN_COMMA', 'TOKEN_REGISTER'),
+           ('TOKEN_COMMAND', 'TOKEN_BINARY', 'TOKEN_COMMA', 'TOKEN_REGISTER'),
+           ('TOKEN_COMMAND', 'TOKEN_HIGH_FONT', 'TOKEN_COMMA', 'TOKEN_REGISTER'),
+           ('TOKEN_COMMAND', 'TOKEN_FLAG', 'TOKEN_COMMA', 'TOKEN_REGISTER'),
+           ('TOKEN_COMMAND', 'TOKEN_REGISTER', 'TOKEN_COMMA', 'TOKEN_FLAG')],
+    'DW': [('TOKEN_COMMAND', 'TOKEN_WORD')],
+    'DB': [('TOKEN_COMMAND', 'TOKEN_BYTE')],
+    'SCD': [('TOKEN_COMMAND', 'TOKEN_NIBBLE')],
+    'SCR': [('TOKEN_COMMAND',)],
+    'SCL': [('TOKEN_COMMAND',)],
+    'EXIT': [('TOKEN_COMMAND',)],
+    'LOW': [('TOKEN_COMMAND',)],
+    'HIGH': [('TOKEN_COMMAND',)]
 }
 
 
@@ -76,7 +76,7 @@ def is_valid_name(node, symbols):
     instruction = node[0]
     if 'JMP'in instruction['value']:
         value = node[1]
-        if value['type'] == 'T_NAME':
+        if value['type'] == 'TOKEN_NAME':
             if not value['value'] in symbols:
                 logger.fail("Invalid symbol %s in (%s, %s)"
                   % (value['value'], instruction['line'], instruction['column']))
@@ -87,7 +87,7 @@ def is_valid_name(node, symbols):
 
 
 def is_valid_memory_address(node):
-    addr = filter(lambda t: t['type'] == 'T_ADDR', node)
+    addr = filter(lambda t: t['type'] == 'TOKEN_ADDR', node)
     if addr and addr[0]['value'] < '#200':
         logger.warning("Invalid memory address %s in (%s, %s)"
               % (addr[0]['value'], addr[0]['line'], addr[0]['column']))

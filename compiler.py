@@ -24,7 +24,7 @@ if __name__ == '__main__':
     parser.add_argument('-i', dest="filename", required=True,
                         help='asm file',
                         type=lambda x: is_valid_file(parser, x))
-    parser.add_argument('-o', dest="output", help='c8 file')
+    parser.add_argument('-o', dest="output", help='c8 file', required=True)
     args = parser.parse_args()
 
     code = args.filename.read()
