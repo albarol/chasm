@@ -2,7 +2,7 @@ CLS
 LD Vc, #00
 SNE Vc, #00
 LD Ve, #0f
-LDI #203
+LD I, #203
 LD V0, #20
 STR V0
 CLS
