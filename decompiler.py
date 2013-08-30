@@ -7,9 +7,6 @@ import array
 import chasm
 
 
-CURRENT_PATH = os.path.dirname(os.path.abspath(__file__))
-
-
 def is_valid_file(parser, arg):
     if not os.path.exists(arg):
        parser.error("The file %s does not exist!"%arg)

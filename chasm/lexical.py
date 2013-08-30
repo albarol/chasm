@@ -11,10 +11,10 @@ asm_tokens = [
                                  'XOR|SUBN|SUB|SHR|SHL|SNE|'
                                  'RND|DRW|SKP|SKNP|DW|DB|'
                                  'SCD|SCR|SCL|EXIT|LOW|HIGH)'},
-    { 'type': 'TOKEN_WORD', 'pattern': r'#[\da-fA-F]{4}'},
-    { 'type': 'TOKEN_ADDR', 'pattern': r'#[\da-fA-F]{3}'},
-    { 'type': 'TOKEN_BYTE', 'pattern': r'#[\da-fA-F]{2}'},
-    { 'type': 'TOKEN_NIBBLE', 'pattern': r'#[\da-fA-F]{1}'},
+    { 'type': 'TOKEN_WORD', 'pattern': r'0x[\da-fA-F]{4}'},
+    { 'type': 'TOKEN_ADDR', 'pattern': r'0x[\da-fA-F]{3}'},
+    { 'type': 'TOKEN_BYTE', 'pattern': r'0x[\da-fA-F]{2}'},
+    { 'type': 'TOKEN_NIBBLE', 'pattern': r'0x[\da-fA-F]{1}'},
     { 'type': 'TOKEN_VALUE', 'pattern': r'^[0-9]{1,3}'},
     { 'type': 'TOKEN_NAME', 'pattern': r'^([\w]{3}[\w\d]*)'},
     { 'type': 'TOKEN_REGISTER', 'pattern': r'V[\da-fA-F]{1}'},
@@ -28,8 +28,8 @@ asm_tokens = [
     { 'type': 'TOKEN_MEMORY_I', 'pattern': r'\[I\]'},
     { 'type': 'TOKEN_REGISTER_I', 'pattern': r'I'},
     { 'type': 'TOKEN_COMMENT', 'pattern': r'^;[^\n]*'},
-    { 'type': 'TOKEN_WHITESPACE', 'pattern': r'^[ \t\r]'},
     { 'type': 'TOKEN_COMMA', 'pattern': r','},
+    { 'type': 'TOKEN_WHITESPACE', 'pattern': r'^[ \t\r]'},
     { 'type': 'TOKEN_EOL', 'pattern': r'^\n'},
     { 'type': 'TOKEN_UNKNOW', 'pattern': r'[:punct:#\d\w]+'}
 ]

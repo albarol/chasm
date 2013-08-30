@@ -28,8 +28,8 @@ grammar = {
     'TOKEN_HIGH_FONT': ['TOKEN_COMMA'],
     'TOKEN_FLAG': ['TOKEN_COMMA', 'TOKEN_EOL'],
     'TOKEN_COMMA': ['TOKEN_REGISTER', 'TOKEN_BYTE', 'TOKEN_NIBBLE',
-                'TOKEN_DELAY', 'TOKEN_KEYBOARD', 'TOKEN_MEMORY_I',
-                'TOKEN_FLAG', 'TOKEN_ADDR'],
+                    'TOKEN_DELAY', 'TOKEN_KEYBOARD', 'TOKEN_MEMORY_I',
+                    'TOKEN_FLAG', 'TOKEN_ADDR', 'TOKEN_NAME'],
     'TOKEN_EOL': []
 }
 
@@ -103,19 +103,20 @@ class Ast(object):
                 self.__table.append(token['value'], addr)
             elif not node.tree and token['type'] in grammar['TOKEN_SOL']:
                 node.append(token)
-            elif token['type'] == 'TOKEN_EOL':
+            elif node.tree and token['type'] == 'TOKEN_EOL':
                 self.__nodes.append(node)
-                addr += 1
+                addr += 2
                 node = AstNode(addr=addr)
             elif node.tree and token['type'] in grammar[node.tree[-1]['type']]:
                 node.tree.append(token)
             else:
-                if not node.tree:
-                    logger.fail("Syntax Error %s is invalid instruction in (%s, %s)"
-                          % (token['value'], token['line'], token['column']))
-
-                logger.fail("Syntax Error %s %s is invalid syntax in (%s, %s)" %
-                           (' '.join([t['value'] for t in node.tree]), token['value'], token['line'], token['column']))
+                if not token['type'] == 'TOKEN_EOL':
+                    if not node.tree:
+                        logger.fail("Syntax Error %s is invalid instruction in (%s, %s)"
+                                    % (token['value'], token['line'], token['column']))
+                    else:
+                        logger.fail("Syntax Error %s %s is invalid syntax in (%s, %s)" %
+                               (' '.join([t['value'] for t in node.tree]), token['value'], token['line'], token['column']))
             index += 1
 
 
