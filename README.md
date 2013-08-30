@@ -3,12 +3,12 @@
 This project define a basic ISA to CHIP8 and generate code based on ISA.
 Transform asm in binary code:
 ```
-./assembler.py -i pong.asm -o pong.c8
+./compiler.py -i pong.asm -o pong.c8
 ```
 
 Transform binary code in asm:
 ```
-./disassembler.py -i pong.c8 -o pong.asm
+./decompiler.py -i pong.c8 -o pong.asm
 ```
 
 ### All opcodes supported by ISA
