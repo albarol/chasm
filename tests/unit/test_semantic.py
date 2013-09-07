@@ -99,7 +99,7 @@ class SemanticTestCase(unittest.TestCase):
     def test_throw_exception_when_validate_if_name_does_not_exists_in_symbol_table(self):
 
         # Arrange:
-        code = "Play: LD VA, #02\nJMP Draw\nArgs: DRW V0, V1, #1"
+        code = "Play: LD VA, 0x02\nJP Draw\nArgs: DRW V0, V1, 0x1"
         tokens = lexical.tokenize(code)
         ast = syntactic.Ast(tokens)
 

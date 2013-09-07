@@ -65,4 +65,3 @@ def generate(opcodes):
                 mnemonics.append(mnemonic)
                 break
     return mnemonics
-
