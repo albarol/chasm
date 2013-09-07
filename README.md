@@ -1,6 +1,7 @@
 # Chasm - Chip8 Assembler
 
 This project define a basic ISA to CHIP8 and generate code based on ISA.
+
 Transform asm in binary code:
 ```
 ./compiler.py -i pong.asm -o pong.c8
