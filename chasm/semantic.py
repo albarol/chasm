@@ -25,7 +25,7 @@ rules = {
     'XOR':  [('TOKEN_COMMAND', 'TOKEN_REGISTER', 'TOKEN_COMMA', 'TOKEN_REGISTER')],
     'SUB':  [('TOKEN_COMMAND', 'TOKEN_REGISTER', 'TOKEN_COMMA', 'TOKEN_REGISTER')],
     'SHR':  [('TOKEN_COMMAND', 'TOKEN_REGISTER', 'TOKEN_COMMA', 'TOKEN_REGISTER')],
-    'SUBC':  [('TOKEN_COMMAND', 'TOKEN_REGISTER', 'TOKEN_COMMA', 'TOKEN_REGISTER')],
+    'SUBN':  [('TOKEN_COMMAND', 'TOKEN_REGISTER', 'TOKEN_COMMA', 'TOKEN_REGISTER')],
     'SHL':  [('TOKEN_COMMAND', 'TOKEN_REGISTER', 'TOKEN_COMMA', 'TOKEN_REGISTER')],
     'RND': [('TOKEN_COMMAND', 'TOKEN_REGISTER', 'TOKEN_COMMA', 'TOKEN_BYTE')],
     'DRW': [('TOKEN_COMMAND', 'TOKEN_REGISTER', 'TOKEN_COMMA', 'TOKEN_REGISTER',
@@ -76,7 +76,7 @@ def lookup_symbols(node, symbols):
     else:
       symbol = symbols[token_name['value']]
       token_name['value'] = hex(symbol)
-  
+
 
 def is_valid_instruction(node):
     instruction = tuple([t['type'] for t in node])

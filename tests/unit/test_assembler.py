@@ -53,7 +53,7 @@ class AssemblerTestCase(unittest.TestCase):
     def test_convert_JMP_1NNN_node_to_opcode(self):
 
         # Arrange:
-        code = "JMP 0xFFF"
+        code = "JP 0xFFF"
         tokens = lexical.tokenize(code)
         ast = syntactic.Ast(tokens)
         semantic.analyze(ast)
@@ -67,7 +67,7 @@ class AssemblerTestCase(unittest.TestCase):
     def test_convert_JMP_BNNN_node_to_opcode(self):
 
         # Arrange:
-        code = "JMP 0xFFF, V0"
+        code = "JP 0xFFF, V0"
         tokens = lexical.tokenize(code)
         ast = syntactic.Ast(tokens)
         semantic.analyze(ast)
@@ -277,7 +277,7 @@ class AssemblerTestCase(unittest.TestCase):
     def test_convert_LDI_node_to_opcode(self):
 
         # Arrange:
-        code = "LDI 0xffe"
+        code = "LD I, 0xffe"
         tokens = lexical.tokenize(code)
         ast = syntactic.Ast(tokens)
         semantic.analyze(ast)
@@ -344,10 +344,10 @@ class AssemblerTestCase(unittest.TestCase):
         # Arrange:
         self.assertEqual(self.pack('E0A1'), opcodes[0])
 
-    def test_convert_STR_node_to_opcode(self):
+    def test_convert_LDI_FX55_node_to_opcode(self):
 
         # Arrange:
-        code = "STR V1"
+        code = "LD [I], V1"
         tokens = lexical.tokenize(code)
         ast = syntactic.Ast(tokens)
         semantic.analyze(ast)
@@ -361,7 +361,7 @@ class AssemblerTestCase(unittest.TestCase):
     def test_convert_FILL_node_to_opcode(self):
 
         # Arrange:
-        code = "FILL V1"
+        code = "LD V1, [I]"
         tokens = lexical.tokenize(code)
         ast = syntactic.Ast(tokens)
         semantic.analyze(ast)
@@ -459,7 +459,7 @@ class AssemblerTestCase(unittest.TestCase):
     def test_convert_LD_FX1E_node_to_opcode(self):
 
         # Arrange:
-        code = "LD I, V4"
+        code = "ADD I, V4"
         tokens = lexical.tokenize(code)
         ast = syntactic.Ast(tokens)
         semantic.analyze(ast)

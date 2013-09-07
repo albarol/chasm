@@ -73,26 +73,26 @@ class SemanticTestCase(unittest.TestCase):
     def test_invalid_analyze_entire_ast(self):
 
         # Arrange:
-        code = "LD VA, #02\nJMP #199\n"
+        code = "LD VA, 0x02\nJP 0x199\n"
         tokens = lexical.tokenize(code)
         ast = syntactic.Ast(tokens)
 
         # Act:
         semantic.analyze(ast)
-        
+
         # Arrange:
         self.assertFalse(logger.invalid)
 
     def test_validate_if_name_exists_in_symbol_table(self):
 
         # Arrange:
-        code = "Play: LD VA, #02\nJMP Args\nArgs: DRW V0, V1, #1"
+        code = "Play: LD VA, 0x02\nJP Args\nArgs: DRW V0, V1, 0x1"
         tokens = lexical.tokenize(code)
         ast = syntactic.Ast(tokens)
 
         # Act:
         semantic.analyze(ast)
-        
+
         # Arrange:
         self.assertFalse(logger.invalid)
 
@@ -105,6 +105,6 @@ class SemanticTestCase(unittest.TestCase):
 
         # Act:
         semantic.analyze(ast)
-        
+
         # Arrange:
         self.assertTrue(logger.invalid)
