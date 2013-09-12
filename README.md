@@ -1,3 +1,4 @@
+[![Build Status](https://travis-ci.org/fakeezz/chasm.png?branch=master)](https://travis-ci.org/fakeezz/chasm)
 # Chasm - Chip8 Assembler
 
 This project define a basic ISA to CHIP8 and generate code based on ISA.
