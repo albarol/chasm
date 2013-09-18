@@ -1,3 +1,5 @@
+# -*- coding: utf-8 -*-
+
 import re
 import struct
 
@@ -56,6 +58,16 @@ symbols = [
 ]
 
 
+variables = [
+    {'token': 'NNNN', 'group': 1 },
+    {'token':'NNN','group': 1 },
+    {'token':'NN','group': 2},
+    {'token':'N', 'group': 3},
+    {'token':'X', 'group': 1},
+    {'token':'Y', 'group': 2}
+]
+
+
 def generate(ast):
     opcodes = []
     for node in ast.nodes:
@@ -63,20 +75,13 @@ def generate(ast):
         for symbol in symbols:
             match = re.match(symbol['pattern'], instruction)
             if match:
-                opcode = symbol['opcode']
-                if 'NNNN' in symbol['opcode']:
-                    opcode = opcode.replace('NNNN', match.group(1))
-                elif 'NNN' in symbol['opcode']:
-                    opcode = opcode.replace('NNN', match.group(1))
-                elif 'NN' in symbol['opcode']:
-                    opcode = opcode.replace('NN', match.group(2))
-                elif 'N' in symbol['opcode']:
-                    opcode = opcode.replace('N', match.group(3))
-
-                if 'X' in symbol['opcode']:
-                    opcode = opcode.replace('X', match.group(1))
-                if 'Y' in symbol['opcode']:
-                    opcode = opcode.replace('Y', match.group(2))
-
-                opcodes.append(struct.pack('>H', int(opcode, 16)))
+                opcodes.append(pack_opcode(symbol, match))
     return opcodes
+
+
+def pack_opcode(symbol, match):
+    opcode = symbol['opcode']
+    for variable in variables:
+        if variable['token'] in opcode:
+            opcode = opcode.replace(variable['token'], match.group(variable['group']))
+    return struct.pack('>H', int(opcode, 16))

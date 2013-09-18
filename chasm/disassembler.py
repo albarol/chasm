@@ -1,17 +1,18 @@
+# -*- coding: utf-8 -*-
+
 import re
 
 tokens = [
-    { 'pattern': r'(0{4})', 'mnemonic': 'DW #nnnn' },
     { 'pattern': r'(00[eE]0)', 'mnemonic': 'CLS' },
     { 'pattern': r'(00[eE]{2})', 'mnemonic': 'RET' },
-    { 'pattern': r'0([\da-fA-F]{3})', 'mnemonic': 'SYS #nnn' },
-    { 'pattern': r'1([\da-fA-F]{3})', 'mnemonic': 'JP #nnn' },
-    { 'pattern': r'2([\da-fA-F]{3})', 'mnemonic': 'CALL #nnn' },
-    { 'pattern': r'3([\da-fA-F]{1})([\da-fA-F]{2})', 'mnemonic': 'SE Vx, #nn' },
-    { 'pattern': r'4([\da-fA-F]{1})([\da-fA-F]{2})', 'mnemonic': 'SNE Vx, #nn' },
+    { 'pattern': r'0([\da-fA-F]{3})', 'mnemonic': 'SYS 0xnnn' },
+    { 'pattern': r'1([\da-fA-F]{3})', 'mnemonic': 'JP 0xnnn' },
+    { 'pattern': r'2([\da-fA-F]{3})', 'mnemonic': 'CALL 0xnnn' },
+    { 'pattern': r'3([\da-fA-F]{1})([\da-fA-F]{2})', 'mnemonic': 'SE Vx, 0xnn' },
+    { 'pattern': r'4([\da-fA-F]{1})([\da-fA-F]{2})', 'mnemonic': 'SNE Vx, 0xnn' },
     { 'pattern': r'5([\da-fA-F]{1})([\da-fA-F]{1})0', 'mnemonic': 'SE Vx, Vy' },
-    { 'pattern': r'6([\da-fA-F]{1})([\da-fA-F]{2})', 'mnemonic': 'LD Vx, #nn' },
-    { 'pattern': r'7([\da-fA-F]{1})([\da-fA-F]{2})', 'mnemonic': 'ADD Vx, #nn' },
+    { 'pattern': r'6([\da-fA-F]{1})([\da-fA-F]{2})', 'mnemonic': 'LD Vx, 0xnn' },
+    { 'pattern': r'7([\da-fA-F]{1})([\da-fA-F]{2})', 'mnemonic': 'ADD Vx, 0xnn' },
     { 'pattern': r'8([\da-fA-F]{1})([\da-fA-F]{1})0', 'mnemonic': 'LD Vx, Vy' },
     { 'pattern': r'8([\da-fA-F]{1})([\da-fA-F]{1})1', 'mnemonic': 'OR Vx, Vy' },
     { 'pattern': r'8([\da-fA-F]{1})([\da-fA-F]{1})2', 'mnemonic': 'AND Vx, Vy' },
@@ -20,43 +21,42 @@ tokens = [
     { 'pattern': r'8([\da-fA-F]{1})([\da-fA-F]{1})5', 'mnemonic': 'SUB Vx, Vy' },
     { 'pattern': r'8([\da-fA-F]{1})([\da-fA-F]{1})6', 'mnemonic': 'SHR Vx, Vy' },
     { 'pattern': r'8([\da-fA-F]{1})([\da-fA-F]{1})7', 'mnemonic': 'SUBN Vx, Vy' },
-    { 'pattern': r'8([\da-fA-F]{1})([\da-fA-F]{1})E', 'mnemonic': 'SHL Vx, Vy' },
+    { 'pattern': r'8([\da-fA-F]{1})([\da-fA-F]{1})[Ee]', 'mnemonic': 'SHL Vx, Vy' },
     { 'pattern': r'9([\da-fA-F]{1})([\da-fA-F]{1})0', 'mnemonic': 'SNE Vx, Vy' },
-    { 'pattern': r'[aA]([\da-fA-F]{3})', 'mnemonic': 'LD I, #nnn' },
-    { 'pattern': r'[bB]([\da-fA-F]{3})', 'mnemonic': 'JP #nnn, V0' },
-    { 'pattern': r'[cC]([\da-fA-F]{1})([\da-fA-F]{2})', 'mnemonic': 'RND Vx, #nn' },
-    { 'pattern': r'[dD]([\da-fA-F]{1})([\da-fA-F]{1})([\da-fA-F]{1})', 'mnemonic': 'DRW Vx, Vy, #n' },
-    { 'pattern': r'[eE]([\da-fA-F]{1})9E', 'mnemonic': 'SKP Vx' },
-    { 'pattern': r'[eE]([\da-fA-F]{1})A1', 'mnemonic': 'SKNP Vx' },
+    { 'pattern': r'[aA]([\da-fA-F]{3})', 'mnemonic': 'LD I, 0xnnn' },
+    { 'pattern': r'[bB]([\da-fA-F]{3})', 'mnemonic': 'JP 0xnnn, V0' },
+    { 'pattern': r'[cC]([\da-fA-F]{1})([\da-fA-F]{2})', 'mnemonic': 'RND Vx, 0xnn' },
+    { 'pattern': r'[dD]([\da-fA-F]{1})([\da-fA-F]{1})([\da-fA-F]{1})', 'mnemonic': 'DRW Vx, Vy, 0xn' },
+    { 'pattern': r'[eE]([\da-fA-F]{1})9[Ee]', 'mnemonic': 'SKP Vx' },
+    { 'pattern': r'[eE]([\da-fA-F]{1})[aA]1', 'mnemonic': 'SKNP Vx' },
     { 'pattern': r'[fF]([\da-fA-F]{1})07', 'mnemonic': 'LD Vx, DT' },
-    { 'pattern': r'[fF]([\da-fA-F]{1})0A', 'mnemonic': 'LD Vx, K' },
+    { 'pattern': r'[fF]([\da-fA-F]{1})0[aA]', 'mnemonic': 'LD Vx, K' },
     { 'pattern': r'[fF]([\da-fA-F]{1})15', 'mnemonic': 'LD DT, Vx' },
     { 'pattern': r'[fF]([\da-fA-F]{1})18', 'mnemonic': 'LD ST, Vx' },
-    { 'pattern': r'[fF]([\da-fA-F]{1})1E', 'mnemonic': 'ADD I, Vx' },
+    { 'pattern': r'[fF]([\da-fA-F]{1})1[Ee]', 'mnemonic': 'ADD I, Vx' },
     { 'pattern': r'[fF]([\da-fA-F]{1})29', 'mnemonic': 'LD F, Vx' },
     { 'pattern': r'[fF]([\da-fA-F]{1})33', 'mnemonic': 'LD B, Vx' },
     { 'pattern': r'[fF]([\da-fA-F]{1})55', 'mnemonic': 'LD [I], Vx' },
     { 'pattern': r'[fF]([\da-fA-F]{1})65', 'mnemonic': 'LD Vx, [I]' },
-    { 'pattern': r'([\da-fA-F]{4})', 'mnemonic': 'DW #nnnn' },
+    { 'pattern': r'([\da-fA-F]{4})', 'mnemonic': 'DW 0xnnnn' },
 ]
 
 def generate(opcodes):
     mnemonics = []
-    opcodes.byteswap()
     for opcode in opcodes:
         instruction = hex(opcode)[2:].rjust(4, '0')
         for token in tokens:
             match = re.match(token['pattern'], instruction)
             if match:
                 mnemonic = token['mnemonic']
-                if '#nnnn' in token['mnemonic']:
-                    mnemonic = mnemonic.replace('#nnnn', "#%s" % (match.group(1),))
-                elif '#nnn' in token['mnemonic']:
-                    mnemonic = mnemonic.replace('#nnn', "#%s" % (match.group(1),))
-                elif '#nn' in token['mnemonic']:
-                    mnemonic = mnemonic.replace('#nn', "#%s" % (match.group(2),))
-                elif '#n' in token['mnemonic']:
-                    mnemonic = mnemonic.replace('#n', "#%s" % (match.group(3),))
+                if 'nnnn' in token['mnemonic']:
+                    mnemonic = mnemonic.replace('0xnnnn', "0x%s" % (match.group(1),))
+                elif 'nnn' in token['mnemonic']:
+                    mnemonic = mnemonic.replace('0xnnn', "0x%s" % (match.group(1),))
+                elif 'nn' in token['mnemonic']:
+                    mnemonic = mnemonic.replace('0xnn', "0x%s" % (match.group(2),))
+                elif 'n' in token['mnemonic']:
+                    mnemonic = mnemonic.replace('0xn', "0x%s" % (match.group(3),))
 
                 if 'Vx' in token['mnemonic']:
                     mnemonic = mnemonic.replace('Vx', "V%s" % (match.group(1),))

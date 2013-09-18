@@ -1,4 +1,4 @@
-
+# -*- coding: utf-8 -*-
 
 class bcolors:
     HEADER = '\033[95m'
@@ -35,7 +35,7 @@ class Logger(object):
             self.messages = []
 
     def __init__(self):
-            
+
         if not Logger.__instance:
             Logger.__instance = Logger.__impl()
         self.__dict__['_Logger__instance'] = Logger.__instance

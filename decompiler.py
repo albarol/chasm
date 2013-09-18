@@ -1,3 +1,4 @@
+# -*- coding: utf-8 -*-
 #!/usr/bin/python
 
 import argparse
@@ -17,7 +18,7 @@ def write_file(parser, arg):
     if not os.path.exists(arg):
        parser.error("The file %s does not exist!"%arg)
     else:
-       return open(arg,'w+')  #return an open file handle    
+       return open(arg,'w+')  #return an open file handle
 
 
 if __name__ == '__main__':
@@ -35,6 +36,7 @@ if __name__ == '__main__':
     except EOFError:
         pass
 
+    opcodes.byteswap()
     mnemonics = chasm.disassembler.generate(opcodes)
     args.output.write('\n'.join(mnemonics))
     args.output.close()
