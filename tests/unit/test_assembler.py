@@ -1,3 +1,5 @@
+# -*- coding: utf-8 -*-
+
 import unittest
 import struct
 from chasm import assembler, lexical, syntactic, semantic
@@ -497,3 +499,17 @@ class AssemblerTestCase(unittest.TestCase):
 
         # Arrange:
         self.assertEqual(self.pack('F633'), opcodes[0])
+
+    def test_convert_DW_to_opcode(self):
+
+        # Arrange:
+        code = "DW 0xF000"
+        tokens = lexical.tokenize(code)
+        ast = syntactic.Ast(tokens)
+        semantic.analyze(ast)
+
+        # Act:
+        opcodes = assembler.generate(ast)
+
+        # Arrange:
+        self.assertEqual(self.pack('F000'), opcodes[0])

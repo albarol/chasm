@@ -1,3 +1,5 @@
+# -*- coding: utf-8 -*-
+
 import unittest
 
 from chasm import syntactic, lexical, errors
@@ -71,4 +73,16 @@ class SyntacticTestCase(unittest.TestCase):
 
         # Assert:
         self.assertEquals(len(ast.table), 2)
+
+    def test_log_when_repeat_symbol(self):
+
+        # Arrange:
+        code = "Draw:\n   DRW V0, V1, 0x1\nDraw:    LD, V0, 0x40\n    LD DT, V0"
+        tokens = lexical.tokenize(code)
+
+        # Act:
+        syntactic.Ast(tokens)
+
+        # Assert:
+        self.assertTrue(logger.invalid)
 

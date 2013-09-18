@@ -1,3 +1,4 @@
+# -*- coding: utf-8 -*-
 #!/usr/bin/python
 
 import argparse
@@ -19,7 +20,7 @@ def is_valid_file(parser, arg):
        return open(arg,'r')  #return an open file handle
 
 def write_file(parser, arg):
-    return open(arg,'wb')  #return an open file handle    
+    return open(arg,'wb')  #return an open file handle
 
 
 if __name__ == '__main__':

@@ -1,3 +1,4 @@
+# -*- coding: utf-8 -*-
 
 from chasm.errors import Logger
 
@@ -106,7 +107,7 @@ class Ast(object):
                 node.append(token)
             elif node.tree and token['type'] == 'TOKEN_EOL':
                 self.__nodes.append(node)
-                addr += 2
+                addr += 2 # 8bits > 0x00 - 0xFF
                 node = AstNode(addr=addr)
             elif node.tree and token['type'] in grammar[node.tree[-1]['type']]:
                 node.tree.append(token)
