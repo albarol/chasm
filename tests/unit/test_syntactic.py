@@ -25,10 +25,10 @@ class SyntacticTestCase(unittest.TestCase):
 
         # Arrange:
         node = []
-        node.append({'class': 'TOKEN_COMMAND', 'lexeme': 'LD', 'column': 1, 'line': 1})
-        node.append({'class': 'TOKEN_REGISTER', 'lexeme': 'VA', 'column': 4, 'line': 1})
-        node.append({'class': 'TOKEN_COMMA', 'lexeme': ',', 'column': 6, 'line': 1})
-        node.append({'class': 'TOKEN_BYTE', 'lexeme': '0x02', 'column': 8, 'line': 1})
+        node.append({'class': 'T_COMMAND', 'lexeme': 'LD', 'column': 1, 'line': 1})
+        node.append({'class': 'T_REGISTER', 'lexeme': 'VA', 'column': 4, 'line': 1})
+        node.append({'class': 'T_COMMA', 'lexeme': ',', 'column': 6, 'line': 1})
+        node.append({'class': 'T_BYTE', 'lexeme': '0x02', 'column': 8, 'line': 1})
         code = "LD VA, 0x02\n"
         tokens = lexical.tokenize(code)
 

@@ -20,10 +20,10 @@ class TokenizerTestCase(unittest.TestCase):
         tokens = lexical.tokenize(code)
 
         # Assert:
-        self.assertEqual('TOKEN_COMMENT', tokens[0]['class'])
+        self.assertEqual('T_COMMENT', tokens[0]['class'])
         self.assertEqual('; CHIP8 Assembler', tokens[0]['lexeme'])
 
-        self.assertEqual('TOKEN_EOL', tokens[1]['class'])
+        self.assertEqual('T_EOL', tokens[1]['class'])
 
     def test_tokenize_whitespace(self):
 
@@ -34,7 +34,7 @@ class TokenizerTestCase(unittest.TestCase):
         tokens = lexical.tokenize(code)
 
         # Assert:
-        self.assertEqual('TOKEN_WHITESPACE', tokens[1]['class'])
+        self.assertEqual('T_WHITESPACE', tokens[1]['class'])
         self.assertEqual(' ', tokens[1]['lexeme'])
 
     def test_tokenize_eol(self):
@@ -46,7 +46,7 @@ class TokenizerTestCase(unittest.TestCase):
         tokens = lexical.tokenize(code)
 
         # Assert:
-        self.assertEqual('TOKEN_EOL', tokens[1]['class'])
+        self.assertEqual('T_EOL', tokens[1]['class'])
         self.assertEqual('\n', tokens[1]['lexeme'])
 
     def test_tokenize_name(self):
@@ -58,7 +58,7 @@ class TokenizerTestCase(unittest.TestCase):
         tokens = lexical.tokenize(code)
 
         # Assert:
-        self.assertEqual('TOKEN_NAME', tokens[2]['class'])
+        self.assertEqual('T_NAME', tokens[2]['class'])
         self.assertEqual('Draw', tokens[2]['lexeme'])
 
     def test_tokenize_comma(self):
@@ -70,7 +70,7 @@ class TokenizerTestCase(unittest.TestCase):
         tokens = lexical.tokenize(code)
 
         # Assert:
-        self.assertEqual('TOKEN_COMMA', tokens[3]['class'])
+        self.assertEqual('T_COMMA', tokens[3]['class'])
         self.assertEqual(',', tokens[3]['lexeme'])
 
     def test_tokenize_command(self):
@@ -82,7 +82,7 @@ class TokenizerTestCase(unittest.TestCase):
         tokens = lexical.tokenize(code)
 
         # Assert:
-        self.assertEqual('TOKEN_COMMAND', tokens[0]['class'])
+        self.assertEqual('T_COMMAND', tokens[0]['class'])
         self.assertEqual('ADD', tokens[0]['lexeme'])
 
     def test_tokenize_addr(self):
@@ -94,7 +94,7 @@ class TokenizerTestCase(unittest.TestCase):
         tokens = lexical.tokenize(code)
 
         # Assert:
-        self.assertEqual('TOKEN_ADDR', tokens[2]['class'])
+        self.assertEqual('T_ADDR', tokens[2]['class'])
         self.assertEqual('0xFFF', tokens[2]['lexeme'])
 
     def test_tokenize_byte(self):
@@ -106,7 +106,7 @@ class TokenizerTestCase(unittest.TestCase):
         tokens = lexical.tokenize(code)
 
         # Assert:
-        self.assertEqual('TOKEN_BYTE', tokens[5]['class'])
+        self.assertEqual('T_BYTE', tokens[5]['class'])
         self.assertEqual('0xEF', tokens[5]['lexeme'])
 
     def test_tokenize_nibble(self):
@@ -118,7 +118,7 @@ class TokenizerTestCase(unittest.TestCase):
         tokens = lexical.tokenize(code)
 
         # Assert:
-        self.assertEqual('TOKEN_NIBBLE', tokens[8]['class'])
+        self.assertEqual('T_NIBBLE', tokens[8]['class'])
         self.assertEqual('0xF', tokens[8]['lexeme'])
 
     def test_tokenize_register(self):
@@ -130,7 +130,7 @@ class TokenizerTestCase(unittest.TestCase):
         tokens = lexical.tokenize(code)
 
         # Assert:
-        self.assertEqual('TOKEN_REGISTER', tokens[2]['class'])
+        self.assertEqual('T_REGISTER', tokens[2]['class'])
         self.assertEqual('V0', tokens[2]['lexeme'])
 
     def test_tokenize_label(self):
@@ -142,7 +142,7 @@ class TokenizerTestCase(unittest.TestCase):
         tokens = lexical.tokenize(code)
 
         # Assert:
-        self.assertEqual('TOKEN_LABEL', tokens[0]['class'])
+        self.assertEqual('T_LABEL', tokens[0]['class'])
         self.assertEqual('Start:', tokens[0]['lexeme'])
 
     def test_tokenize_delay_timer(self):
@@ -154,7 +154,7 @@ class TokenizerTestCase(unittest.TestCase):
         tokens = lexical.tokenize(code)
 
         # Assert:
-        self.assertEqual('TOKEN_DELAY', tokens[5]['class'])
+        self.assertEqual('T_DELAY', tokens[5]['class'])
 
     def test_tokenize_sound_timer(self):
 
@@ -165,7 +165,7 @@ class TokenizerTestCase(unittest.TestCase):
         tokens = lexical.tokenize(code)
 
         # Assert:
-        self.assertEqual('TOKEN_SOUND', tokens[2]['class'])
+        self.assertEqual('T_SOUND', tokens[2]['class'])
 
     def test_tokenize_registerI(self):
 
@@ -176,7 +176,7 @@ class TokenizerTestCase(unittest.TestCase):
         tokens = lexical.tokenize(code)
 
         # Assert:
-        self.assertEqual('TOKEN_REGISTER_I', tokens[2]['class'])
+        self.assertEqual('T_REGISTER_I', tokens[2]['class'])
 
     def test_tokenize_font(self):
 
@@ -187,7 +187,7 @@ class TokenizerTestCase(unittest.TestCase):
         tokens = lexical.tokenize(code)
 
         # Assert:
-        self.assertEqual('TOKEN_FONT', tokens[2]['class'])
+        self.assertEqual('T_FONT', tokens[2]['class'])
 
     def test_tokenize_keyboard(self):
 
@@ -198,7 +198,7 @@ class TokenizerTestCase(unittest.TestCase):
         tokens = lexical.tokenize(code)
 
         # Assert:
-        self.assertEqual('TOKEN_KEYBOARD', tokens[5]['class'])
+        self.assertEqual('T_KEYBOARD', tokens[5]['class'])
 
     def test_tokenize_binary(self):
 
@@ -209,7 +209,7 @@ class TokenizerTestCase(unittest.TestCase):
         tokens = lexical.tokenize(code)
 
         # Assert:
-        self.assertEqual('TOKEN_BINARY', tokens[2]['class'])
+        self.assertEqual('T_BINARY', tokens[2]['class'])
 
     def test_tokenize_value(self):
 
@@ -220,7 +220,7 @@ class TokenizerTestCase(unittest.TestCase):
         tokens = lexical.tokenize(code)
 
         # Assert:
-        self.assertEqual('TOKEN_VALUE', tokens[5]['class'])
+        self.assertEqual('T_VALUE', tokens[5]['class'])
 
     def test_throw_exception_with_has_error_characters(self):
 

@@ -18,10 +18,10 @@ class SemanticTestCase(unittest.TestCase):
     def test_validate_valid_ast_node(self):
 
         # Arrange:
-        node = [{'class': 'TOKEN_COMMAND', 'lexeme': 'LD', 'column': 1, 'line': 1},
-                {'class': 'TOKEN_REGISTER', 'lexeme': 'VA', 'column': 4, 'line': 1},
-                {'class': 'TOKEN_COMMA', 'lexeme': ',', 'column': 6, 'line': 1},
-                {'class': 'TOKEN_BYTE', 'lexeme': '0x02', 'column': 8, 'line': 1}]
+        node = [{'class': 'T_COMMAND', 'lexeme': 'LD', 'column': 1, 'line': 1},
+                {'class': 'T_REGISTER', 'lexeme': 'VA', 'column': 4, 'line': 1},
+                {'class': 'T_COMMA', 'lexeme': ',', 'column': 6, 'line': 1},
+                {'class': 'T_BYTE', 'lexeme': '0x02', 'column': 8, 'line': 1}]
 
         # Act:
         semantic.is_valid_instruction(node)
@@ -32,10 +32,10 @@ class SemanticTestCase(unittest.TestCase):
     def test_validate_has_error_ast_node(self):
 
         # Arrange:
-        node = [{'class': 'TOKEN_COMMAND', 'lexeme': 'CLS', 'column': 1, 'line': 1},
-                {'class': 'TOKEN_REGISTER', 'lexeme': 'VA', 'column': 4, 'line': 1},
-                {'class': 'TOKEN_COMMA', 'lexeme': ',', 'column': 6, 'line': 1},
-                {'class': 'TOKEN_BYTE', 'lexeme': '#02', 'column': 8, 'line': 1}]
+        node = [{'class': 'T_COMMAND', 'lexeme': 'CLS', 'column': 1, 'line': 1},
+                {'class': 'T_REGISTER', 'lexeme': 'VA', 'column': 4, 'line': 1},
+                {'class': 'T_COMMA', 'lexeme': ',', 'column': 6, 'line': 1},
+                {'class': 'T_BYTE', 'lexeme': '#02', 'column': 8, 'line': 1}]
 
         # Act:
         semantic.is_valid_instruction(node)
@@ -46,8 +46,8 @@ class SemanticTestCase(unittest.TestCase):
     def test_validate_valid_memory(self):
 
         # Arrange:
-        node = [{'class': 'TOKEN_COMMAND', 'lexeme': 'LDI', 'column': 1, 'line': 1},
-                {'class': 'TOKEN_ADDR', 'lexeme': '#2EA', 'column': 8, 'line': 1}]
+        node = [{'class': 'T_COMMAND', 'lexeme': 'LDI', 'column': 1, 'line': 1},
+                {'class': 'T_ADDR', 'lexeme': '#2EA', 'column': 8, 'line': 1}]
 
         # Act:
         semantic.is_valid_memory_address(node)
@@ -58,8 +58,8 @@ class SemanticTestCase(unittest.TestCase):
     def test_validate_has_error_memory(self):
 
         # Arrange:
-        node = [{'class': 'TOKEN_COMMAND', 'lexeme': 'JMP', 'column': 1, 'line': 1},
-                {'class': 'TOKEN_ADDR', 'lexeme': '#199', 'column': 8, 'line': 1}]
+        node = [{'class': 'T_COMMAND', 'lexeme': 'JMP', 'column': 1, 'line': 1},
+                {'class': 'T_ADDR', 'lexeme': '#199', 'column': 8, 'line': 1}]
 
         # Act:
         semantic.is_valid_memory_address(node)
