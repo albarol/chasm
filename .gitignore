@@ -2,6 +2,7 @@
 ## Sublime
 
 *.sublime-workspace
+.ropeproject/
 
 # Assembler
 *.c8
