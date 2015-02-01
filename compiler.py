@@ -1,5 +1,5 @@
+#!/usr/bin/env python
 # -*- coding: utf-8 -*-
-#!/usr/bin/python
 
 import argparse
 import os
@@ -15,12 +15,13 @@ logger = chasm.errors.Logger()
 
 def is_valid_file(parser, arg):
     if not os.path.exists(arg):
-       parser.error("The file %s does not exist!"%arg)
+        parser.error("The file {arg} does not exist!".format(arg=arg))
     else:
-       return open(arg,'r')  #return an open file handle
+        return open(arg, 'r')  # return an open file handle
+
 
 def write_file(parser, arg):
-    return open(arg,'wb')  #return an open file handle
+    return open(arg, 'wb')  # return an open file handle
 
 
 if __name__ == '__main__':
@@ -41,6 +42,7 @@ if __name__ == '__main__':
         sys.exit(-1)
 
     opcodes = chasm.assembler.generate(ast)
-    for  opcode in opcodes:
+
+    for opcode in opcodes:
         args.output.write(opcode)
     args.output.close()
