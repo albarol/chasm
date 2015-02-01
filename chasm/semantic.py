@@ -11,14 +11,22 @@ rules = {
     'RET': [('T_COMMAND',)],
     'JP':  [('T_COMMAND', 'T_NAME'),
             ('T_COMMAND', 'T_ADDR'),
+            ('T_COMMAND', 'T_BYTE'),
+            ('T_COMMAND', 'T_NIBBLE'),
             ('T_COMMAND', 'T_ADDR', 'T_COMMA', 'T_REGISTER')],
     'CALL': [('T_COMMAND', 'T_ADDR'),
+             ('T_COMMAND', 'T_BYTE'),
+             ('T_COMMAND', 'T_NIBBLE'),
              ('T_COMMAND', 'T_NAME')],
     'SE': [('T_COMMAND', 'T_REGISTER', 'T_COMMA', 'T_REGISTER'),
-           ('T_COMMAND', 'T_REGISTER', 'T_COMMA', 'T_BYTE')],
+           ('T_COMMAND', 'T_REGISTER', 'T_COMMA', 'T_BYTE'),
+           ('T_COMMAND', 'T_REGISTER', 'T_COMMA', 'T_NIBBLE')],
     'SNE': [('T_COMMAND', 'T_REGISTER', 'T_COMMA', 'T_BYTE'),
+            ('T_COMMAND', 'T_REGISTER', 'T_COMMA', 'T_NIBBLE'),
             ('T_COMMAND', 'T_REGISTER', 'T_COMMA', 'T_REGISTER')],
     'ADD': [('T_COMMAND', 'T_REGISTER', 'T_COMMA', 'T_BYTE'),
+            ('T_COMMAND', 'T_REGISTER', 'T_COMMA', 'T_ADDR'),
+            ('T_COMMAND', 'T_REGISTER', 'T_COMMA', 'T_NIBBLE'),
             ('T_COMMAND', 'T_REGISTER', 'T_COMMA', 'T_REGISTER'),
             ('T_COMMAND', 'T_REGISTER_I', 'T_COMMA', 'T_REGISTER')],
     'OR':  [('T_COMMAND', 'T_REGISTER', 'T_COMMA', 'T_REGISTER')],
@@ -29,12 +37,13 @@ rules = {
     'SUBN':  [('T_COMMAND', 'T_REGISTER', 'T_COMMA', 'T_REGISTER')],
     'SHL':  [('T_COMMAND', 'T_REGISTER', 'T_COMMA', 'T_REGISTER')],
     'RND': [('T_COMMAND', 'T_REGISTER', 'T_COMMA', 'T_BYTE')],
-    'DRW': [('T_COMMAND', 'T_REGISTER', 'T_COMMA', 'T_REGISTER',
-             'T_COMMA', 'T_NIBBLE')],
+    'DRW': [('T_COMMAND', 'T_REGISTER', 'T_COMMA', 'T_REGISTER', 'T_COMMA', 'T_NIBBLE')],
     'SKP': [('T_COMMAND', 'T_REGISTER')],
     'SKNP': [('T_COMMAND', 'T_REGISTER')],
     'LD': [('T_COMMAND', 'T_REGISTER', 'T_COMMA', 'T_REGISTER'),
+           ('T_COMMAND', 'T_REGISTER', 'T_COMMA', 'T_ADDR'),
            ('T_COMMAND', 'T_REGISTER', 'T_COMMA', 'T_BYTE'),
+           ('T_COMMAND', 'T_REGISTER', 'T_COMMA', 'T_NIBBLE'),
            ('T_COMMAND', 'T_REGISTER', 'T_COMMA', 'T_DELAY'),
            ('T_COMMAND', 'T_REGISTER', 'T_COMMA', 'T_KEYBOARD'),
            ('T_COMMAND', 'T_DELAY', 'T_COMMA', 'T_REGISTER'),
@@ -90,7 +99,7 @@ def lookup_symbols(node, symbols):
 
 
 def is_valid_memory_address(node):
-    addr = filter(lambda t: t['class'] == 'T_ADDR', node)
+    addr = filter(lambda t: t['class'] in ['T_ADDR'], node)
     if addr and addr[0]['lexeme'] < '0x200':
         logger.warning("Invalid memory address {0} in ({1}, {2})",
                        addr[0]['lexeme'], addr[0]['line'], addr[0]['column'])

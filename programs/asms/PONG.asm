@@ -71,7 +71,7 @@ Big_Loop:
 
     LD  V0, #60 ; Set V0=delay before ball launch
     LD  DT, V0  ; Set delay timer to V0
-DT_loop:        ;
+DT_Loop:        ;
     LD  V0, DT  ; Read delay timer into V0
     SE  V0, 0   ; Skip next instruction if V0=0
     JP  DT_Loop ; Read again delay timer if not 0
@@ -138,7 +138,7 @@ Ball_Loop:
     LD  V9, 1   ; Set Y direction to down
 
     DRW V6, V7, 1 ; Draw ball
-    JP  Padl_loop ;
+    JP  Padl_Loop ;
 
 Left_Side:
     LD  V8, 2    ; Set X direction to right

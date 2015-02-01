@@ -7,17 +7,11 @@ from chasm.errors import Logger
 logger = Logger()
 
 asm_tokens = [
-    {'type': 'T_LABEL', 'pattern': r'([\w]{2}[\w\d_]*)\:'},
+    {'type': 'T_LABEL', 'pattern': r'([a-zA-Z_]{3}[\w\d_]*)\:'},
     {'type': 'T_COMMAND', 'pattern': r'(SYS|CLS|RET|JP|CALL|'
      'SE|SNE|LD|ADD|OR|AND|XOR|SUBN|SUB|SHR|SHL|SNE|'
      'RND|DRW|SKP|SKNP|DW|DB|SCD|SCR|SCL|EXIT|LOW|HIGH)'},
-    {'type': 'T_WORD', 'pattern': r'(0x|#)[\da-fA-F]{4}'},
-    {'type': 'T_ADDR', 'pattern': r'(0x|#)[\da-fA-F]{3}'},
-    {'type': 'T_BYTE', 'pattern': r'(0x|#)[\da-fA-F]{2}'},
-    {'type': 'T_NIBBLE', 'pattern': r'(0x|#)[\da-fA-F]{1}'},
-    {'type': 'T_VALUE', 'pattern': r'^[0-9]{1,3}'},
-    {'type': 'T_NAME', 'pattern': r'^([\w]{3}[\w\d]*)'},
-    {'type': 'T_REGISTER', 'pattern': r'V[\da-fA-F]{1}'},
+    {'type': 'T_NAME', 'pattern': r'^([a-zA-Z_]{3}[\w\d_]*)'},
     {'type': 'T_DELAY', 'pattern': r'DT'},
     {'type': 'T_SOUND', 'pattern': r'ST'},
     {'type': 'T_BINARY', 'pattern': r'B'},
@@ -27,6 +21,11 @@ asm_tokens = [
     {'type': 'T_FLAG', 'pattern': r'R'},
     {'type': 'T_MEMORY_I', 'pattern': r'\[I\]'},
     {'type': 'T_REGISTER_I', 'pattern': r'I'},
+    {'type': 'T_WORD', 'pattern': r'(0x|#)?[\da-fA-F]{4}'},
+    {'type': 'T_ADDR', 'pattern': r'(0x|#)?[\da-fA-F]{3}'},
+    {'type': 'T_BYTE', 'pattern': r'(0x|#)?[\da-fA-F]{2}'},
+    {'type': 'T_NIBBLE', 'pattern': r'(0x|#)?[\da-fA-F]{1}'},
+    {'type': 'T_REGISTER', 'pattern': r'V[\da-fA-F]{1}'},
     {'type': 'T_COMMENT', 'pattern': r'^;[^\n]*'},
     {'type': 'T_COMMA', 'pattern': r','},
     {'type': 'T_WHITESPACE', 'pattern': r'^[ \t\r]'},

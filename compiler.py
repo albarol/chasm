@@ -38,7 +38,7 @@ if __name__ == '__main__':
     chasm.semantic.analyze(ast)
 
     logger.show()
-    if logger.invalid:
+    if logger.has_error:
         sys.exit(-1)
 
     opcodes = chasm.assembler.generate(ast)
