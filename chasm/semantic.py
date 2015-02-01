@@ -61,35 +61,36 @@ rules = {
 
 
 def analyze(ast):
-    for node in ast.nodes:
+    for addr, node in ast.nodes.iteritems():
         is_valid_instruction(node)
-        lookup_symbols(node, ast.table)
+        lookup_symbols(node, ast.symbols)
         is_valid_memory_address(node)
     return True
 
-def lookup_symbols(node, symbols):
-  tokens = filter(lambda t: t['type'] == 'TOKEN_NAME', node)
-  if tokens:
-    token_name = tokens[0]
-    if not token_name['value'] in symbols:
-      logger.fail("Invalid symbol %s in (%s, %s)"
-                  % (token_name['value'], node[0]['line'], node[0]['column']))
-    else:
-      symbol = symbols[token_name['value']]
-      token_name['value'] = hex(symbol)
-
 
 def is_valid_instruction(node):
-    instruction = tuple([t['type'] for t in node])
-    rule = rules[node[0]['value']]
-    if not instruction in rule:
-        instruction = ' '.join(map(lambda t: t['value'], node))
-        logger.fail("Invalid instruction %s in (%s, %s)" % (instruction, node[0]['line'], node[0]['column']))
-    return True
+    instruction = tuple([t['class'] for t in node])
+    command = node[0]
+    rule = rules[command['lexeme']]
+    if instruction not in rule:
+        instruction = ' '.join(map(lambda t: t['lexeme'], node))
+        logger.fail("Invalid instruction {0} in ({1}, {2})",
+                    instruction, command['line'], command['column'])
+
+
+def lookup_symbols(node, symbols):
+    tokens = filter(lambda t: t['class'] == 'TOKEN_NAME', node)
+    for token in tokens:
+        if token['lexeme'] not in symbols:
+            logger.fail("Invalid symbol {0} in ({1}, {2})",
+                        token['lexeme'], token['line'], token['column'])
+        else:
+            symbol = symbols[token['lexeme']]
+            token['lexeme'] = hex(symbol)
+
 
 def is_valid_memory_address(node):
-    addr = filter(lambda t: t['type'] == 'TOKEN_ADDR', node)
-    if addr and addr[0]['value'] < '0x200':
-        logger.warning("Invalid memory address %s in (%s, %s)"
-              % (addr[0]['value'], addr[0]['line'], addr[0]['column']))
-    return True
+    addr = filter(lambda t: t['class'] == 'TOKEN_ADDR', node)
+    if addr and addr[0]['lexeme'] < '0x200':
+        logger.warning("Invalid memory address {0} in ({1}, {2})",
+                       addr[0]['lexeme'], addr[0]['line'], addr[0]['column'])

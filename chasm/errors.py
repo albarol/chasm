@@ -1,5 +1,6 @@
 # -*- coding: utf-8 -*-
 
+
 class bcolors:
     HEADER = '\033[95m'
     OKBLUE = '\033[94m'
@@ -16,22 +17,22 @@ class Logger(object):
     class __impl(object):
 
         def __init__(self):
-            self.invalid = False
+            self.has_error = False
             self.messages = []
 
-        def warning(self, message):
-            self.messages.append({'type': 'warning', 'message': bcolors.WARNING + 'WARNING: ' + message + bcolors.ENDC})
+        def warning(self, message, *params):
+            self.messages.append({'type': 'warning', 'message': bcolors.WARNING + 'WARNING: ' + message.format(*params) + bcolors.ENDC})
 
-        def fail(self, message):
-            self.invalid = True
-            self.messages.append({'type': 'fail', 'message': bcolors.FAIL + 'FAIL: ' + message + bcolors.ENDC})
+        def fail(self, message, *params):
+            self.has_error = True
+            self.messages.append({'type': 'fail', 'message': bcolors.FAIL + 'FAIL: ' + message.format(*params) + bcolors.ENDC})
 
         def show(self):
             for message in self.messages:
                 print message['message']
 
         def clear(self):
-            self.invalid = False
+            self.has_error = False
             self.messages = []
 
     def __init__(self):

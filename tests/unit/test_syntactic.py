@@ -24,11 +24,11 @@ class SyntacticTestCase(unittest.TestCase):
     def test_should_group_commands_in_ast(self):
 
         # Arrange:
-        node = syntactic.AstNode(addr=0x200)
-        node.append({'type': 'TOKEN_COMMAND', 'value': 'LD', 'column': 1, 'line': 1})
-        node.append({'type': 'TOKEN_REGISTER', 'value': 'VA', 'column': 4, 'line': 1})
-        node.append({'type': 'TOKEN_COMMA', 'value': ',', 'column': 6, 'line': 1})
-        node.append({'type': 'TOKEN_BYTE', 'value': '0x02', 'column': 8, 'line': 1})
+        node = []
+        node.append({'class': 'TOKEN_COMMAND', 'lexeme': 'LD', 'column': 1, 'line': 1})
+        node.append({'class': 'TOKEN_REGISTER', 'lexeme': 'VA', 'column': 4, 'line': 1})
+        node.append({'class': 'TOKEN_COMMA', 'lexeme': ',', 'column': 6, 'line': 1})
+        node.append({'class': 'TOKEN_BYTE', 'lexeme': '0x02', 'column': 8, 'line': 1})
         code = "LD VA, 0x02\n"
         tokens = lexical.tokenize(code)
 
@@ -36,9 +36,9 @@ class SyntacticTestCase(unittest.TestCase):
         ast = syntactic.Ast(tokens)
 
         # Assert:
-        self.assertEquals(node, ast.nodes[0])
+        self.assertEquals(node, ast.nodes[0x200])
 
-    def test_throws_syntactic_error_when_sequence_is_invalid(self):
+    def test_throws_syntactic_error_when_sequence_is_has_error(self):
 
         # Arrange:
         code = "LD ,"
@@ -48,9 +48,9 @@ class SyntacticTestCase(unittest.TestCase):
         syntactic.Ast(tokens)
 
         # Assert:
-        self.assertTrue(logger.invalid)
+        self.assertTrue(logger.has_error)
 
-    def test_throws_syntactic_error_when_initialize_with_invalid_value(self):
+    def test_throws_syntactic_error_when_initialize_with_has_error_value(self):
 
         # Arrange:
         code = "V0, V1"
@@ -60,7 +60,7 @@ class SyntacticTestCase(unittest.TestCase):
         syntactic.Ast(tokens)
 
         # Assert:
-        self.assertTrue(logger.invalid)
+        self.assertTrue(logger.has_error)
 
     def test_construct_symbolic_table_in_ast(self):
 
@@ -72,7 +72,7 @@ class SyntacticTestCase(unittest.TestCase):
         ast = syntactic.Ast(tokens)
 
         # Assert:
-        self.assertEquals(len(ast.table), 2)
+        self.assertEquals(len(ast.symbols), 2)
 
     def test_log_when_repeat_symbol(self):
 
@@ -84,5 +84,4 @@ class SyntacticTestCase(unittest.TestCase):
         syntactic.Ast(tokens)
 
         # Assert:
-        self.assertTrue(logger.invalid)
-
+        self.assertTrue(logger.has_error)

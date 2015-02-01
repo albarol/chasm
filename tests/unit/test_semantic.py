@@ -6,60 +6,66 @@ from chasm import semantic, lexical, syntactic, errors
 
 logger = errors.Logger()
 
+
 class SemanticTestCase(unittest.TestCase):
 
-
     def setUp(self):
+        logger.clear()
+
+    def tearDown(self):
         logger.clear()
 
     def test_validate_valid_ast_node(self):
 
         # Arrange:
-        node = [{'type': 'T_COMMAND', 'value': 'LD', 'column': 1, 'line': 1},
-               {'type': 'T_REGISTER', 'value': 'VA', 'column': 4, 'line': 1},
-               {'type': 'T_COMMA', 'value': ',', 'column': 6, 'line': 1},
-               {'type': 'T_BYTE', 'value': '#02', 'column': 8, 'line': 1}]
-
-        # Act:
-        # Arrange:
-        self.assertTrue(semantic.is_valid_instruction(node))
-
-    def test_validate_invalid_ast_node(self):
-
-        # Arrange:
-        node = [{'type': 'T_COMMAND', 'value': 'CLS', 'column': 1, 'line': 1},
-               {'type': 'T_REGISTER', 'value': 'VA', 'column': 4, 'line': 1},
-               {'type': 'T_COMMA', 'value': ',', 'column': 6, 'line': 1},
-               {'type': 'T_BYTE', 'value': '#02', 'column': 8, 'line': 1}]
+        node = [{'class': 'TOKEN_COMMAND', 'lexeme': 'LD', 'column': 1, 'line': 1},
+                {'class': 'TOKEN_REGISTER', 'lexeme': 'VA', 'column': 4, 'line': 1},
+                {'class': 'TOKEN_COMMA', 'lexeme': ',', 'column': 6, 'line': 1},
+                {'class': 'TOKEN_BYTE', 'lexeme': '0x02', 'column': 8, 'line': 1}]
 
         # Act:
         semantic.is_valid_instruction(node)
 
         # Arrange:
-        self.assertTrue(logger.invalid)
+        self.assertFalse(logger.has_error)
+
+    def test_validate_has_error_ast_node(self):
+
+        # Arrange:
+        node = [{'class': 'TOKEN_COMMAND', 'lexeme': 'CLS', 'column': 1, 'line': 1},
+                {'class': 'TOKEN_REGISTER', 'lexeme': 'VA', 'column': 4, 'line': 1},
+                {'class': 'TOKEN_COMMA', 'lexeme': ',', 'column': 6, 'line': 1},
+                {'class': 'TOKEN_BYTE', 'lexeme': '#02', 'column': 8, 'line': 1}]
+
+        # Act:
+        semantic.is_valid_instruction(node)
+
+        # Arrange:
+        self.assertTrue(logger.has_error)
 
     def test_validate_valid_memory(self):
 
         # Arrange:
-        node = [{'type': 'T_COMMAND', 'value': 'LDI', 'column': 1, 'line': 1},
-               {'type': 'T_ADDR', 'value': '#2EA', 'column': 8, 'line': 1}]
-
-        # Act:
-        # Arrange:
-        self.assertTrue(semantic.is_valid_memory_address(node))
-
-    def test_validate_invalid_memory(self):
-
-        # Arrange:
-        node = [{'type': 'T_COMMAND', 'value': 'JMP', 'column': 1, 'line': 1},
-               {'type': 'T_ADDR', 'value': '#199', 'column': 8, 'line': 1}]
+        node = [{'class': 'TOKEN_COMMAND', 'lexeme': 'LDI', 'column': 1, 'line': 1},
+                {'class': 'TOKEN_ADDR', 'lexeme': '#2EA', 'column': 8, 'line': 1}]
 
         # Act:
         semantic.is_valid_memory_address(node)
 
         # Arrange:
-        self.assertFalse(logger.invalid)
+        self.assertFalse(logger.has_error)
 
+    def test_validate_has_error_memory(self):
+
+        # Arrange:
+        node = [{'class': 'TOKEN_COMMAND', 'lexeme': 'JMP', 'column': 1, 'line': 1},
+                {'class': 'TOKEN_ADDR', 'lexeme': '#199', 'column': 8, 'line': 1}]
+
+        # Act:
+        semantic.is_valid_memory_address(node)
+
+        # Arrange:
+        self.assertFalse(logger.has_error)
 
     def test_analyze_entire_ast(self):
 
@@ -72,7 +78,7 @@ class SemanticTestCase(unittest.TestCase):
         # Arrange:
         self.assertTrue(semantic.analyze(ast))
 
-    def test_invalid_analyze_entire_ast(self):
+    def test_has_error_analyze_entire_ast(self):
 
         # Arrange:
         code = "LD VA, 0x02\nJP 0x199\n"
@@ -83,7 +89,7 @@ class SemanticTestCase(unittest.TestCase):
         semantic.analyze(ast)
 
         # Arrange:
-        self.assertFalse(logger.invalid)
+        self.assertFalse(logger.has_error)
 
     def test_validate_if_name_exists_in_symbol_table(self):
 
@@ -96,7 +102,7 @@ class SemanticTestCase(unittest.TestCase):
         semantic.analyze(ast)
 
         # Arrange:
-        self.assertFalse(logger.invalid)
+        self.assertFalse(logger.has_error)
 
     def test_throw_exception_when_validate_if_name_does_not_exists_in_symbol_table(self):
 
@@ -109,4 +115,4 @@ class SemanticTestCase(unittest.TestCase):
         semantic.analyze(ast)
 
         # Arrange:
-        self.assertTrue(logger.invalid)
+        self.assertTrue(logger.has_error)

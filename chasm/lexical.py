@@ -51,8 +51,8 @@ def tokenize(code):
         token = get_token(code)
 
         if token['class'] == 'TOKEN_UNKNOW':
-            logger.fail("Invalid token {0} in ({1}, {2})".format(
-                token['lexeme'], line, column))
+            logger.fail("Invalid token {0} in ({1}, {2})",
+                        token['lexeme'], line, column)
 
         tokens.append({'class': token['class'],
                        'lexeme': token['lexeme'],

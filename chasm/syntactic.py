@@ -8,11 +8,11 @@ grammar = {
     'TOKEN_SOL': ['TOKEN_LABEL', 'TOKEN_COMMAND'],
     'TOKEN_LABEL': ['TOKEN_EOL'],
     'TOKEN_COMMAND': ['TOKEN_REGISTER', 'TOKEN_BINARY', 'TOKEN_NIBBLE',
-                  'TOKEN_ADDR', 'TOKEN_CONSTANT', 'TOKEN_DELAY',
-                  'TOKEN_SOUND', 'TOKEN_FONT', 'TOKEN_REGISTER_I',
-                  'TOKEN_BINARY', 'TOKEN_VALUE', 'TOKEN_WORD', 'TOKEN_EOL',
-                  'TOKEN_NAME', 'TOKEN_MEMORY_I', 'TOKEN_HIGH_FONT', 'TOKEN_FLAG',
-                  'TOKEN_BYTE'],
+                      'TOKEN_ADDR', 'TOKEN_CONSTANT', 'TOKEN_DELAY',
+                      'TOKEN_SOUND', 'TOKEN_FONT', 'TOKEN_REGISTER_I',
+                      'TOKEN_BINARY', 'TOKEN_VALUE', 'TOKEN_WORD', 'TOKEN_EOL',
+                      'TOKEN_NAME', 'TOKEN_MEMORY_I', 'TOKEN_HIGH_FONT', 'TOKEN_FLAG',
+                      'TOKEN_BYTE'],
     'TOKEN_ADDR': ['TOKEN_EOL', 'TOKEN_COMMA'],
     'TOKEN_BYTE': ['TOKEN_EOL'],
     'TOKEN_NIBBLE': ['TOKEN_EOL'],
@@ -36,92 +36,50 @@ grammar = {
 }
 
 
-class AstNode(object):
-
-    def __init__(self, addr=0x000):
-        self.__tree = []
-        self.addr = addr
-
-    def append(self, token):
-        self.__tree.append(token)
-
-    @property
-    def tree(self):
-        return self.__tree
-
-    def __getitem__(self, key):
-        return self.__tree[key]
-
-
-    def __eq__(self, other):
-        assert isinstance(other, AstNode)
-        return self.tree == other.tree
-
-class SymbolicTable(object):
-
-    def __init__(self):
-        self.__names = {}
-
-    def append(self, name, addr):
-        if name in self.__names:
-            logger.fail("Symbol table contains this name %s" % (name,))
-        self.__names[name[:-1]] = addr
-
-    def __getitem__(self, key):
-        return self.__names[key]
-
-    def __contains__(self, key):
-        return key in self.__names
-
-    def __len__(self):
-        return len(self.__names)
-
-
 class Ast(object):
 
     def __init__(self, tokens):
-        self.__nodes = []
-        self.__table = SymbolicTable()
-        valid_tokens = filter(lambda token: token['type'] not in ('TOKEN_WHITESPACE', 'TOKEN_COMMENT'), tokens)
+        self.nodes = {}
+        self.symbols = {}
+        valid_tokens = filter(lambda token: token['class'] not in ('TOKEN_WHITESPACE', 'TOKEN_COMMENT'), tokens)
         self._generate_ast(valid_tokens)
 
-    @property
-    def nodes(self):
-        return filter(lambda node: True if node.tree else False, self.__nodes)
+    def add_symbol(self, name, addr):
+        if name in self.symbols:
+            logger.fail("Symbol {0} already declared.", name)
+        self.symbols[name[:-1]] = addr
 
-    @property
-    def table(self):
-        return self.__table
+    def append(self, addr, token):
+        if addr not in self.nodes:
+            self.nodes[addr] = []
+        self.nodes[addr].append(token)
 
     def _generate_ast(self, tokens):
         addr = 0x200
-        index = 0
-        node = AstNode(addr=addr)
+        self.nodes[addr] = []
 
-        while index < len(tokens):
-            token = tokens[index]
+        for token in tokens:
+            if token['class'] == 'TOKEN_LABEL':
+                self.add_symbol(token['lexeme'], addr)
+                continue
 
-            if token['type'] == 'TOKEN_LABEL':
-                self.__table.append(token['value'], addr)
-            elif not node.tree and token['type'] in grammar['TOKEN_SOL']:
-                node.append(token)
-            elif node.tree and token['type'] == 'TOKEN_EOL':
-                self.__nodes.append(node)
-                addr += 2 # 8bits > 0x00 - 0xFF
-                node = AstNode(addr=addr)
-            elif node.tree and token['type'] in grammar[node.tree[-1]['type']]:
-                node.tree.append(token)
-            else:
-                if not token['type'] == 'TOKEN_EOL':
-                    if not node.tree:
-                        logger.fail("Syntax Error %s is invalid instruction in (%s, %s)"
-                                    % (token['value'], token['line'], token['column']))
-                    else:
-                        logger.fail("Syntax Error %s %s is invalid syntax in (%s, %s)" %
-                               (' '.join([t['value'] for t in node.tree]), token['value'], token['line'], token['column']))
-            index += 1
+            if token['class'] in grammar['TOKEN_SOL']:
+                self.append(addr, token)
+                continue
 
+            if token['class'] == 'TOKEN_EOL':
+                addr += 0x2  # 8bits > 0x00 - 0xFF
+                continue
 
-        # append when TOKEN_EOL does not exists
-        if node.tree:
-            self.__nodes.append(node)
+            try:
+                last_token = self.nodes[addr][-1]['class']
+                if token['class'] in grammar[last_token]:
+                    self.append(addr, token)
+                    continue
+            except IndexError:
+                logger.fail("Syntax Error {0} is invalid instruction in ({1}, {2})",
+                            token['lexeme'], token['line'], token['column'])
+                continue
+
+            logger.fail("Syntax Error: {0} {1} is invalid syntax in ({2}, {3})",
+                        ' '.join([t['lexeme'] for t in self.nodes[addr]]), token['lexeme'], token['line'], token['column'])

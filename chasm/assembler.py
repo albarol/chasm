@@ -70,8 +70,8 @@ variables = [
 
 def generate(ast):
     opcodes = []
-    for node in ast.nodes:
-        instruction = ''.join([i['value'] for i in node])
+    for addr, node in ast.nodes.iteritems():
+        instruction = ''.join([i['lexeme'] for i in node])
         for symbol in symbols:
             match = re.match(symbol['pattern'], instruction)
             if match:

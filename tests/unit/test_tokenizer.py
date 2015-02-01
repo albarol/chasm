@@ -222,7 +222,7 @@ class TokenizerTestCase(unittest.TestCase):
         # Assert:
         self.assertEqual('TOKEN_VALUE', tokens[5]['class'])
 
-    def test_throw_exception_with_invalid_characters(self):
+    def test_throw_exception_with_has_error_characters(self):
 
         # Arrange:
         code = "ADD #V0, 0xFF"
@@ -231,7 +231,7 @@ class TokenizerTestCase(unittest.TestCase):
         lexical.tokenize(code)
 
         # Assert:
-        self.assertTrue(logger.invalid)
+        self.assertTrue(logger.has_error)
 
     def test_show_column_from_asm(self):
 
