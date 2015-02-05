@@ -9,6 +9,9 @@ logger = errors.Logger()
 
 class SyntacticTestCase(unittest.TestCase):
 
+    def setUp(self):
+        logger.clear()
+
     def test_should_generate_simple_ast(self):
 
         # Arrange:
@@ -28,8 +31,8 @@ class SyntacticTestCase(unittest.TestCase):
         node.append({'class': 'T_COMMAND', 'lexeme': 'LD', 'column': 1, 'line': 1})
         node.append({'class': 'T_REGISTER', 'lexeme': 'VA', 'column': 4, 'line': 1})
         node.append({'class': 'T_COMMA', 'lexeme': ',', 'column': 6, 'line': 1})
-        node.append({'class': 'T_BYTE', 'lexeme': '0x02', 'column': 8, 'line': 1})
-        code = "LD VA, 0x02\n"
+        node.append({'class': 'T_NUMBER', 'lexeme': '0x2', 'column': 8, 'line': 1})
+        code = "LD VA, 2\n"
         tokens = lexical.tokenize(code)
 
         # Act:

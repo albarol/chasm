@@ -1,22 +1,21 @@
 # -*- coding: utf-8 -*-
 
 from chasm.errors import Logger
+from chasm.utils import convert_to_hexstring
 
 logger = Logger()
 
 grammar = {
     'T_SOL': ['T_LABEL', 'T_COMMAND'],
     'T_LABEL': ['T_EOL'],
-    'T_COMMAND': ['T_REGISTER', 'T_BINARY', 'T_NIBBLE',
-                  'T_ADDR', 'T_CONSTANT', 'T_DELAY',
+    'T_COMMAND': ['T_REGISTER', 'T_NUMBER',
+                  'T_CONSTANT', 'T_DELAY',
                   'T_SOUND', 'T_FONT', 'T_REGISTER_I',
-                  'T_BINARY', 'T_WORD', 'T_EOL',
-                  'T_NAME', 'T_MEMORY_I', 'T_HIGH_FONT', 'T_FLAG',
+                  'T_BINARY', 'T_EOL', 'T_NAME',
+                  'T_MEMORY_I', 'T_HIGH_FONT', 'T_FLAG',
                   'T_BYTE'],
-    'T_ADDR': ['T_EOL', 'T_COMMA'],
-    'T_BYTE': ['T_EOL'],
-    'T_NIBBLE': ['T_EOL'],
-    'T_WORD': ['T_EOL'],
+    'T_NUMBER': ['T_EOL', 'T_COMMA'],
+    'T_CONSTANT': ['T_EOL', 'T_COMMA'],
     'T_NAME': ['T_EOL'],
     'T_CONSTANT': ['T_EOL'],
     'T_VALUE': ['T_EOL'],
@@ -30,9 +29,9 @@ grammar = {
     'T_MEMORY_I': ['T_COMMA', 'T_EOL'],
     'T_HIGH_FONT': ['T_COMMA'],
     'T_FLAG': ['T_COMMA', 'T_EOL'],
-    'T_COMMA': ['T_REGISTER', 'T_BYTE', 'T_NIBBLE',
+    'T_COMMA': ['T_REGISTER', 'T_NUMBER', 'T_CONSTANT',
                 'T_DELAY', 'T_KEYBOARD', 'T_MEMORY_I',
-                'T_FLAG', 'T_ADDR', 'T_NAME', 'T_VALUE'],
+                'T_FLAG', 'T_NAME'],
     'T_EOL': []
 }
 
@@ -56,12 +55,17 @@ class Ast(object):
         self.nodes[addr].append(token)
 
     def _generate_ast(self, tokens):
-        addr = 0x1FE
+        addr = 0x200
 
         for token in tokens:
 
+            if token['class'] in ('T_CONSTANT', 'T_NUMBER'):
+                token['lexeme'] = convert_to_hexstring(token['lexeme'])
+
+
             if token['class'] == 'T_LABEL':
                 self.add_symbol(token['lexeme'], addr)
+
 
             elif token['class'] in grammar['T_SOL']:
                 addr += 0x2  # 8bits > 0x00 - 0xFF
@@ -78,7 +82,7 @@ class Ast(object):
                         logger.fail("Syntax Error {0} {1} is invalid syntax in ({2}, {3})",
                                     ' '.join([t['lexeme'] for t in self.nodes[addr]]), token['lexeme'], token['line'], token['column'])
 
-                except IndexError:
+                except (IndexError, KeyError):
                     logger.fail("Syntax Error {0} is invalid instruction in ({1}, {2})",
                                 token['lexeme'], token['line'], token['column'])
                     continue

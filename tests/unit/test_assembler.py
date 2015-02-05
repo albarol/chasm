@@ -13,7 +13,7 @@ class AssemblerTestCase(unittest.TestCase):
     def test_convert_SYS_node_to_opcode(self):
 
         # Arrange:
-        code = "SYS 0xfff"
+        code = "SYS #fff"
         tokens = lexical.tokenize(code)
         ast = syntactic.Ast(tokens)
         semantic.analyze(ast)
@@ -55,7 +55,7 @@ class AssemblerTestCase(unittest.TestCase):
     def test_convert_JMP_1NNN_node_to_opcode(self):
 
         # Arrange:
-        code = "JP 0xFFF"
+        code = "JP #FFF"
         tokens = lexical.tokenize(code)
         ast = syntactic.Ast(tokens)
         semantic.analyze(ast)
@@ -69,7 +69,7 @@ class AssemblerTestCase(unittest.TestCase):
     def test_convert_JMP_BNNN_node_to_opcode(self):
 
         # Arrange:
-        code = "JP 0xFFF, V0"
+        code = "JP 4095, V0"
         tokens = lexical.tokenize(code)
         ast = syntactic.Ast(tokens)
         semantic.analyze(ast)
@@ -83,7 +83,7 @@ class AssemblerTestCase(unittest.TestCase):
     def test_convert_CALL_node_to_opcode(self):
 
         # Arrange:
-        code = "CALL 0xFFF"
+        code = "CALL #FFF"
         tokens = lexical.tokenize(code)
         ast = syntactic.Ast(tokens)
         semantic.analyze(ast)
@@ -97,7 +97,7 @@ class AssemblerTestCase(unittest.TestCase):
     def test_convert_SE_3XNN_node_to_opcode(self):
 
         # Arrange:
-        code = "SE V0, 0xFF"
+        code = "SE V0, 255"
         tokens = lexical.tokenize(code)
         ast = syntactic.Ast(tokens)
         semantic.analyze(ast)
@@ -125,7 +125,7 @@ class AssemblerTestCase(unittest.TestCase):
     def test_convert_SNE_4XNN_node_to_opcode(self):
 
         # Arrange:
-        code = "SNE V0, 0xae"
+        code = "SNE V0, #AE"
         tokens = lexical.tokenize(code)
         ast = syntactic.Ast(tokens)
         semantic.analyze(ast)
@@ -153,7 +153,7 @@ class AssemblerTestCase(unittest.TestCase):
     def test_convert_ADD_7XNN_node_to_opcode(self):
 
         # Arrange:
-        code = "ADD V2, 0xFF"
+        code = "ADD V2, #FF"
         tokens = lexical.tokenize(code)
         ast = syntactic.Ast(tokens)
         semantic.analyze(ast)
@@ -279,7 +279,7 @@ class AssemblerTestCase(unittest.TestCase):
     def test_convert_LDI_node_to_opcode(self):
 
         # Arrange:
-        code = "LD I, 0xffe"
+        code = "LD I, #ffe"
         tokens = lexical.tokenize(code)
         ast = syntactic.Ast(tokens)
         semantic.analyze(ast)
@@ -293,7 +293,7 @@ class AssemblerTestCase(unittest.TestCase):
     def test_convert_RND_node_to_opcode(self):
 
         # Arrange:
-        code = "RND V1, 0xFF"
+        code = "RND V1, #FF"
         tokens = lexical.tokenize(code)
         ast = syntactic.Ast(tokens)
         semantic.analyze(ast)
@@ -307,7 +307,7 @@ class AssemblerTestCase(unittest.TestCase):
     def test_convert_DRW_node_to_opcode(self):
 
         # Arrange:
-        code = "DRW V1, V9, 0xF"
+        code = "DRW V1, V9, #F"
         tokens = lexical.tokenize(code)
         ast = syntactic.Ast(tokens)
         semantic.analyze(ast)
@@ -377,7 +377,7 @@ class AssemblerTestCase(unittest.TestCase):
     def test_convert_LD_6XNN_node_to_opcode(self):
 
         # Arrange:
-        code = "LD V0, 0xFF"
+        code = "LD V0, #FF"
         tokens = lexical.tokenize(code)
         ast = syntactic.Ast(tokens)
         semantic.analyze(ast)
@@ -503,7 +503,7 @@ class AssemblerTestCase(unittest.TestCase):
     def test_convert_DW_to_opcode(self):
 
         # Arrange:
-        code = "DW 0xF000"
+        code = "DW #F000"
         tokens = lexical.tokenize(code)
         ast = syntactic.Ast(tokens)
         semantic.analyze(ast)
@@ -513,3 +513,17 @@ class AssemblerTestCase(unittest.TestCase):
 
         # Arrange:
         self.assertEqual(self.pack('F000'), opcodes[0])
+
+    def test_should_padding_when_value_should_node_complete_opcode(self):
+
+        # Arrange:
+        code = "JP 2"
+        tokens = lexical.tokenize(code)
+        ast = syntactic.Ast(tokens)
+        semantic.analyze(ast)
+
+        # Act:
+        opcodes = assembler.generate(ast)
+
+        # Arrange:
+        self.assertEqual(self.pack('1002'), opcodes[0])

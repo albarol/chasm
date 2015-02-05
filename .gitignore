@@ -3,9 +3,11 @@
 
 *.sublime-workspace
 .ropeproject/
+.cache/
 
 # Assembler
 *.c8
+*.hex
 
 ## Python
 

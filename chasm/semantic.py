@@ -10,23 +10,22 @@ rules = {
     'CLS': [('T_COMMAND',)],
     'RET': [('T_COMMAND',)],
     'JP':  [('T_COMMAND', 'T_NAME'),
-            ('T_COMMAND', 'T_ADDR'),
-            ('T_COMMAND', 'T_BYTE'),
-            ('T_COMMAND', 'T_NIBBLE'),
-            ('T_COMMAND', 'T_ADDR', 'T_COMMA', 'T_REGISTER')],
+            ('T_COMMAND', 'T_CONSTANT'),
+            ('T_COMMAND', 'T_NUMBER'),
+            ('T_COMMAND', 'T_NUMBER', 'T_COMMA', 'T_REGISTER'),
+            ('T_COMMAND', 'T_CONSTANT', 'T_COMMA', 'T_REGISTER')],
     'CALL': [('T_COMMAND', 'T_ADDR'),
              ('T_COMMAND', 'T_BYTE'),
              ('T_COMMAND', 'T_NIBBLE'),
              ('T_COMMAND', 'T_NAME')],
     'SE': [('T_COMMAND', 'T_REGISTER', 'T_COMMA', 'T_REGISTER'),
-           ('T_COMMAND', 'T_REGISTER', 'T_COMMA', 'T_BYTE'),
-           ('T_COMMAND', 'T_REGISTER', 'T_COMMA', 'T_NIBBLE')],
-    'SNE': [('T_COMMAND', 'T_REGISTER', 'T_COMMA', 'T_BYTE'),
-            ('T_COMMAND', 'T_REGISTER', 'T_COMMA', 'T_NIBBLE'),
+           ('T_COMMAND', 'T_REGISTER', 'T_COMMA', 'T_NUMBER'),
+           ('T_COMMAND', 'T_REGISTER', 'T_COMMA', 'T_CONSTANT')],
+    'SNE': [('T_COMMAND', 'T_REGISTER', 'T_COMMA', 'T_NUMBER'),
+            ('T_COMMAND', 'T_REGISTER', 'T_COMMA', 'T_CONSTANT'),
             ('T_COMMAND', 'T_REGISTER', 'T_COMMA', 'T_REGISTER')],
-    'ADD': [('T_COMMAND', 'T_REGISTER', 'T_COMMA', 'T_BYTE'),
-            ('T_COMMAND', 'T_REGISTER', 'T_COMMA', 'T_ADDR'),
-            ('T_COMMAND', 'T_REGISTER', 'T_COMMA', 'T_NIBBLE'),
+    'ADD': [('T_COMMAND', 'T_REGISTER', 'T_COMMA', 'T_CONSTANT'),
+            ('T_COMMAND', 'T_REGISTER', 'T_COMMA', 'T_NUMBER'),
             ('T_COMMAND', 'T_REGISTER', 'T_COMMA', 'T_REGISTER'),
             ('T_COMMAND', 'T_REGISTER_I', 'T_COMMA', 'T_REGISTER')],
     'OR':  [('T_COMMAND', 'T_REGISTER', 'T_COMMA', 'T_REGISTER')],
@@ -36,19 +35,24 @@ rules = {
     'SHR':  [('T_COMMAND', 'T_REGISTER', 'T_COMMA', 'T_REGISTER')],
     'SUBN':  [('T_COMMAND', 'T_REGISTER', 'T_COMMA', 'T_REGISTER')],
     'SHL':  [('T_COMMAND', 'T_REGISTER', 'T_COMMA', 'T_REGISTER')],
-    'RND': [('T_COMMAND', 'T_REGISTER', 'T_COMMA', 'T_BYTE')],
-    'DRW': [('T_COMMAND', 'T_REGISTER', 'T_COMMA', 'T_REGISTER', 'T_COMMA', 'T_NIBBLE')],
+    'RND': [('T_COMMAND', 'T_REGISTER', 'T_COMMA', 'T_NUMBER'),
+            ('T_COMMAND', 'T_REGISTER', 'T_COMMA', 'T_CONSTANT'),
+            ('T_COMMAND', 'T_REGISTER', 'T_COMMA', 'T_NAME')],
+    'DRW': [('T_COMMAND', 'T_REGISTER', 'T_COMMA', 'T_REGISTER', 'T_COMMA', 'T_NUMBER'),
+            ('T_COMMAND', 'T_REGISTER', 'T_COMMA', 'T_REGISTER', 'T_COMMA', 'T_CONSTANT')],
     'SKP': [('T_COMMAND', 'T_REGISTER')],
     'SKNP': [('T_COMMAND', 'T_REGISTER')],
     'LD': [('T_COMMAND', 'T_REGISTER', 'T_COMMA', 'T_REGISTER'),
-           ('T_COMMAND', 'T_REGISTER', 'T_COMMA', 'T_ADDR'),
-           ('T_COMMAND', 'T_REGISTER', 'T_COMMA', 'T_BYTE'),
-           ('T_COMMAND', 'T_REGISTER', 'T_COMMA', 'T_NIBBLE'),
+           ('T_COMMAND', 'T_REGISTER', 'T_COMMA', 'T_CONSTANT'),
+           ('T_COMMAND', 'T_REGISTER', 'T_COMMA', 'T_NUMBER'),
+           ('T_COMMAND', 'T_REGISTER', 'T_COMMA', 'T_NAME'),
            ('T_COMMAND', 'T_REGISTER', 'T_COMMA', 'T_DELAY'),
            ('T_COMMAND', 'T_REGISTER', 'T_COMMA', 'T_KEYBOARD'),
            ('T_COMMAND', 'T_DELAY', 'T_COMMA', 'T_REGISTER'),
            ('T_COMMAND', 'T_SOUND', 'T_COMMA', 'T_REGISTER'),
-           ('T_COMMAND', 'T_REGISTER_I', 'T_COMMA', 'T_ADDR'),
+           ('T_COMMAND', 'T_REGISTER_I', 'T_COMMA', 'T_CONSTANT'),
+           ('T_COMMAND', 'T_REGISTER_I', 'T_COMMA', 'T_NUMBER'),
+           ('T_COMMAND', 'T_REGISTER_I', 'T_COMMA', 'T_NAME'),
            ('T_COMMAND', 'T_MEMORY_I', 'T_COMMA', 'T_REGISTER'),
            ('T_COMMAND', 'T_REGISTER', 'T_COMMA', 'T_MEMORY_I'),
            ('T_COMMAND', 'T_FONT', 'T_COMMA', 'T_REGISTER'),
@@ -58,9 +62,13 @@ rules = {
            ('T_COMMAND', 'T_REGISTER_I', 'T_COMMA', 'T_NAME'),
            ('T_COMMAND', 'T_REGISTER', 'T_COMMA', 'T_FLAG')
            ],
-    'DW': [('T_COMMAND', 'T_WORD')],
-    'DB': [('T_COMMAND', 'T_BYTE')],
-    'SCD': [('T_COMMAND', 'T_NIBBLE')],
+    'DW': [('T_COMMAND', 'T_NUMBER'),
+           ('T_COMMAND', 'T_CONSTANT')],
+    'DB': [('T_COMMAND', 'T_NUMBER'),
+           ('T_COMMAND', 'T_CONSTANT')],
+    'SCD': [('T_COMMAND', 'T_NUMBER'),
+            ('T_COMMAND', 'T_CONSTANT'),
+            ('T_COMMAND', 'T_NAME')],
     'SCR': [('T_COMMAND',)],
     'SCL': [('T_COMMAND',)],
     'EXIT': [('T_COMMAND',)],
@@ -71,13 +79,13 @@ rules = {
 
 def analyze(ast):
     for addr, node in ast.nodes.iteritems():
-        is_valid_instruction(node)
+        check_instruction(node)
         lookup_symbols(node, ast.symbols)
-        is_valid_memory_address(node)
+        check_memory_address(node)
     return True
 
 
-def is_valid_instruction(node):
+def check_instruction(node):
     instruction = tuple([t['class'] for t in node])
     command = node[0]
     rule = rules[command['lexeme']]
@@ -98,8 +106,17 @@ def lookup_symbols(node, symbols):
             token['lexeme'] = hex(symbol)
 
 
-def is_valid_memory_address(node):
-    addr = filter(lambda t: t['class'] in ['T_ADDR'], node)
-    if addr and addr[0]['lexeme'] < '0x200':
-        logger.warning("Invalid memory address {0} in ({1}, {2})",
-                       addr[0]['lexeme'], addr[0]['line'], addr[0]['column'])
+def check_memory_address(node):
+    tokens = filter(lambda t: t['class'] in ['T_NUMBER', 'T_CONSTANT'], node)
+    command = node[0]['lexeme']
+    begin, end = 0x200, 0xFFF
+
+    for token in tokens:
+        address = int(token['lexeme'], 16)
+        if address < begin:
+            logger.warning("Invalid memory address {0} in ({1}, {2})",
+                           address, token['line'], token['column'])
+
+        if address > end and command not in ('DW'):
+            logger.fail("Invalid memory address {0} in ({1}, {2})",
+                        address, token['line'], token['column'])

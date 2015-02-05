@@ -12,19 +12,27 @@ class SemanticTestCase(unittest.TestCase):
     def setUp(self):
         logger.clear()
 
-    def tearDown(self):
-        logger.clear()
-
     def test_validate_valid_ast_node(self):
 
         # Arrange:
         node = [{'class': 'T_COMMAND', 'lexeme': 'LD', 'column': 1, 'line': 1},
                 {'class': 'T_REGISTER', 'lexeme': 'VA', 'column': 4, 'line': 1},
                 {'class': 'T_COMMA', 'lexeme': ',', 'column': 6, 'line': 1},
-                {'class': 'T_BYTE', 'lexeme': '0x02', 'column': 8, 'line': 1}]
+                {'class': 'T_NUMBER', 'lexeme': '2', 'column': 8, 'line': 1}]
 
         # Act:
-        semantic.is_valid_instruction(node)
+        semantic.check_instruction(node)
+
+        # Arrange:
+        self.assertFalse(logger.has_error)
+
+    def test_should_accept_16bit_values_for_dw(self):
+        # Arrange:
+        node = [{'class': 'T_COMMAND', 'lexeme': 'DW', 'column': 1, 'line': 1},
+                {'class': 'T_CONSTANT', 'lexeme': '32896', 'column': 3, 'line': 1}]
+
+        # Act:
+        semantic.check_memory_address(node)
 
         # Arrange:
         self.assertFalse(logger.has_error)
@@ -35,10 +43,10 @@ class SemanticTestCase(unittest.TestCase):
         node = [{'class': 'T_COMMAND', 'lexeme': 'CLS', 'column': 1, 'line': 1},
                 {'class': 'T_REGISTER', 'lexeme': 'VA', 'column': 4, 'line': 1},
                 {'class': 'T_COMMA', 'lexeme': ',', 'column': 6, 'line': 1},
-                {'class': 'T_BYTE', 'lexeme': '#02', 'column': 8, 'line': 1}]
+                {'class': 'T_CONSTANT', 'lexeme': '#02', 'column': 8, 'line': 1}]
 
         # Act:
-        semantic.is_valid_instruction(node)
+        semantic.check_instruction(node)
 
         # Arrange:
         self.assertTrue(logger.has_error)
@@ -47,25 +55,25 @@ class SemanticTestCase(unittest.TestCase):
 
         # Arrange:
         node = [{'class': 'T_COMMAND', 'lexeme': 'LDI', 'column': 1, 'line': 1},
-                {'class': 'T_ADDR', 'lexeme': '#2EA', 'column': 8, 'line': 1}]
+                {'class': 'T_CONSTANT', 'lexeme': '0x2EA', 'column': 8, 'line': 1}]
 
         # Act:
-        semantic.is_valid_memory_address(node)
+        semantic.check_memory_address(node)
 
         # Arrange:
         self.assertFalse(logger.has_error)
 
-    def test_validate_has_error_memory(self):
+    def test_validate_invalid_memory_address(self):
 
         # Arrange:
         node = [{'class': 'T_COMMAND', 'lexeme': 'JMP', 'column': 1, 'line': 1},
-                {'class': 'T_ADDR', 'lexeme': '#199', 'column': 8, 'line': 1}]
+                {'class': 'T_NUMBER', 'lexeme': '4099', 'column': 8, 'line': 1}]
 
         # Act:
-        semantic.is_valid_memory_address(node)
+        semantic.check_memory_address(node)
 
         # Arrange:
-        self.assertFalse(logger.has_error)
+        self.assertTrue(logger.has_error)
 
     def test_analyze_entire_ast(self):
 
@@ -81,7 +89,7 @@ class SemanticTestCase(unittest.TestCase):
     def test_has_error_analyze_entire_ast(self):
 
         # Arrange:
-        code = "LD VA, 0x02\nJP 0x199\n"
+        code = "LD VA, Play\nJP 409\n"
         tokens = lexical.tokenize(code)
         ast = syntactic.Ast(tokens)
 
@@ -89,12 +97,12 @@ class SemanticTestCase(unittest.TestCase):
         semantic.analyze(ast)
 
         # Arrange:
-        self.assertFalse(logger.has_error)
+        self.assertTrue(logger.has_error)
 
     def test_validate_if_name_exists_in_symbol_table(self):
 
         # Arrange:
-        code = "Play: LD VA, 0x02\nJP Args\nArgs: DRW V0, V1, 0x1"
+        code = "Play: LD VA, 2\nJP Args\nArgs: DRW V0, V1, 1"
         tokens = lexical.tokenize(code)
         ast = syntactic.Ast(tokens)
 
@@ -107,7 +115,7 @@ class SemanticTestCase(unittest.TestCase):
     def test_throw_exception_when_validate_if_name_does_not_exists_in_symbol_table(self):
 
         # Arrange:
-        code = "Play: LD VA, 0x02\nJP Draw\nArgs: DRW V0, V1, 0x1"
+        code = "Play: LD VA, 2\nJP Draw\nArgs: DRW V0, V1, 1"
         tokens = lexical.tokenize(code)
         ast = syntactic.Ast(tokens)
 
