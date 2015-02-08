@@ -4,9 +4,10 @@ import unittest
 
 from chasm import disassembler
 
+
 class DisassemblerTestCase(unittest.TestCase):
 
-    def test_convert_0xFFF_to_SYS(self):
+    def test_convert_0xfff_to_SYS(self):
 
         # Arrange:
         opcodes = [0x0FFF]
@@ -15,7 +16,7 @@ class DisassemblerTestCase(unittest.TestCase):
         mnemonics = disassembler.generate(opcodes)
 
         # Assert:
-        self.assertEquals('SYS 0xfff', mnemonics[0])
+        self.assertEquals('SYS #fff', mnemonics[0])
 
     def test_convert_0xNNNN_to_DW(self):
 
@@ -26,7 +27,7 @@ class DisassemblerTestCase(unittest.TestCase):
         mnemonics = disassembler.generate(opcodes)
 
         # Assert:
-        self.assertEquals('DW 0xf000', mnemonics[0])
+        self.assertEquals('DW #f000', mnemonics[0])
 
     def test_convert_0x00E0_to_CLS(self):
 
@@ -59,7 +60,7 @@ class DisassemblerTestCase(unittest.TestCase):
         mnemonics = disassembler.generate(opcodes)
 
         # Assert:
-        self.assertEquals('JP 0xfff', mnemonics[0])
+        self.assertEquals('JP #fff', mnemonics[0])
 
     def test_convert_0x2FFF_to_CALL(self):
 
@@ -70,7 +71,7 @@ class DisassemblerTestCase(unittest.TestCase):
         mnemonics = disassembler.generate(opcodes)
 
         # Assert:
-        self.assertEquals('CALL 0xfff', mnemonics[0])
+        self.assertEquals('CALL #fff', mnemonics[0])
 
     def test_convert_0x3XNN_to_SE(self):
 
@@ -81,7 +82,7 @@ class DisassemblerTestCase(unittest.TestCase):
         mnemonics = disassembler.generate(opcodes)
 
         # Assert:
-        self.assertEquals('SE Vf, 0xff', mnemonics[0])
+        self.assertEquals('SE Vf, #ff', mnemonics[0])
 
     def test_convert_0x4XNN_to_SNE(self):
 
@@ -92,7 +93,7 @@ class DisassemblerTestCase(unittest.TestCase):
         mnemonics = disassembler.generate(opcodes)
 
         # Assert:
-        self.assertEquals('SNE Ve, 0xff', mnemonics[0])
+        self.assertEquals('SNE Ve, #ff', mnemonics[0])
 
     def test_convert_0x5XY0_to_SE(self):
 
@@ -114,7 +115,7 @@ class DisassemblerTestCase(unittest.TestCase):
         mnemonics = disassembler.generate(opcodes)
 
         # Assert:
-        self.assertEquals('LD Vf, 0x00', mnemonics[0])
+        self.assertEquals('LD Vf, #00', mnemonics[0])
 
     def test_convert_0x7XNN_to_ADD(self):
 
@@ -125,7 +126,7 @@ class DisassemblerTestCase(unittest.TestCase):
         mnemonics = disassembler.generate(opcodes)
 
         # Assert:
-        self.assertEquals('ADD Vf, 0x00', mnemonics[0])
+        self.assertEquals('ADD Vf, #00', mnemonics[0])
 
     def test_convert_0x8XY0_to_LD(self):
 
@@ -246,7 +247,7 @@ class DisassemblerTestCase(unittest.TestCase):
         mnemonics = disassembler.generate(opcodes)
 
         # Assert:
-        self.assertEquals('LD I, 0xfff', mnemonics[0])
+        self.assertEquals('LD I, #fff', mnemonics[0])
 
     def test_convert_0xBNNN_to_JP(self):
 
@@ -257,7 +258,7 @@ class DisassemblerTestCase(unittest.TestCase):
         mnemonics = disassembler.generate(opcodes)
 
         # Assert:
-        self.assertEquals('JP 0xfff, V0', mnemonics[0])
+        self.assertEquals('JP #fff, V0', mnemonics[0])
 
     def test_convert_0xCXNN_to_RND(self):
 
@@ -268,7 +269,7 @@ class DisassemblerTestCase(unittest.TestCase):
         mnemonics = disassembler.generate(opcodes)
 
         # Assert:
-        self.assertEquals('JP 0xfff, V0', mnemonics[0])
+        self.assertEquals('JP #fff, V0', mnemonics[0])
 
     def test_convert_0xDXYN_to_DRW(self):
 
@@ -279,7 +280,7 @@ class DisassemblerTestCase(unittest.TestCase):
         mnemonics = disassembler.generate(opcodes)
 
         # Assert:
-        self.assertEquals('DRW Vf, Ve, 0x5', mnemonics[0])
+        self.assertEquals('DRW Vf, Ve, #5', mnemonics[0])
 
     def test_convert_0xEX9E_SKP(self):
 

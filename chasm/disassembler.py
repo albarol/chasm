@@ -42,17 +42,6 @@ tokens = [
 ]
 
 
-def parsing(mnemonic, match):
-    codes = {
-        'nnnn': mnemonic.replace("0xnnnn", "0x{0}".format(match.group(1))),
-        'nn': mnemonic.replace('0xnnn', "0x{0}".format(match.group(1))),
-        'n': mnemonic.replace('0xn', "0x{0}".format(match.group(3))),
-        'Vx': mnemonic.replace('Vx', "V{0}".format(match.group(1))),
-        'Vy': mnemonic.replace('Vy', "V{0}".format(match.group(2)))
-    }
-    return codes[mnemonic]
-
-
 def generate(opcodes):
     mnemonics = []
     for opcode in opcodes:
@@ -62,18 +51,18 @@ def generate(opcodes):
             if match:
                 mnemonic = token['mnemonic']
                 if 'nnnn' in token['mnemonic']:
-                    mnemonic = mnemonic.replace('0xnnnn', "0x%s" % (match.group(1),))
+                    mnemonic = mnemonic.replace('0xnnnn', "#{0}".format(match.group(1)))
                 elif 'nnn' in token['mnemonic']:
-                    mnemonic = mnemonic.replace('0xnnn', "0x%s" % (match.group(1),))
+                    mnemonic = mnemonic.replace('0xnnn', "#{0}".format(match.group(1)))
                 elif 'nn' in token['mnemonic']:
-                    mnemonic = mnemonic.replace('0xnn', "0x%s" % (match.group(2),))
+                    mnemonic = mnemonic.replace('0xnn', "#{0}".format(match.group(2)))
                 elif 'n' in token['mnemonic']:
-                    mnemonic = mnemonic.replace('0xn', "0x%s" % (match.group(3),))
+                    mnemonic = mnemonic.replace('0xn', "#{0}".format(match.group(3)))
 
                 if 'Vx' in token['mnemonic']:
-                    mnemonic = mnemonic.replace('Vx', "V%s" % (match.group(1),))
+                    mnemonic = mnemonic.replace('Vx', "V{0}".format(match.group(1)))
                 if 'Vy' in token['mnemonic']:
-                    mnemonic = mnemonic.replace('Vy', "V%s" % (match.group(2),))
+                    mnemonic = mnemonic.replace('Vy', "V{0}".format(match.group(2)))
                 mnemonics.append(mnemonic)
                 break
     return mnemonics

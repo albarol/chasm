@@ -39,7 +39,7 @@ class SyntacticTestCase(unittest.TestCase):
         ast = syntactic.Ast(tokens)
 
         # Assert:
-        self.assertEquals(node, ast.nodes[0x200])
+        self.assertEquals(node, ast.nodes[0x202])
 
     def test_throws_syntactic_error_when_sequence_is_has_error(self):
 
