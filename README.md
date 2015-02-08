@@ -1,14 +1,14 @@
 [![Build Status](https://travis-ci.org/fakeezz/chasm.png?branch=master)](https://travis-ci.org/fakeezz/chasm)
 # Chasm - Chip8 Assembler
 
-This project define a basic ISA to CHIP8 and generate code based on ISA.
+A basic assembler for chip8 to generate bytecode using a pseudo-assembly language
 
-Transform asm in binary code:
+How to transform asm in binary code:
 ```
 ./compiler.py -i pong.asm -o pong.c8
 ```
 
-Transform binary code in asm:
+How to transform binary code in asm:
 ```
 ./decompiler.py -i pong.c8 -o pong.asm
 ```
@@ -52,7 +52,6 @@ Transform binary code in asm:
 | FX33    | LD B, (Vx)           |
 | FX55    | LD [I], (Vx)         |
 | FX65    | LD (Vx), [I]         |
-|         | DB #NN               |
 |         | DW #NNNN             |
 
 ### Super chip8
