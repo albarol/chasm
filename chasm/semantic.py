@@ -4,7 +4,6 @@ from chasm.errors import Logger
 
 logger = Logger()
 
-
 rules = {
     'SYS': [('T_COMMAND', 'T_NUMBER'),
             ('T_COMMAND', 'T_CONSTANT'),
@@ -120,10 +119,13 @@ def check_memory_address(node):
 
     for token in tokens:
         address = int(token['lexeme'], 16)
-        if address < begin:
+
+        use_addr = command in ('JP', 'CALL') or (command == 'LD' and node[1]['lexeme'] == 'T_REGISTER_I')
+
+        if address < begin and use_addr:
             logger.warning("Invalid memory address {0} in ({1}, {2})",
-                           address, token['line'], token['column'])
+                           hex(address), token['line'], token['column'])
 
         if address > end and command not in ('DW'):
             logger.fail("Invalid memory address {0} in ({1}, {2})",
-                        address, token['line'], token['column'])
+                        hex(address), token['line'], token['column'])
