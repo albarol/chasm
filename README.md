@@ -33,9 +33,9 @@ How to transform binary code in asm:
 | 8XY3    | XOR (Vx, Vy)         |
 | 8XY4    | ADD (Vx, Vy)         |
 | 8XY5    | SUB (Vx, Vy)         |
-| 8XY6    | SHR (Vx, Vy)         |
+| 8XY6    | SHR Vx {, Vy}        |
 | 8XY7    | SUBN (Vx, Vy)        |
-| 8XYE    | SHL (Vx, Vy)         |
+| 8XYE    | SHL Vx {, Vy}        |
 | 9XY0    | SNE (Vx, Vy)         |
 | ANNN    | LD I, (addr)         |
 | BNNN    | JP (addr, V0)        |

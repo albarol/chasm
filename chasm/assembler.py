@@ -21,8 +21,10 @@ symbols = [
     {'pattern': r'XORV([\da-fA-F]{1}),V([\da-fA-F]{1})', 'opcode': '8XY3'},
     {'pattern': r'SUBV([\da-fA-F]{1}),V([\da-fA-F]{1})', 'opcode': '8XY5'},
     {'pattern': r'SHRV([\da-fA-F]{1}),V([\da-fA-F]{1})', 'opcode': '8XY6'},
+    {'pattern': r'SHRV([\da-fA-F]{1})', 'opcode': '8XX6'},
     {'pattern': r'SUBNV([\da-fA-F]{1}),V([\da-fA-F]{1})', 'opcode': '8XY7'},
     {'pattern': r'SHLV([\da-fA-F]{1}),V([\da-fA-F]{1})', 'opcode': '8XYE'},
+    {'pattern': r'SHLV([\da-fA-F]{1})', 'opcode': '8XXE'},
 
     {'pattern': r'RNDV([\da-fA-F]{1}),0x([\da-fA-F]{1,2})', 'opcode': 'CXNN'},
     {'pattern': r'DRWV([\da-fA-F]{1}),V([\da-fA-F]{1}),0x([\da-fA-F]{1})', 'opcode': 'DXYN'},
