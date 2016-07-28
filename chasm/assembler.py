@@ -71,7 +71,8 @@ variables = [
 
 def generate(ast):
     opcodes = []
-    for addr, node in ast.nodes.iteritems():
+    for addr in sorted(ast.nodes):
+        node = ast.nodes[addr]
         instruction = ''.join([i['lexeme'] for i in node])
         for symbol in symbols:
             opcode = re.match(symbol['pattern'], instruction)
