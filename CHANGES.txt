@@ -1,8 +1,17 @@
-0.1.0
+2.1.0
 =====
 
-  - Python 3.x version
+ - Python 3.x version
 
+2.0.0
+=====
+
+  - Add decompiler
+
+1.0.0
+=====
+
+  - Add compiler
 
 0.0.1
 =====
