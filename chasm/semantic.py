@@ -86,7 +86,7 @@ rules = {
 
 
 def analyze(ast):
-    for addr, node in ast.nodes.iteritems():
+    for addr, node in ast.nodes.items():
         check_instruction(node)
         lookup_symbols(node, ast.symbols)
         check_memory_address(node)
