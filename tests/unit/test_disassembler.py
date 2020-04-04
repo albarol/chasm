@@ -16,7 +16,7 @@ class DisassemblerTestCase(unittest.TestCase):
         mnemonics = disassembler.generate(opcodes)
 
         # Assert:
-        self.assertEquals('SYS #fff', mnemonics[0])
+        self.assertEqual('SYS #fff', mnemonics[0])
 
     def test_convert_0xNNNN_to_DW(self):
 
@@ -27,7 +27,7 @@ class DisassemblerTestCase(unittest.TestCase):
         mnemonics = disassembler.generate(opcodes)
 
         # Assert:
-        self.assertEquals('DW #f000', mnemonics[0])
+        self.assertEqual('DW #f000', mnemonics[0])
 
     def test_convert_0x00E0_to_CLS(self):
 
@@ -38,7 +38,7 @@ class DisassemblerTestCase(unittest.TestCase):
         mnemonics = disassembler.generate(opcodes)
 
         # Assert:
-        self.assertEquals('CLS', mnemonics[0])
+        self.assertEqual('CLS', mnemonics[0])
 
     def test_convert_0x00EE_to_RET(self):
 
@@ -49,7 +49,7 @@ class DisassemblerTestCase(unittest.TestCase):
         mnemonics = disassembler.generate(opcodes)
 
         # Assert:
-        self.assertEquals('RET', mnemonics[0])
+        self.assertEqual('RET', mnemonics[0])
 
     def test_convert_0x1FFF_to_JP(self):
 
@@ -60,7 +60,7 @@ class DisassemblerTestCase(unittest.TestCase):
         mnemonics = disassembler.generate(opcodes)
 
         # Assert:
-        self.assertEquals('JP #fff', mnemonics[0])
+        self.assertEqual('JP #fff', mnemonics[0])
 
     def test_convert_0x2FFF_to_CALL(self):
 
@@ -71,7 +71,7 @@ class DisassemblerTestCase(unittest.TestCase):
         mnemonics = disassembler.generate(opcodes)
 
         # Assert:
-        self.assertEquals('CALL #fff', mnemonics[0])
+        self.assertEqual('CALL #fff', mnemonics[0])
 
     def test_convert_0x3XNN_to_SE(self):
 
@@ -82,7 +82,7 @@ class DisassemblerTestCase(unittest.TestCase):
         mnemonics = disassembler.generate(opcodes)
 
         # Assert:
-        self.assertEquals('SE Vf, #ff', mnemonics[0])
+        self.assertEqual('SE Vf, #ff', mnemonics[0])
 
     def test_convert_0x4XNN_to_SNE(self):
 
@@ -93,7 +93,7 @@ class DisassemblerTestCase(unittest.TestCase):
         mnemonics = disassembler.generate(opcodes)
 
         # Assert:
-        self.assertEquals('SNE Ve, #ff', mnemonics[0])
+        self.assertEqual('SNE Ve, #ff', mnemonics[0])
 
     def test_convert_0x5XY0_to_SE(self):
 
@@ -104,7 +104,7 @@ class DisassemblerTestCase(unittest.TestCase):
         mnemonics = disassembler.generate(opcodes)
 
         # Assert:
-        self.assertEquals('SE Ve, Vf', mnemonics[0])
+        self.assertEqual('SE Ve, Vf', mnemonics[0])
 
     def test_convert_0x6XNN_to_LD(self):
 
@@ -115,7 +115,7 @@ class DisassemblerTestCase(unittest.TestCase):
         mnemonics = disassembler.generate(opcodes)
 
         # Assert:
-        self.assertEquals('LD Vf, #00', mnemonics[0])
+        self.assertEqual('LD Vf, #00', mnemonics[0])
 
     def test_convert_0x7XNN_to_ADD(self):
 
@@ -126,7 +126,7 @@ class DisassemblerTestCase(unittest.TestCase):
         mnemonics = disassembler.generate(opcodes)
 
         # Assert:
-        self.assertEquals('ADD Vf, #00', mnemonics[0])
+        self.assertEqual('ADD Vf, #00', mnemonics[0])
 
     def test_convert_0x8XY0_to_LD(self):
 
@@ -137,7 +137,7 @@ class DisassemblerTestCase(unittest.TestCase):
         mnemonics = disassembler.generate(opcodes)
 
         # Assert:
-        self.assertEquals('LD Va, Ve', mnemonics[0])
+        self.assertEqual('LD Va, Ve', mnemonics[0])
 
     def test_convert_0x8XY1_to_OR(self):
 
@@ -148,7 +148,7 @@ class DisassemblerTestCase(unittest.TestCase):
         mnemonics = disassembler.generate(opcodes)
 
         # Assert:
-        self.assertEquals('OR Va, Ve', mnemonics[0])
+        self.assertEqual('OR Va, Ve', mnemonics[0])
 
     def test_convert_0x8XY2_to_AND(self):
 
@@ -159,7 +159,7 @@ class DisassemblerTestCase(unittest.TestCase):
         mnemonics = disassembler.generate(opcodes)
 
         # Assert:
-        self.assertEquals('AND Va, Ve', mnemonics[0])
+        self.assertEqual('AND Va, Ve', mnemonics[0])
 
     def test_convert_0x8XY3_to_XOR(self):
 
@@ -170,7 +170,7 @@ class DisassemblerTestCase(unittest.TestCase):
         mnemonics = disassembler.generate(opcodes)
 
         # Assert:
-        self.assertEquals('XOR Va, Ve', mnemonics[0])
+        self.assertEqual('XOR Va, Ve', mnemonics[0])
 
     def test_convert_0x8XY4_to_ADD(self):
 
@@ -181,7 +181,7 @@ class DisassemblerTestCase(unittest.TestCase):
         mnemonics = disassembler.generate(opcodes)
 
         # Assert:
-        self.assertEquals('ADD Va, Ve', mnemonics[0])
+        self.assertEqual('ADD Va, Ve', mnemonics[0])
 
     def test_convert_0x8XY5_to_SUB(self):
 
@@ -192,7 +192,7 @@ class DisassemblerTestCase(unittest.TestCase):
         mnemonics = disassembler.generate(opcodes)
 
         # Assert:
-        self.assertEquals('SUB Va, Ve', mnemonics[0])
+        self.assertEqual('SUB Va, Ve', mnemonics[0])
 
     def test_convert_0x8XY6_to_SHR(self):
 
@@ -203,7 +203,7 @@ class DisassemblerTestCase(unittest.TestCase):
         mnemonics = disassembler.generate(opcodes)
 
         # Assert:
-        self.assertEquals('SHR Va, Ve', mnemonics[0])
+        self.assertEqual('SHR Va, Ve', mnemonics[0])
 
     def test_convert_0x8XY7_to_SUBN(self):
 
@@ -214,7 +214,7 @@ class DisassemblerTestCase(unittest.TestCase):
         mnemonics = disassembler.generate(opcodes)
 
         # Assert:
-        self.assertEquals('SUBN Va, Ve', mnemonics[0])
+        self.assertEqual('SUBN Va, Ve', mnemonics[0])
 
     def test_convert_0x8XYE_to_SHL(self):
 
@@ -225,7 +225,7 @@ class DisassemblerTestCase(unittest.TestCase):
         mnemonics = disassembler.generate(opcodes)
 
         # Assert:
-        self.assertEquals('SHL Va, Ve', mnemonics[0])
+        self.assertEqual('SHL Va, Ve', mnemonics[0])
 
     def test_convert_0x9XY0_to_SNE(self):
 
@@ -236,7 +236,7 @@ class DisassemblerTestCase(unittest.TestCase):
         mnemonics = disassembler.generate(opcodes)
 
         # Assert:
-        self.assertEquals('SNE Va, Ve', mnemonics[0])
+        self.assertEqual('SNE Va, Ve', mnemonics[0])
 
     def test_convert_0xANNN_to_LD(self):
 
@@ -247,7 +247,7 @@ class DisassemblerTestCase(unittest.TestCase):
         mnemonics = disassembler.generate(opcodes)
 
         # Assert:
-        self.assertEquals('LD I, #fff', mnemonics[0])
+        self.assertEqual('LD I, #fff', mnemonics[0])
 
     def test_convert_0xBNNN_to_JP(self):
 
@@ -258,7 +258,7 @@ class DisassemblerTestCase(unittest.TestCase):
         mnemonics = disassembler.generate(opcodes)
 
         # Assert:
-        self.assertEquals('JP #fff, V0', mnemonics[0])
+        self.assertEqual('JP #fff, V0', mnemonics[0])
 
     def test_convert_0xCXNN_to_RND(self):
 
@@ -269,7 +269,7 @@ class DisassemblerTestCase(unittest.TestCase):
         mnemonics = disassembler.generate(opcodes)
 
         # Assert:
-        self.assertEquals('JP #fff, V0', mnemonics[0])
+        self.assertEqual('JP #fff, V0', mnemonics[0])
 
     def test_convert_0xDXYN_to_DRW(self):
 
@@ -280,7 +280,7 @@ class DisassemblerTestCase(unittest.TestCase):
         mnemonics = disassembler.generate(opcodes)
 
         # Assert:
-        self.assertEquals('DRW Vf, Ve, #5', mnemonics[0])
+        self.assertEqual('DRW Vf, Ve, #5', mnemonics[0])
 
     def test_convert_0xEX9E_SKP(self):
 
@@ -291,7 +291,7 @@ class DisassemblerTestCase(unittest.TestCase):
         mnemonics = disassembler.generate(opcodes)
 
         # Assert:
-        self.assertEquals('SKP Vf', mnemonics[0])
+        self.assertEqual('SKP Vf', mnemonics[0])
 
     def test_convert_0xEXA1_SKNP(self):
 
@@ -302,7 +302,7 @@ class DisassemblerTestCase(unittest.TestCase):
         mnemonics = disassembler.generate(opcodes)
 
         # Assert:
-        self.assertEquals('SKNP Vf', mnemonics[0])
+        self.assertEqual('SKNP Vf', mnemonics[0])
 
     def test_convert_0xFX07_LD(self):
 
@@ -313,7 +313,7 @@ class DisassemblerTestCase(unittest.TestCase):
         mnemonics = disassembler.generate(opcodes)
 
         # Assert:
-        self.assertEquals('LD Vf, DT', mnemonics[0])
+        self.assertEqual('LD Vf, DT', mnemonics[0])
 
     def test_convert_0xFX0A_LD(self):
 
@@ -324,7 +324,7 @@ class DisassemblerTestCase(unittest.TestCase):
         mnemonics = disassembler.generate(opcodes)
 
         # Assert:
-        self.assertEquals('LD Vf, K', mnemonics[0])
+        self.assertEqual('LD Vf, K', mnemonics[0])
 
     def test_convert_0xFX15_LD(self):
 
@@ -335,7 +335,7 @@ class DisassemblerTestCase(unittest.TestCase):
         mnemonics = disassembler.generate(opcodes)
 
         # Assert:
-        self.assertEquals('LD DT, Vf', mnemonics[0])
+        self.assertEqual('LD DT, Vf', mnemonics[0])
 
     def test_convert_0xFX18_LD(self):
 
@@ -346,7 +346,7 @@ class DisassemblerTestCase(unittest.TestCase):
         mnemonics = disassembler.generate(opcodes)
 
         # Assert:
-        self.assertEquals('LD ST, Vf', mnemonics[0])
+        self.assertEqual('LD ST, Vf', mnemonics[0])
 
     def test_convert_0xFX1E_LD(self):
 
@@ -357,7 +357,7 @@ class DisassemblerTestCase(unittest.TestCase):
         mnemonics = disassembler.generate(opcodes)
 
         # Assert:
-        self.assertEquals('ADD I, Vf', mnemonics[0])
+        self.assertEqual('ADD I, Vf', mnemonics[0])
 
     def test_convert_0xFX29_LD(self):
 
@@ -368,7 +368,7 @@ class DisassemblerTestCase(unittest.TestCase):
         mnemonics = disassembler.generate(opcodes)
 
         # Assert:
-        self.assertEquals('LD F, Vf', mnemonics[0])
+        self.assertEqual('LD F, Vf', mnemonics[0])
 
     def test_convert_0xFX33_LD(self):
 
@@ -379,7 +379,7 @@ class DisassemblerTestCase(unittest.TestCase):
         mnemonics = disassembler.generate(opcodes)
 
         # Assert:
-        self.assertEquals('LD B, Vf', mnemonics[0])
+        self.assertEqual('LD B, Vf', mnemonics[0])
 
     def test_convert_0xFX55_LD(self):
 
@@ -390,7 +390,7 @@ class DisassemblerTestCase(unittest.TestCase):
         mnemonics = disassembler.generate(opcodes)
 
         # Assert:
-        self.assertEquals('LD [I], Vf', mnemonics[0])
+        self.assertEqual('LD [I], Vf', mnemonics[0])
 
     def test_convert_0xFX65_LD(self):
 
@@ -401,4 +401,4 @@ class DisassemblerTestCase(unittest.TestCase):
         mnemonics = disassembler.generate(opcodes)
 
         # Assert:
-        self.assertEquals('LD Vf, [I]', mnemonics[0])
+        self.assertEqual('LD Vf, [I]', mnemonics[0])

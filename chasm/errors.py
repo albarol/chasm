@@ -1,7 +1,7 @@
 # -*- coding: utf-8 -*-
 
 
-class bcolors:
+class bcolors(object):
     HEADER = '\033[95m'
     OKBLUE = '\033[94m'
     OKGREEN = '\033[92m'
@@ -29,7 +29,7 @@ class Logger(object):
 
         def show(self):
             for message in self.messages:
-                print message['message']
+                print(message['message'])
 
         def clear(self):
             self.has_error = False

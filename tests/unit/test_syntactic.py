@@ -39,7 +39,7 @@ class SyntacticTestCase(unittest.TestCase):
         ast = syntactic.Ast(tokens)
 
         # Assert:
-        self.assertEquals(node, ast.nodes[0x202])
+        self.assertEqual(node, ast.nodes[0x202])
 
     def test_throws_syntactic_error_when_sequence_is_has_error(self):
 
@@ -75,7 +75,7 @@ class SyntacticTestCase(unittest.TestCase):
         ast = syntactic.Ast(tokens)
 
         # Assert:
-        self.assertEquals(len(ast.symbols), 2)
+        self.assertEqual(len(ast.symbols), 2)
 
     def test_log_when_repeat_symbol(self):
 
