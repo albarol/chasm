@@ -5,12 +5,12 @@ A basic assembler for chip8 to generate bytecode using a pseudo-assembly languag
 
 How to transform asm in binary code:
 ```
-./compiler.py -i pong.asm -o pong.c8
+chasm compile -i pong.asm -o pong.c8
 ```
 
 How to transform binary code in asm:
 ```
-./decompiler.py -i pong.c8 -o pong.asm
+chasm decompile -i pong.c8 -o pong.asm
 ```
 
 ### All opcodes supported by ISA
